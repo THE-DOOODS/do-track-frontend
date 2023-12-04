@@ -224,7 +224,7 @@ const Signup = () => {
                             <RiArrowDropDownLine size={28} />
                             </div>
                             {showDropdown && (
-                            <div className="absolute h-[112px] overflow-y-auto mt-9 border border-primPurple rounded-md bg-white shadow-md z-10">
+                            <div className="absolute h-[112px] text-xs overflow-y-auto mt-9 border border-primPurple rounded-md bg-white shadow-md z-10">
                                 {colleges.map((college) => (
                                 <CollegeOptions
                                     key={college}
