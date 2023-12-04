@@ -1,8 +1,18 @@
+
+import { BrowserRouter as Routers, Routes, Route } from "react-router-dom";
+import Login from "./pages/authorization/Login";
+import Signup from "./pages/authorization/Signup";
+
 function App() {
 	return (
-		<div className='grid place-items-center justify-center h-screen'>
-			<h1 className='text-6xl font-bold text-center'>Do-Track Front-end Setup</h1>
-		</div>
+		<>
+			<Routers>
+				<Routes>
+					<Route path="/login" element={<Login />} />
+					<Route path="/signup" element={<Signup />} />
+				</Routes>
+			</Routers>
+		</>
 	);
 }
 
