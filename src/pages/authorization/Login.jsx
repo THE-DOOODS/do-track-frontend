@@ -23,6 +23,7 @@ const Login = () => {
                         <label className="text-gray-500 font-medium">Email</label>
                         <input 
                             type="text"
+                            placeholder='sample@carsu.edu.ph'
                             className="border border-gray-300 rounded-md border-l-primPurple text-gray-600 border-l-[12px] outline-none h-10 p-2"
                         />
                     </div>

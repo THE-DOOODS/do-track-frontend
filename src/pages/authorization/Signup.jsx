@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
+import { RiArrowDropDownLine } from "react-icons/ri";
 import { Tooltip } from "react-tooltip";
+import CollegeOptions from '../../components/CollegeOptions';
 
 const Signup = () => {
     const [inputFname, setInputFname] = useState('');
@@ -9,7 +11,12 @@ const Signup = () => {
     const [inputPass, setInputPass] = useState('');
     const [inputCPass, setInputCPass] = useState('');
     const [inputPosition, setInputPosition] = useState('');
+    const [inputCollege, setInputCollege] = useState('');
     const [showCPassword, setShowCPassword] = useState(false);
+
+    const colleges = ['--Choose College--', 'CCIS', 'CEGS', 'CED', 'CAA', 'CMNS', 'CHASS', 'COFES'];
+    const [selectedCollege, setSelectedCollege] = useState('');
+    const [showDropdown, setShowDropdown] = useState(false);
 
     const [type, setType] = useState("password");
   
@@ -37,11 +44,28 @@ const Signup = () => {
         setInputPosition(e.target.value);
     };
 
+    const handleInputCollegeChange = (e) => {
+        setInputCollege(e.target.value);
+        if (value !== '--Choose College--') {
+            setSelectedCollege(value);
+        }
+    };
+    
+    const handleSelectCollege = (college) => {
+        if (college !== '--Choose College--') {
+          setSelectedCollege(college);
+        } else {
+          setSelectedCollege('');
+        }
+        setShowDropdown(false);
+    };
+    
+
     return (
         <div className="flex flex-col justify-center items-center bg-gradient-to-b from-primPurple to-primOrange h-screen w-full">
-            <div className="flex flex-col gap-5 border rounded-lg bg-white p-12 shadow-xl">
+            <div className="flex flex-col gap-5 border rounded-lg bg-white p-8 px-12 shadow-xl">
                 <div className="flex flex-col items-center">
-                    <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[136px] pb-10" />
+                    <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[136px] pb-6" />
                     <h1 className="text-primPurple text-4xl font-semibold">Create account.</h1>
                 </div>
                 <div className="flex flex-col items-start gap-2">
@@ -102,9 +126,10 @@ const Signup = () => {
                                 place="right"
                                 className="z-20"
                                 border="1px solid #5A5DFA"
-                                style={{ background: "linear-gradient(to bottom, #AD31C1, #E7A557)" }}
+                                // style={{ background: "linear-gradient(to bottom, #AD31C1, #E7A557)" }}
+                                style={{background:"white"}}
                                 >
-                                <div className="text-xs text-white">
+                                <div className="text-xs text-black">
                                     <h1>Please use your university email</h1>
                                 </div>
                             </Tooltip>
@@ -175,10 +200,50 @@ const Signup = () => {
                                 className="border border-primPurple rounded-md outline-none text-sm text-gray-600 h-10 p-2"
                             />
                         </div>
+                        <div className="flex flex-col gap-1 relative">
+                            <label
+                            className={`absolute left-2 transition-all ease-out ${
+                                (inputCollege || selectedCollege) && (selectedCollege !== '' && selectedCollege !== '--Choose College--')
+                                ? 'top-0 text-[10px] text-primPurple'
+                                : 'top-3 text-xs text-gray-400'
+                            }`}
+                            style={{ pointerEvents: 'none' }}
+                            >
+                            College
+                            </label>
+                            <input
+                            type="text"
+                            value={selectedCollege}
+                            onChange={handleInputCollegeChange}
+                            className="border border-primPurple rounded-md outline-none text-sm text-gray-600 h-10 p-2"
+                            />
+                            <div
+                            className="absolute inset-y-0 right-0 pr-1 flex items-center text-primPurple cursor-pointer"
+                            onClick={() => setShowDropdown(!showDropdown)}
+                            >
+                            <RiArrowDropDownLine size={28} />
+                            </div>
+                            {showDropdown && (
+                            <div className="absolute h-[112px] overflow-y-auto mt-9 border border-primPurple rounded-md bg-white shadow-md z-10">
+                                {colleges.map((college) => (
+                                <CollegeOptions
+                                    key={college}
+                                    option={college}
+                                    onSelect={handleSelectCollege}
+                                />
+                                ))}
+                            </div>
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div className="flex flex-col items-center justify-center">
-                    <button className="bg-primPurple text-white font-semibold p-2 rounded-full w-[182px]">Sign Up</button>
+                    <button 
+                        className="bg-primPurple text-white font-semibold p-2 rounded-full w-[182px]"
+                        type="submit"
+                    >
+                        Sign Up
+                    </button>
                 </div>
             </div>
         </div>
