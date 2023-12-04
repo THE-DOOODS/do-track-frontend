@@ -1,6 +1,7 @@
 import Topbar from "../../components/Topbar";
 import Overviewbar from "../../components/Overviewbar";
 import Statistics from "../../components/Statistics";
+import StudentLists from "../../components/StudentLists";
 
 const Dashboard = () => { 
     return (
@@ -9,6 +10,7 @@ const Dashboard = () => {
             <Overviewbar />
             <hr />
             <Statistics />
+            <StudentLists />
         </div>
     );
 };

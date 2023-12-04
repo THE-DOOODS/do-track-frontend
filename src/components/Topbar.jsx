@@ -2,7 +2,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 
 const Topbar = () => {
     return (
-        <div className="flex items-center justify-between pb-10">
+        <div className="flex items-center justify-between pb-3">
             <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[116px]" />
             <div className="flex items-center gap-3">
                 <h1 className="">Overview</h1>
