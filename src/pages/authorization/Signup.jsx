@@ -63,13 +63,13 @@ const Signup = () => {
 
     return (
         <div className="flex flex-col justify-center items-center bg-gradient-to-b from-primPurple to-primOrange h-screen w-full">
-            <div className="flex flex-col gap-5 border rounded-lg bg-white p-8 px-12 shadow-xl">
+            <div className="flex flex-col gap-5 border rounded-xl bg-white p-8 px-12 shadow-xl">
                 <div className="flex flex-col items-center">
                     <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[136px] pb-6" />
                     <h1 className="text-primPurple text-4xl font-semibold">Create account.</h1>
                 </div>
                 <div className="flex flex-col items-start gap-2">
-                    <p className="text-gray-400 font-medium">Already registered? <a href="/login" className="text-primPurple"><u>Sign In</u></a></p>
+                    <p className="text-gray-400 text-sm font-medium">Already registered? <a href="/login" className="text-primPurple"><u>Sign In</u></a></p>
                     <div className="flex flex-col gap-4">
                         <div className="flex gap-2">
                             <div className="flex flex-col gap-1 relative">
