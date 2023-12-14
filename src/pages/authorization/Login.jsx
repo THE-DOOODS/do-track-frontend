@@ -36,6 +36,8 @@ const Login = () => {
 				setTimeout(() => {
 					navigator("/dashboard");
 				}, 3000)
+			} else {
+				console.log("Email or Password invalid!");
 			}
 		} catch (err) {
 			console.log(err);
