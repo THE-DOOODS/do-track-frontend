@@ -57,30 +57,26 @@ const Signup = () => {
 
     const handlecollegeChange = (e) => {
         setCollege(e.target.value);
-        if (e.target.value !== '--Choose College--') {
-            if (e.target.value === 'CCIS') {
-                setCollege("1");
-            } else if (e.target.value === 'CEGS') {
-                setCollege("2");
-            } else if (e.target.value === "CED") {
-                setCollege("3");
-            } else if (e.target.value === "CAA") {
-                setCollege("4");
-            } else if (e.target.value === "CMNS") {
-                setCollege("5");
-            } else if (e.target.value === "CHASS") {
-                setCollege("6");
-            } else if (e.target.value === "COFES") {
-                setCollege("7");
-            }
-        }  else {
-            console.log("Error");
-        }
     };
     
     const handleSelectCollege = (college) => {
         if (college !== '--Choose College--') {
-          setSelectedCollege(college);
+            setSelectedCollege(college);
+            if (college === 'CCIS') {
+                setCollege("1");
+            } else if (college === 'CEGS') {
+                setCollege("2");
+            } else if (college === "CED") {
+                setCollege("3");
+            } else if (college === "CAA") {
+                setCollege("4");
+            } else if (college === "CMNS") {
+                setCollege("5");
+            } else if (college === "CHASS") {
+                setCollege("6");
+            } else if (college === "COFES") {
+                setCollege("7");
+            }
         } else {
           setSelectedCollege('');
         }
@@ -112,10 +108,11 @@ const Signup = () => {
                 });
     
                 if (response.ok) {
+                    console.log("Success Registration");
                     setTimeout(() => {
-                        navigator("/dashboard");
+                        navigator("/login");
                     }, 3000)
-                } 
+                }
                 
             } catch (err) {
                 console.log(err);
@@ -125,11 +122,11 @@ const Signup = () => {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center bg-gradient-to-b from-primPurple to-primOrange h-screen w-full">
-            <div className="flex flex-col gap-5 border rounded-xl bg-white p-6 px-8 shadow-xl">
+        <div className="flex flex-col justify-center items-center bg-gradient-to-b from-primPurple to-primOrange h-screen w-full p-4">
+            <div className="flex flex-col gap-5 border rounded-xl bg-white p-4 lg:p-6 px-6 lg:px-8 shadow-xl w-auto">
                 <div className="flex flex-col items-center">
                     <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[136px] pb-2" />
-                    <h1 className="text-primPurple text-3xl font-semibold">Create Account</h1>
+                    <h1 className="text-primPurple text-xl md:text-3xl font-semibold">Create Account</h1>
                 </div>
                 <div className="flex flex-col items-start gap-1">
                     <div className="flex flex-col gap-3">
@@ -144,10 +141,11 @@ const Signup = () => {
                                     First name
                                 </label>
                                 <input
+                                    id='fname'
                                     type="text"
                                     value={first_name}
                                     onChange={handlefirst_nameChange}
-                                    className="border border-primPurple rounded-md outline-none text-sm text-gray-600 h-10 p-2"
+                                    className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
                                 />
                             </div>
                             <div className="flex flex-col gap-1 relative">
@@ -160,10 +158,11 @@ const Signup = () => {
                                     Last name
                                 </label>
                                 <input
+                                    id='fname'
                                     type="text"
                                     value={last_name}
                                     onChange={handlelast_nameChange}
-                                    className="border border-primPurple rounded-md outline-none text-sm text-gray-600 h-10 p-2"
+                                    className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
                                 />
                             </div>
                         </div>
@@ -177,11 +176,12 @@ const Signup = () => {
                                 Email
                             </label>
                             <input
+                                id='fname'
                                 type="text"
                                 value={email}
                                 onChange={handleemailChange}
                                 data-tooltip-id="emailTooltip"
-                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 h-10 p-2"
+                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
                             />
                            <Tooltip
                                 id="emailTooltip"
@@ -206,10 +206,11 @@ const Signup = () => {
                                 Student ID
                             </label>
                             <input
+                                id='fname'
                                 type="text"
                                 value={admin_id}
                                 onChange={handleInputadminIdChange}
-                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 h-10 p-2"
+                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
                             />
                         </div>
                         <div className="flex flex-col gap-1 relative">
@@ -222,10 +223,11 @@ const Signup = () => {
                                 Password
                             </label>
                             <input
+                                id='fname'
                                 type={type}
                                 value={password}
                                 onChange={handlepasswordChange}
-                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 h-10 p-2"
+                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
                             />
                             {type === "password" ? (
                                 <span
@@ -251,10 +253,11 @@ const Signup = () => {
                                 Confirm Password
                             </label>
                             <input
+                                id='fname'
                                 type={showCPassword ? "text" : "password"}
                                 value={inputCPass}
                                 onChange={handleInputCPassChange}
-                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 h-10 p-2"
+                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
                             />
                             <div
                                 className="absolute inset-y-0 right-0 pr-3 flex items-center text-primPurple cursor-pointer"
@@ -272,10 +275,11 @@ const Signup = () => {
                                 Position
                             </label>
                             <input
+                                id='fname'
                                 type="text"
                                 value={position}
                                 onChange={handlepositionChange}
-                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 h-10 p-2"
+                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
                             />
                         </div>
                         <div className="flex flex-col gap-1 relative">
@@ -290,10 +294,11 @@ const Signup = () => {
                             College
                             </label>
                             <input
-                            type="text"
-                            value={selectedCollege}
-                            onChange={handlecollegeChange}
-                            className="border border-primPurple rounded-md outline-none text-sm text-gray-600 h-10 p-2"
+                                id='fname'
+                                type="text"
+                                value={selectedCollege}
+                                onChange={handlecollegeChange}
+                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
                             />
                             <div
                             className="absolute inset-y-0 right-0 pr-1 flex items-center text-primPurple cursor-pointer"
@@ -314,12 +319,12 @@ const Signup = () => {
                             )}
                         </div>
                     </div>
-                    <p className="text-gray-400 text-sm">Already registered? <a href="/login" className="text-primPurple font-medium"><u>Sign In</u></a></p>
+                    <p className="text-gray-400 text-xs md:text-sm">Already registered? <a href="/login" className="text-primPurple font-medium"><u>Sign In</u></a></p>
                 </div>
                 <div className="flex flex-col items-center justify-center">
                     <button 
                         onClick={handleSignupRequest}
-                        className="bg-primPurple text-white font-semibold p-2 rounded-full w-[182px]"
+                        className="bg-primPurple text-white font-semibold p-2 rounded-full w-[102px] md:w-[142px] lg:w-[182px]"
                         type="submit"
                     >
                         Sign Up

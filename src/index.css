@@ -30,3 +30,9 @@
     overflow: hidden;
     transition: overflow 1s ease-in-out;
    }
+
+   @media (max-width: 600px) {
+    #fname {
+      width: 100%;
+    }
+  }

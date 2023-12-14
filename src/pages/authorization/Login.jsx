@@ -26,7 +26,7 @@ const Login = () => {
 
 			if (response.ok) {
 				const data = await response.json();
-				console.log(data)
+				console.log(data);
 				localStorage.setItem("admin_id", data.data?.admin?.admin_id);
 				localStorage.setItem("college_id", data.data?.admin?.college_id);
 				localStorage.setItem("email", data.data?.admin?.email);
@@ -45,29 +45,28 @@ const Login = () => {
 	};
 
 	return (
-		<div className="flex w-full h-screen justify-between">
-			<div className="flex justify-end items-end bg-gradient-to-b from-primPurple to-primOrange h-sreen w-full">
-				<img
-					src="./public/static/images/login_illustrator.png"
-					alt=""
-					className="w-[700px]"
-				/>
+		<div className="flex w-full h-screen items-center lg:items-end justify-center lg:justify-between bg-gradient-to-b from-primPurple to-primOrange md:bg-white">
+			<div className="lg:w-full hidden lg:flex justify-end items-end">
+				<img src="./public/static/images/login_illustrator.png" alt="" className="w-[700px]" />
 			</div>
-			<div className="flex flex-col justify-center w-full p-10">
-				<a href="/">
-					<IoClose className="absolute top-10 right-10 text-primPurple" size={32} />
-				</a>
-				<div className="flex items-end mt-10 mx-20">
-					<img src="/static/icons/Logo.png" alt="" className="w-[136px]" />
-					{/* <h1 className="font-extrabold text-2xl text-primPurple">o<span className="text-logoOrange">-TRACK</span></h1> */}
+			<div className="flex flex-col justify-between lg:justify-center w-[332px] lg:w-full h-[524px] lg:h-full rounded-lg lg:rounded-none p-5 lg:p-10 bg-white">
+				<div className="flex flex-row justify-between items-start mx-0 lg:mx-20">
+					<div>
+						<img src="/static/icons/Logo.png" alt="" className="w-[136px]" />
+					</div>
+					<div className="flex items-center">
+						<a href="/">
+						<IoClose className="text-primPurple" size={32} />
+						</a>
+					</div>
 				</div>
-				<div className="flex flex-col mx-20 gap-3 pt-6">
+				<div className="flex flex-col mx-0 lg:mx-20 gap-3 pt-6">
 					<h1 className="font-bold text-primPurple text-xl">Log in</h1>
 					<p className="text-gray-600">
 						Start managing attendees in the Do-Day event
 					</p>
 				</div>
-				<div className="flex flex-col mx-20 pt-4 gap-5">
+				<div className="flex flex-col mx-0 lg:mx-20 pt-4 gap-5">
 					<div className="flex flex-col gap-1">
 						<label className="text-gray-500 font-medium">Email</label>
 						<input
@@ -93,16 +92,16 @@ const Login = () => {
 						</div>
 					</div>
 				</div>
-				<div className="flex pt-4 gap-1 items-center mx-20 pb-2">
+				<div className="flex pt-4 gap-1 items-center mx-0 lg:mx-20 pb-2">
 					<input type="checkbox" />
-					<span className="text-gray-400">Remember me</span>
+					<span className="text-gray-400 text-xs lg:text-base">Remember me</span>
 				</div>
 				<button
 					onClick={handleLoginRequest}
-					className="bg-gradient-to-r from-primPurple to-primOrange text-white h-10 p-2 rounded-md mx-20">
+					className="bg-gradient-to-r from-primPurple to-primOrange text-white h-10 p-2 rounded-md mx-0 lg:mx-20">
 					Sign In
 				</button>
-				<p className="text-gray-500 mx-20 pt-2">
+				<p className="text-gray-500 mx-0 lg:mx-20 pt-2">
 					Don't have an account yet?{" "}
 					<a href="/signup">
 						<u className="text-primPurple font-medium">Sign up</u>

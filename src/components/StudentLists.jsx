@@ -2,6 +2,21 @@ import { TbClipboardList } from "react-icons/tb";
 import StudentStats from "./StudentStats";
 
 const StudentLists = () => {
+
+    const college_id = localStorage.getItem("college_id");
+
+    const handleStudentsRequest = async () => {
+        try {
+            let studsResponse = await fetch(`http://127.0.0.1:8000/api/attendance/attendance-by-college/${college_id}`, {
+                method: "GET",
+                headers: {"Content-Type": "application/json"},
+            });
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
+
     return (
         <div className="flex flex-col py-6 gap-3">
             <div className="flex items-center justify-between">
@@ -12,12 +27,12 @@ const StudentLists = () => {
                 <h1 className="cursor-pointer">All Students</h1>
                 <h1 className="cursor-pointer">Active Students</h1>
                 <h1 className="cursor-pointer">Inactive Students</h1>
-                <input type="text" placeholder="Search student" className="p-1 px-4 border rounded-full text-sm" />
+                {/* <input type="text" placeholder="Search student" className="p-1 px-4 border rounded-full text-sm" /> */}
             </div>
             <hr />
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                    <thead className="text-xs text-gray-700 uppercase ">
+                    <thead className="text-xs text-gray-700 uppercase bg-purple -200 bg-gray-200">
                         <tr>
                             <th scope="col" className="px-6 py-3">
                                 Student ID

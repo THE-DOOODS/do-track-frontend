@@ -1,6 +1,7 @@
 
 
 const StudentStats = () => {
+    
     return (
             <tr className="bg-white border-b hover:bg-gray-200 text-xs">
                 <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">

@@ -4,6 +4,9 @@ import { IoMdExit } from "react-icons/io";
 
 const Topbar = () => {
     const [menu, setMenu] = useState(false);
+    
+    const first_name = localStorage.getItem("first_name");
+    const last_name = localStorage.getItem("last_name");
 
     const toggleMenu = () => {
         setMenu(!menu);
@@ -13,7 +16,7 @@ const Topbar = () => {
         <div className="flex items-center justify-between pb-3">
             <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[116px]" />
             <div className="flex items-center gap-3">
-                <h1 className="">Overview</h1>
+                <h1 className="">{first_name} {last_name}</h1>
                 <div className="flex items-center gap-2 relative">
                     <div className="w-[32px] h-[32px] rounded-full bg-primPurple"></div>
                     <button
