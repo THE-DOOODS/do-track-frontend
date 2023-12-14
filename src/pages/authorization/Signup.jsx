@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
+import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Tooltip } from "react-tooltip";
 import CollegeOptions from '../../components/CollegeOptions';
@@ -8,6 +9,7 @@ const Signup = () => {
     const [inputFname, setInputFname] = useState('');
     const [inputLname, setInputLname] = useState('');
     const [inputEmail, setInputEmail] = useState('');
+    const [admin_id, setAdmin_id] = useState('');
     const [inputPass, setInputPass] = useState('');
     const [inputCPass, setInputCPass] = useState('');
     const [inputPosition, setInputPosition] = useState('');
@@ -30,6 +32,10 @@ const Signup = () => {
 
     const handleInputEmailChange = (e) => {
         setInputEmail(e.target.value);
+    };
+
+    const handleInputadminIdChange = (e) => {
+        setAdmin_id(e.target.value);
     };
 
     const handleInputPassChange = (e) => {
@@ -63,14 +69,13 @@ const Signup = () => {
 
     return (
         <div className="flex flex-col justify-center items-center bg-gradient-to-b from-primPurple to-primOrange h-screen w-full">
-            <div className="flex flex-col gap-5 border rounded-xl bg-white p-8 px-12 shadow-xl">
+            <div className="flex flex-col gap-5 border rounded-xl bg-white p-6 px-8 shadow-xl">
                 <div className="flex flex-col items-center">
-                    <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[136px] pb-6" />
-                    <h1 className="text-primPurple text-4xl font-semibold">Create account.</h1>
+                    <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[136px] pb-2" />
+                    <h1 className="text-primPurple text-3xl font-semibold">Create Account</h1>
                 </div>
-                <div className="flex flex-col items-start gap-2">
-                    <p className="text-gray-400 text-sm font-medium">Already registered? <a href="/login" className="text-primPurple"><u>Sign In</u></a></p>
-                    <div className="flex flex-col gap-4">
+                <div className="flex flex-col items-start gap-1">
+                    <div className="flex flex-col gap-3">
                         <div className="flex gap-2">
                             <div className="flex flex-col gap-1 relative">
                                 <label
@@ -137,6 +142,22 @@ const Signup = () => {
                         <div className="flex flex-col gap-1 relative">
                             <label
                                 className={`absolute left-2 transition-all ease-out ${
+                                admin_id ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
+                                }`}
+                                style={{ pointerEvents: 'none' }}
+                            >
+                                Student ID
+                            </label>
+                            <input
+                                type="text"
+                                value={admin_id}
+                                onChange={handleInputadminIdChange}
+                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 h-10 p-2"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-1 relative">
+                            <label
+                                className={`absolute left-2 transition-all ease-out ${
                                 inputPass ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
                                 }`}
                                 style={{ pointerEvents: 'none' }}
@@ -179,7 +200,7 @@ const Signup = () => {
                                 className="border border-primPurple rounded-md outline-none text-sm text-gray-600 h-10 p-2"
                             />
                             <div
-                                class="absolute inset-y-0 right-0 pr-3 flex items-center text-primPurple cursor-pointer"
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-primPurple cursor-pointer"
                                 onClick={() => setShowCPassword(!showCPassword)}>
                                 {showCPassword ? <PiEyeBold /> : <PiEyeClosedBold />}
                             </div>
@@ -236,6 +257,7 @@ const Signup = () => {
                             )}
                         </div>
                     </div>
+                    <p className="text-gray-400 text-sm">Already registered? <a href="/login" className="text-primPurple font-medium"><u>Sign In</u></a></p>
                 </div>
                 <div className="flex flex-col items-center justify-center">
                     <button 
