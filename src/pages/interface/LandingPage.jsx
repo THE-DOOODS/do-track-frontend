@@ -16,7 +16,7 @@ const LandingPage = () => {
                 </div>
             </div>
             <img
-                src="./public/static/images/ScannerMockUp.png"
+                src="/static/images/ScannerMockUp.png"
                 alt=""
                 className="h-[422px] absolute -rotate-12 -translate-x-80 hidden lg:block"
             />
