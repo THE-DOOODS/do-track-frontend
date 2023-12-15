@@ -5,6 +5,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { Tooltip } from "react-tooltip";
 import CollegeOptions from '../../components/CollegeOptions';
 import { useNavigate } from 'react-router';
+import { Toaster, toast } from 'sonner';
 
 const Signup = () => {
     const [first_name, setFirst_name] = useState('');
@@ -109,6 +110,7 @@ const Signup = () => {
     
                 if (response.ok) {
                     console.log("Success Registration");
+                    toast.success('Account Created')
                     setTimeout(() => {
                         navigator("/login");
                     }, 3000)
@@ -123,6 +125,7 @@ const Signup = () => {
 
     return (
         <div className="flex flex-col justify-center items-center bg-gradient-to-b from-primPurple to-primOrange h-screen w-full p-4">
+            <Toaster richColors />
             <div className="flex flex-col gap-5 border rounded-xl bg-white p-4 lg:p-6 px-6 lg:px-8 shadow-xl w-auto">
                 <div className="flex flex-col items-center">
                     <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[136px] pb-2" />

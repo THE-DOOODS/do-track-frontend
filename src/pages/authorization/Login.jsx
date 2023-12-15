@@ -47,7 +47,7 @@ const Login = () => {
 	return (
 		<div className="flex w-full h-screen items-center lg:items-end justify-center lg:justify-between bg-gradient-to-b from-primPurple to-primOrange md:bg-white">
 			<div className="lg:w-full hidden lg:flex justify-end items-end">
-				<img src="./public/static/images/login_illustrator.png" alt="" className="w-[700px]" />
+				<img src="/static/images/login_illustrator.png" alt="" className="w-[700px]" />
 			</div>
 			<div className="flex flex-col justify-between lg:justify-center w-[332px] lg:w-full h-[524px] lg:h-full rounded-lg lg:rounded-none p-5 lg:p-10 bg-white">
 				<div className="flex flex-row justify-between items-start mx-0 lg:mx-20">
