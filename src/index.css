@@ -32,7 +32,7 @@
    }
 
    @media (max-width: 600px) {
-    #fname, #lname, #email, #studid, #pass, #cpass, #position, #college {
+    #fname {
       width: 100%;
     }
   }
