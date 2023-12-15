@@ -125,7 +125,7 @@ const Signup = () => {
         <div className="flex flex-col justify-center items-center bg-gradient-to-b from-primPurple to-primOrange h-screen w-full p-4">
             <div className="flex flex-col gap-5 border rounded-xl bg-white p-4 lg:p-6 px-6 lg:px-8 shadow-xl w-auto">
                 <div className="flex flex-col items-center">
-                    <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[136px] pb-2" />
+                    <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[166px] pb-2" />
                     <h1 className="text-primPurple text-xl md:text-3xl font-semibold">Create Account</h1>
                 </div>
                 <div className="flex flex-col items-start gap-1">
