@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
 import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Tooltip } from "react-tooltip";
 import CollegeOptions from '../../components/CollegeOptions';
 import { useNavigate } from 'react-router';
+import { Toaster, toast } from 'sonner';
+import LoadingBar from 'react-top-loading-bar';
 
 const Signup = () => {
     const [first_name, setFirst_name] = useState('');
@@ -18,7 +20,7 @@ const Signup = () => {
     const [showCPassword, setShowCPassword] = useState(false);
 
     const colleges = ['--Choose College--', 'CCIS', 'CEGS', 'CED', 'CAA', 'CMNS', 'CHASS', 'COFES'];
-    
+    const emailRegex = /^[a-zA-Z0-9._-]+@carsu\.edu\.ph$/;
 
     const [selectedCollege, setSelectedCollege] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
@@ -26,6 +28,7 @@ const Signup = () => {
     const [type, setType] = useState("password");
 
     const navigator = useNavigate();
+    const loadingBar = useRef(null);
   
     const handlefirst_nameChange = (e) => {
         setFirst_name(e.target.value);
@@ -83,12 +86,30 @@ const Signup = () => {
         setShowDropdown(false);
     };
 
-    const handleSignupRequest = async (e) => {
+    const handleSignupRequest = async (event) => {
 
-        e.preventDefault();
+        event.preventDefault();
 
-        if (password !== inputCPass) {
-            console.log("Password not matched!");
+        if (first_name === "") {
+            toast.error('First name required')
+        } else if (last_name === "") {
+            toast.error('Last name required')
+        } else if (email === "") {
+            toast.error('Email required')
+        } else if (admin_id === "") {
+            toast.error('Student ID required')
+        } else if (password === "") {
+            toast.error('Password required')
+        } else if (inputCPass === "") {
+            toast.error('Confirm password required')
+        } else if (position === "") {
+            toast.error('Position required')
+        } else if (college === "") {
+            toast.error('College required')
+        } else if (email !== "" && !emailRegex.test(email)) {
+            toast.error('Please use university email')
+        } else  if (password !== inputCPass) {
+            toast.error('Password not matched!');
         } else {
             try {
                 let response = await fetch("https://do-track-backend-production.up.railway.app/api/register", {
@@ -108,13 +129,20 @@ const Signup = () => {
                 });
     
                 if (response.ok) {
-                    console.log("Success Registration");
+                    toast.success('Success Registration');
+                    loadingBar.current.continuous(60);
                     setTimeout(() => {
-                        navigator("/login");
-                    }, 3000)
+                        loadingBar.current.complete();
+                        setTimeout(() => {
+                            navigator("/login");
+                        }, 1200);
+                    }, 1000);
+                } else {
+                    toast.error('Email already in use');
                 }
                 
             } catch (err) {
+                toast.warning('Internal Server Error');
                 console.log(err);
             }
         }
@@ -123,6 +151,8 @@ const Signup = () => {
 
     return (
         <div className="flex flex-col justify-center items-center bg-gradient-to-b from-primPurple to-primOrange h-screen w-full p-4">
+            <Toaster richColors />
+            <LoadingBar height={7} color='#4ab516' ref={loadingBar} />
             <div className="flex flex-col gap-5 border rounded-xl bg-white p-4 lg:p-6 px-6 lg:px-8 shadow-xl w-auto">
                 <div className="flex flex-col items-center">
                     <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[166px] pb-2" />
