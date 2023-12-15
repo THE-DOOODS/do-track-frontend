@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
 import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine } from "react-icons/ri";
@@ -6,8 +6,6 @@ import { Tooltip } from "react-tooltip";
 import CollegeOptions from '../../components/CollegeOptions';
 import { useNavigate } from 'react-router';
 import { Toaster, toast } from 'sonner';
-import LoadingBar from 'react-top-loading-bar';
-
 
 const Signup = () => {
     const [first_name, setFirst_name] = useState('');
@@ -20,10 +18,7 @@ const Signup = () => {
     const [college, setCollege] = useState('');
     const [showCPassword, setShowCPassword] = useState(false);
 
-    const loadingBar = useRef(null);
-
     const colleges = ['--Choose College--', 'CCIS', 'CEGS', 'CED', 'CAA', 'CMNS', 'CHASS', 'COFES'];
-    const emailRegex = /^[a-zA-Z0-9._-]+@carsu\.edu\.ph$/;
     
 
     const [selectedCollege, setSelectedCollege] = useState('');
@@ -93,26 +88,8 @@ const Signup = () => {
 
         e.preventDefault();
 
-        if (first_name === "") {
-            toast.error('First name required')
-        } else if (last_name === "") {
-            toast.error('Last name require')
-        } else if (email === "") {
-            toast.error('Email required')
-        } else if (admin_id === "") {
-            toast.error('Student ID required')
-        } else if (password === "") {
-            toast.error('Password required')
-        } else if (inputCPass === "") {
-            toast.error('Confirm password required')
-        } else if (position === "") {
-            toast.error('Position is require')
-        } else if (college === "") {
-            toast.error('College is required')
-        } else if (password !== inputCPass) {
-            toast.error('Password not matched');
-        } else if (email !== "" && !emailRegex.test(email)) {
-            toast.error('Must use university email')
+        if (password !== inputCPass) {
+            console.log("Password not matched!");
         } else {
             try {
                 let response = await fetch("https://do-track-backend-production.up.railway.app/api/register", {
@@ -132,16 +109,11 @@ const Signup = () => {
                 });
     
                 if (response.ok) {
-                    loadingBar.current.continuousStart(60);
-                    toast.success('Account Created');
+                    console.log("Success Registration");
+                    toast.success('Account Created')
                     setTimeout(() => {
-                        loadingBar.current.complete();
-                        setTimeout(() => {
-                            navigator("/login");
-                        }, 1200);
-                    }, 1000);
-                } else {
-                    toast.error('Email already in use');
+                        navigator("/login");
+                    }, 3000)
                 }
                 
             } catch (err) {
@@ -153,12 +125,11 @@ const Signup = () => {
 
     return (
         <div className="flex flex-col justify-center items-center bg-gradient-to-b from-primPurple to-primOrange h-screen w-full p-4">
-            <LoadingBar height={6} color='#4AB516' ref={loadingBar} />
             <Toaster richColors />
             <div className="flex flex-col gap-5 border rounded-xl bg-white p-4 lg:p-6 px-6 lg:px-8 shadow-xl w-auto">
                 <div className="flex flex-col items-center">
-                    <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[166px] pb-2" />
-                    <h1 className="text-primPurple text-xl md:text-2xl font-semibold">Create Account</h1>
+                    <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[136px] pb-2" />
+                    <h1 className="text-primPurple text-xl md:text-3xl font-semibold">Create Account</h1>
                 </div>
                 <div className="flex flex-col items-start gap-1">
                     <div className="flex flex-col gap-3">
@@ -190,7 +161,7 @@ const Signup = () => {
                                     Last name
                                 </label>
                                 <input
-                                    id='lname'
+                                    id='fname'
                                     type="text"
                                     value={last_name}
                                     onChange={handlelast_nameChange}
@@ -208,7 +179,7 @@ const Signup = () => {
                                 Email
                             </label>
                             <input
-                                id='email'
+                                id='fname'
                                 type="text"
                                 value={email}
                                 onChange={handleemailChange}
@@ -238,7 +209,7 @@ const Signup = () => {
                                 Student ID
                             </label>
                             <input
-                                id='studid'
+                                id='fname'
                                 type="text"
                                 value={admin_id}
                                 onChange={handleInputadminIdChange}
@@ -255,7 +226,7 @@ const Signup = () => {
                                 Password
                             </label>
                             <input
-                                id='pass'
+                                id='fname'
                                 type={type}
                                 value={password}
                                 onChange={handlepasswordChange}
@@ -285,7 +256,7 @@ const Signup = () => {
                                 Confirm Password
                             </label>
                             <input
-                                id='cpass'
+                                id='fname'
                                 type={showCPassword ? "text" : "password"}
                                 value={inputCPass}
                                 onChange={handleInputCPassChange}
@@ -307,7 +278,7 @@ const Signup = () => {
                                 Position
                             </label>
                             <input
-                                id='position'
+                                id='fname'
                                 type="text"
                                 value={position}
                                 onChange={handlepositionChange}
@@ -326,7 +297,7 @@ const Signup = () => {
                             College
                             </label>
                             <input
-                                id='college'
+                                id='fname'
                                 type="text"
                                 value={selectedCollege}
                                 onChange={handlecollegeChange}
