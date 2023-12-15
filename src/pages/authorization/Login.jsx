@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router";
+import { Toaster, toast } from 'sonner';
+import LoadingBar from 'react-top-loading-bar';
 
 const Login = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -9,43 +11,64 @@ const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
+	const emailRegex = /^[a-zA-Z0-9._-]+@carsu\.edu\.ph$/;
+
 	const navigator = useNavigate();
+	const loadingBar = useRef(null);
 
-	const handleLoginRequest = async () => {
-		try {
-			let response = await fetch("https://do-track-backend-production.up.railway.app/api/login", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					email,
-					password,
-				}),
-			});
+	const handleLoginRequest = async (event) => {
+		event.preventDefault();
 
-			if (response.ok) {
-				const data = await response.json();
-				console.log(data);
-				localStorage.setItem("admin_id", data.data?.admin?.admin_id);
-				localStorage.setItem("college_id", data.data?.admin?.college_id);
-				localStorage.setItem("email", data.data?.admin?.email);
-				localStorage.setItem("first_name", data.data?.admin?.first_name);
-				localStorage.setItem("last_name", data.data?.admin?.last_name);
-				localStorage.setItem("position", data.data?.admin?.position);
-				setTimeout(() => {
-					navigator("/dashboard");
-				}, 3000)
-			} else {
-				console.log("Email or Password invalid!");
+		if (email === "") {
+			toast.error('Email is required')
+		} else if (password === "") {
+			toast.error('Password is required')
+		} else if (email !== "" && !emailRegex.test(email)) {
+			toast.error('Please use university email')
+		} else {
+			try {
+				let response = await fetch("https://do-track-backend-production.up.railway.app/api/login", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						email,
+						password,
+					}),
+				});
+	
+				if (response.ok) {
+					const data = await response.json();
+					console.log(data);
+					localStorage.setItem("admin_id", data.data?.admin?.admin_id);
+					localStorage.setItem("college_id", data.data?.admin?.college_id);
+					localStorage.setItem("email", data.data?.admin?.email);
+					localStorage.setItem("first_name", data.data?.admin?.first_name);
+					localStorage.setItem("last_name", data.data?.admin?.last_name);
+					localStorage.setItem("position", data.data?.admin?.position);
+	
+					loadingBar.current.continuous(60);
+					setTimeout(() => {
+						loadingBar.current.complete();
+						setTimeout(() => {
+							navigator("/dashboard");
+						}, 1200)
+					},1000);
+				} else {
+					toast.error('Email or Password invalid');
+				}
+			} catch (err) {
+				toast.warning('Internal Server Error')
+				console.log(err);
 			}
-		} catch (err) {
-			console.log(err);
 		}
 	};
 
 	return (
 		<div className="flex w-full h-screen items-center lg:items-end justify-center lg:justify-between bg-gradient-to-b from-primPurple to-primOrange md:bg-white">
+			<LoadingBar height={7} color="#4ab516" ref={loadingBar} />
+			<Toaster richColors />
 			<div className="lg:w-full hidden lg:flex justify-end items-end">
 				<img src="/static/images/login_illustrator.png" alt="" className="w-[700px]" />
 			</div>
