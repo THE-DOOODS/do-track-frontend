@@ -158,7 +158,7 @@ const Signup = () => {
                                     Last name
                                 </label>
                                 <input
-                                    id='fname'
+                                    id='lname'
                                     type="text"
                                     value={last_name}
                                     onChange={handlelast_nameChange}
@@ -176,7 +176,7 @@ const Signup = () => {
                                 Email
                             </label>
                             <input
-                                id='fname'
+                                id='email'
                                 type="text"
                                 value={email}
                                 onChange={handleemailChange}
@@ -206,7 +206,7 @@ const Signup = () => {
                                 Student ID
                             </label>
                             <input
-                                id='fname'
+                                id='studid'
                                 type="text"
                                 value={admin_id}
                                 onChange={handleInputadminIdChange}
@@ -223,7 +223,7 @@ const Signup = () => {
                                 Password
                             </label>
                             <input
-                                id='fname'
+                                id='pass'
                                 type={type}
                                 value={password}
                                 onChange={handlepasswordChange}
@@ -253,7 +253,7 @@ const Signup = () => {
                                 Confirm Password
                             </label>
                             <input
-                                id='fname'
+                                id='cpass'
                                 type={showCPassword ? "text" : "password"}
                                 value={inputCPass}
                                 onChange={handleInputCPassChange}
@@ -275,7 +275,7 @@ const Signup = () => {
                                 Position
                             </label>
                             <input
-                                id='fname'
+                                id='position'
                                 type="text"
                                 value={position}
                                 onChange={handlepositionChange}
@@ -294,7 +294,7 @@ const Signup = () => {
                             College
                             </label>
                             <input
-                                id='fname'
+                                id='college'
                                 type="text"
                                 value={selectedCollege}
                                 onChange={handlecollegeChange}
