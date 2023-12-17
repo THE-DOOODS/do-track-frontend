@@ -19,6 +19,15 @@ const Signup = () => {
     const [college, setCollege] = useState('');
     const [showCPassword, setShowCPassword] = useState(false);
 
+    const [fnameError, setFnameError] = useState(false);
+	const [lnameError, setLnameError] = useState(false);
+	const [emailError, setEmailError] = useState(false);
+	const [idError, setIdError] = useState(false);
+	const [passError, setPassError] = useState(false);
+	const [cPassError, setCPassError] = useState(false);
+	const [positionError, setPositionError] = useState(false);
+	const [collegeError, setCollegeError] = useState(false);
+
     const colleges = ['--Choose College--', 'CCIS', 'CEGS', 'CED', 'CAA', 'CMNS', 'CHASS', 'COFES'];
     const emailRegex = /^[a-zA-Z0-9._-]+@carsu\.edu\.ph$/;
 
@@ -90,21 +99,31 @@ const Signup = () => {
 
         event.preventDefault();
 
+        setFnameError(false);
+		setLnameError(false);
+		setEmailError(false);
+		setIdError(false);
+		setPassError(false);
+		setCPassError(false);
+		setPositionError(false);
+		setCollegeError(false);
+
         const fields = [
-            {value: college, message: "College is required"},
-            {value: position, message: "Position is required"},
-            {value: inputCPass, message: "Confirm Password is required"},
-            {value: password, message: "Password is required"},
-            {value: admin_id, message: "Student ID is required"},
-            {value: email, message: "Email is required"},
-            {value: last_name, message: "Last name is required"},
-            {value: first_name, message: "First name is required"},
+            {value: college, setError: setCollegeError, message: "College is required"},
+            {value: position, setError: setPositionError, message: "Position is required"},
+            {value: inputCPass, setError: setCPassError, message: "Confirm Password is required"},
+            {value: password, setError: setPassError, message: "Password is required"},
+            {value: admin_id, setError: setIdError, message: "Student ID is required"},
+            {value: email, setError: setEmailError, message: "Email is required"},
+            {value: last_name, setError: setLnameError, message: "Last name is required"},
+            {value: first_name, setError: setFnameError, message: "First name is required"},
        ];
 
        let isValid = true;
 
        fields.forEach((field) => {
         if (field.value === "") {
+            field.setError(true);
             toast.error(field.message);
             isValid = false;
         }
@@ -130,10 +149,16 @@ const Signup = () => {
         // } else 
 
         if (isValid) {
-            if (email !== "" && !emailRegex.test(email)) {
+            if (!(password.length >= 8)) {
+                toast.error('Password must be at least 8 characters');
+                setPassError(true);
+            } else if (email !== "" && !emailRegex.test(email)) {
                 toast.error('Please use university email')
+                setEmailError(true);
             } else if (password !== inputCPass) {
                 toast.error('Password not matched!');
+                setPassError(true);
+                setCPassError(true);
             } else {
                 try {
                     let response = await fetch("https://do-track-backend-production.up.railway.app/api/register", {
@@ -176,7 +201,7 @@ const Signup = () => {
 
     return (
         <div className="flex flex-col justify-center items-center bg-gradient-to-b from-primPurple to-primOrange h-screen w-full p-4">
-            <Toaster position='top-center' closeButton richColors />
+            <Toaster position='top-right' closeButton richColors />
             <LoadingBar height={7} color='#4ab516' ref={loadingBar} />
             <div className="flex flex-col gap-5 border rounded-xl bg-white p-4 lg:p-6 px-6 lg:px-8 shadow-xl w-auto">
                 <div className="flex flex-col items-center">
@@ -200,7 +225,11 @@ const Signup = () => {
                                     type="text"
                                     value={first_name}
                                     onChange={handlefirst_nameChange}
-                                    className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                    className={` ${ 
+                                        fnameError 
+                                            ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                            : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                    }`}
                                 />
                             </div>
                             <div className="flex flex-col gap-1 relative">
@@ -217,7 +246,11 @@ const Signup = () => {
                                     type="text"
                                     value={last_name}
                                     onChange={handlelast_nameChange}
-                                    className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                    className={` ${ 
+                                        lnameError 
+                                            ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                            : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                    }`}
                                 />
                             </div>
                         </div>
@@ -236,7 +269,11 @@ const Signup = () => {
                                 value={email}
                                 onChange={handleemailChange}
                                 data-tooltip-id="emailTooltip"
-                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                className= {`${
+                                    emailError
+                                        ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                        : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                }`}
                             />
                            <Tooltip
                                 id="emailTooltip"
@@ -266,7 +303,11 @@ const Signup = () => {
                                 value={admin_id}
                                 onChange={handleInputadminIdChange}
                                 data-tooltip-id="IDTooltip"
-                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                className={`${
+                                    idError
+                                        ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                        : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                }`}
                             />
                             <Tooltip
                                 id="IDTooltip"
@@ -295,7 +336,11 @@ const Signup = () => {
                                 type={type}
                                 value={password}
                                 onChange={handlepasswordChange}
-                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                className={`${
+                                    passError
+                                        ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                        : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                }`}
                             />
                             {type === "password" ? (
                                 <span
@@ -325,7 +370,11 @@ const Signup = () => {
                                 type={showCPassword ? "text" : "password"}
                                 value={inputCPass}
                                 onChange={handleInputCPassChange}
-                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                className={`${
+                                    cPassError
+                                        ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                        : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                }`}
                             />
                             <div
                                 className="absolute inset-y-0 right-0 pr-3 flex items-center text-primPurple cursor-pointer"
@@ -347,7 +396,11 @@ const Signup = () => {
                                 type="text"
                                 value={position}
                                 onChange={handlepositionChange}
-                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                className={`${
+                                    positionError
+                                        ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                        : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                }`}
                             />
                         </div>
                         <div className="flex flex-col gap-1 relative">
@@ -366,7 +419,11 @@ const Signup = () => {
                                 type="text"
                                 value={selectedCollege}
                                 onChange={handlecollegeChange}
-                                className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                className={`${
+                                    collegeError
+                                        ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                        : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                }`}
                             />
                             <div
                             className="absolute inset-y-0 right-0 pr-1 flex items-center text-primPurple cursor-pointer"

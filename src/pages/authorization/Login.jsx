@@ -11,6 +11,9 @@ const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
+	const [emailError, setEmailError] = useState(false);
+	const [passError, setPassError] = useState(false);
+
 	const emailRegex = /^[a-zA-Z0-9._-]+@carsu\.edu\.ph$/;
 
 	const navigator = useNavigate();
@@ -19,15 +22,19 @@ const Login = () => {
 	const handleLoginRequest = async (event) => {
 		event.preventDefault();
 
+		setEmailError(false);
+		setPassError(false);
+
 		const fields = [
-			{value: password, message: "Password is required"},
-			{value: email, message: "Email is required"},
+			{value: password, setError: setPassError, message: "Password is required"},
+			{value: email, setError: setEmailError, message: "Email is required"},
 		];
 
 		let isValid = true;
 
 		fields.forEach((field) => {
 			if (field.value === "") {
+				field.setError(true);
 				toast.error(field.message);
 				isValid = false;
 			}
@@ -42,6 +49,7 @@ const Login = () => {
 		if (isValid) {
 			if (email !== "" && !emailRegex.test(email)) {
 				toast.error('Please use university email')
+				setEmailError(true);
 			} else {
 				try {
 					let response = await fetch("https://do-track-backend-production.up.railway.app/api/login", {
@@ -73,7 +81,17 @@ const Login = () => {
 							}, 1200)
 						},1000);
 					} else {
-						toast.error('Email or Password invalid');
+						if (response.status === 400) {
+							const data = await response.json();
+							if (data.message === "User does not exist") {
+								setEmailError(true);
+								toast.error('User does not exist');
+							}
+							if (data.message === "Wrong password") {
+								setPassError(true);
+								toast.error('Incorrect password')
+							}
+						}
 					}
 				} catch (err) {
 					toast.warning('Internal Server Error')
@@ -109,22 +127,42 @@ const Login = () => {
 				</div>
 				<div className="flex flex-col mx-0 lg:mx-20 pt-4 gap-5">
 					<div className="flex flex-col gap-1">
-						<label className="text-gray-500 font-medium">Email</label>
+						<label className={`${
+							emailError
+								? "text-red-500 font-medium"
+								: "text-gray-500 font-medium"
+						}`}>
+							Email
+						</label>
 						<input
 							type="text"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							placeholder="sample@carsu.edu.ph"
-							className="border border-gray-300 rounded-md border-l-primPurple text-gray-600 border-l-[12px] outline-none h-10 p-2"
+							className={`${
+								emailError
+									? "border border-red-500 rounded-md border-l-red-500 text-gray-600 border-l-[12px] outline-none h-10 p-2"
+									: "border border-gray-300 rounded-md border-l-primPurple text-gray-600 border-l-[12px] outline-none h-10 p-2"
+							}`}
 						/>
 					</div>
 					<div className="flex flex-col gap-1 relative">
-						<label className="text-gray-500 font-medium">Password</label>
+						<label className={`${
+							passError
+								? "text-red-500 font-medium"
+								: "text-gray-500 font-medium"
+						}`}>
+							Password
+						</label>
 						<input
 							type={showPassword ? "text" : "password"}
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
-							className="border border-gray-300 rounded-md border-l-primPurple text-gray-600 border-l-[12px] outline-none h-10 p-2"
+							className={`${
+								passError
+									? "border border-red-500 rounded-md border-l-red-500 text-gray-600 border-l-[12px] outline-none h-10 p-2"
+									: "border border-gray-300 rounded-md border-l-primPurple text-gray-600 border-l-[12px] outline-none h-10 p-2"
+							}`}
 						/>
 						<div
 							className="absolute inset-y-10 right-0 pr-3 items-center text-primPurple cursor-pointer"
