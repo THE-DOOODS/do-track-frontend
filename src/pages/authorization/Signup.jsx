@@ -165,6 +165,7 @@ const Signup = () => {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
+                            Accept: "application/json",
                         },
                         body: JSON.stringify({
                             admin_id,
@@ -179,7 +180,7 @@ const Signup = () => {
         
                     const data = await response.json();
                     console.log(data);
-                    
+
                     if (response.ok) {
                         toast.success('Success Registration');
                         loadingBar.current.continuousStart(60);
