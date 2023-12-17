@@ -90,60 +90,85 @@ const Signup = () => {
 
         event.preventDefault();
 
-        if (first_name === "") {
-            toast.error('First name required')
-        } else if (last_name === "") {
-            toast.error('Last name required')
-        } else if (email === "") {
-            toast.error('Email required')
-        } else if (admin_id === "") {
-            toast.error('Student ID required')
-        } else if (password === "") {
-            toast.error('Password required')
-        } else if (inputCPass === "") {
-            toast.error('Confirm password required')
-        } else if (position === "") {
-            toast.error('Position required')
-        } else if (college === "") {
-            toast.error('College required')
-        } else if (email !== "" && !emailRegex.test(email)) {
-            toast.error('Please use university email')
-        } else  if (password !== inputCPass) {
-            toast.error('Password not matched!');
-        } else {
-            try {
-                let response = await fetch("https://do-track-backend-production.up.railway.app/api/register", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        admin_id,
-                        first_name,
-                        last_name,
-                        email,
-                        password,
-                        position,
-                        college,
-                    }),
-                });
-    
-                if (response.ok) {
-                    toast.success('Success Registration');
-                    loadingBar.current.continuous(60);
-                    setTimeout(() => {
-                        loadingBar.current.complete();
+        const fields = [
+            {value: college, message: "College is required"},
+            {value: position, message: "Position is required"},
+            {value: inputCPass, message: "Confirm Password is required"},
+            {value: password, message: "Password is required"},
+            {value: admin_id, message: "Student ID is required"},
+            {value: email, message: "Email is required"},
+            {value: last_name, message: "Last name is required"},
+            {value: first_name, message: "First name is required"},
+       ];
+
+       let isValid = true;
+
+       fields.forEach((field) => {
+        if (field.value === "") {
+            toast.error(field.message);
+            isValid = false;
+        }
+       });
+
+
+        // if (first_name === "") {
+        //     toast.error('First name required')
+        // } else if (last_name === "") {
+        //     toast.error('Last name required')
+        // } else if (email === "") {
+        //     toast.error('Email required')
+        // } else if (admin_id === "") {
+        //     toast.error('Student ID required')
+        // } else if (password === "") {
+        //     toast.error('Password required')
+        // } else if (inputCPass === "") {
+        //     toast.error('Confirm password required')
+        // } else if (position === "") {
+        //     toast.error('Position required')
+        // } else if (college === "") {
+        //     toast.error('College required')
+        // } else 
+
+        if (isValid) {
+            if (email !== "" && !emailRegex.test(email)) {
+                toast.error('Please use university email')
+            } else if (password !== inputCPass) {
+                toast.error('Password not matched!');
+            } else {
+                try {
+                    let response = await fetch("https://do-track-backend-production.up.railway.app/api/register", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            admin_id,
+                            first_name,
+                            last_name,
+                            email,
+                            password,
+                            position,
+                            college,
+                        }),
+                    });
+        
+                    if (response.ok) {
+                        toast.success('Success Registration');
+                        loadingBar.current.continuousStart(60);
                         setTimeout(() => {
-                            navigator("/login");
-                        }, 1200);
-                    }, 1000);
-                } else {
-                    toast.error('Email already in use');
+                            loadingBar.current.complete();
+                            setTimeout(() => {
+                                navigator("/login");
+                            }, 1200);
+                        }, 1000);
+                    } else {
+                        toast.error('Email already in use');
+                    }
+                    
+                } catch (err) {
+                    toast.warning('Internal Server Error');
+                    console.log(err);
                 }
-                
-            } catch (err) {
-                toast.warning('Internal Server Error');
-                console.log(err);
             }
         }
 
@@ -151,7 +176,7 @@ const Signup = () => {
 
     return (
         <div className="flex flex-col justify-center items-center bg-gradient-to-b from-primPurple to-primOrange h-screen w-full p-4">
-            <Toaster richColors />
+            <Toaster position='top-center' closeButton richColors />
             <LoadingBar height={7} color='#4ab516' ref={loadingBar} />
             <div className="flex flex-col gap-5 border rounded-xl bg-white p-4 lg:p-6 px-6 lg:px-8 shadow-xl w-auto">
                 <div className="flex flex-col items-center">
@@ -215,7 +240,7 @@ const Signup = () => {
                             />
                            <Tooltip
                                 id="emailTooltip"
-                                place="right"
+                                place="bottom"
                                 className="z-20"
                                 border="1px solid #5A5DFA"
                                 // style={{ background: "linear-gradient(to bottom, #AD31C1, #E7A557)" }}
@@ -240,8 +265,21 @@ const Signup = () => {
                                 type="text"
                                 value={admin_id}
                                 onChange={handleInputadminIdChange}
+                                data-tooltip-id="IDTooltip"
                                 className="border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
                             />
+                            <Tooltip
+                                id="IDTooltip"
+                                place="bottom"
+                                className="z-20"
+                                border="1px solid #5A5DFA"
+                                // style={{ background: "linear-gradient(to bottom, #AD31C1, #E7A557)" }}
+                                style={{background:"white"}}
+                                >
+                                <div className="text-xs text-black">
+                                    <h1>e.g. 211-00000</h1>
+                                </div>
+                            </Tooltip>
                         </div>
                         <div className="flex flex-col gap-1 relative">
                             <label
