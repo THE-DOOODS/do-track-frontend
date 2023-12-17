@@ -1,21 +1,34 @@
 import { TbClipboardList } from "react-icons/tb";
 import StudentStats from "./StudentStats";
+import { useState, useEffect } from "react";
 
 const StudentLists = () => {
-
     const college_id = localStorage.getItem("college_id");
 
-    const handleStudentsRequest = async () => {
-        try {
-            let studsResponse = await fetch(`http://127.0.0.1:8000/api/attendance/attendance-by-college/${college_id}`, {
-                method: "GET",
-                headers: {"Content-Type": "application/json"},
-            });
-        } catch (err) {
-            console.log(err);
-        }
+    const [collegeAttend, setCollegeAttend] = useState([]);
 
-    }
+    const handleAttendCollegeRequest = async () => {
+        try {
+            let response = await fetch(`http://do-track-backend-production.up.railway.app/api/attendance/attendance-by-college/${college_id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setCollegeAttend(data?.data);
+            }
+        } catch (err) {
+            console.log("Unable to fetch attendance by college");
+        }
+    };
+
+    useEffect(() => {
+        handleAttendCollegeRequest();
+    }, [])
 
     return (
         <div className="flex flex-col py-4 gap-3">
@@ -64,10 +77,7 @@ const StudentLists = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <StudentStats />
-                        <StudentStats />
-                        <StudentStats />
-                        <StudentStats />
+                        <StudentStats collegeAttend={collegeAttend} />
                     </tbody>
                 </table>
             </div>

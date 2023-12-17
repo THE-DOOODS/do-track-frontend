@@ -32,7 +32,7 @@ const Dashboard = () => {
      
     useEffect(() => {
         handleCollegeRequest();
-    },[]);
+    }, []);
 
     return (
         <div className="flex flex-col mt-20 py-6 px-16">

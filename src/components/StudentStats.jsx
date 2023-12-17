@@ -1,7 +1,14 @@
+import { useEffect, useState } from "react";
 
 
-const StudentStats = () => {
+const StudentStats = ({collegeAttend}) => {
     
+    const [attendData, setAttendData] = useState([]);
+
+    useEffect(() => {
+        setAttendData(collegeAttend);
+    }, [collegeAttend]);
+
     return (
             <tr className="bg-white border-b hover:bg-gray-200 text-xs">
                 <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
