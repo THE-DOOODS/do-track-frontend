@@ -210,246 +210,246 @@ const Signup = () => {
                     <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[166px] pb-2" />
                     <h1 className="text-primPurple text-xl md:text-3xl font-semibold">Create Account</h1>
                 </div>
-                <form>
                     <div className="flex flex-col items-start gap-1">
-                        <div className="flex flex-col gap-3">
-                            <div className="flex gap-2">
-                                <div className="flex flex-col gap-1 relative">
-                                    <label
-                                        className={`absolute items-center left-2 transition-all ease-out ${
-                                        first_name ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
-                                        }`}
-                                        style={{ pointerEvents: 'none' }}
-                                    >
-                                        First name
-                                    </label>
-                                    <input
-                                        id='fname'
-                                        type="text"
-                                        value={first_name}
-                                        onChange={handlefirst_nameChange}
-                                        className={` ${ 
-                                            fnameError 
-                                                ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                                : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                        }`}
-                                    />
+                        <form>
+                            <div className="flex flex-col gap-3">
+                                <div className="flex gap-2">
+                                    <div className="flex flex-col gap-1 relative">
+                                        <label
+                                            className={`absolute items-center left-2 transition-all ease-out ${
+                                            first_name ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
+                                            }`}
+                                            style={{ pointerEvents: 'none' }}
+                                        >
+                                            First name
+                                        </label>
+                                        <input
+                                            id='fname'
+                                            type="text"
+                                            value={first_name}
+                                            onChange={handlefirst_nameChange}
+                                            className={` ${ 
+                                                fnameError 
+                                                    ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                                    : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                            }`}
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-1 relative">
+                                        <label
+                                            className={`absolute left-2 transition-all ease-out ${
+                                            last_name ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
+                                            }`}
+                                            style={{ pointerEvents: 'none' }}
+                                        >
+                                            Last name
+                                        </label>
+                                        <input
+                                            id='lname'
+                                            type="text"
+                                            value={last_name}
+                                            onChange={handlelast_nameChange}
+                                            className={` ${ 
+                                                lnameError 
+                                                    ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                                    : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                            }`}
+                                        />
+                                    </div>
                                 </div>
                                 <div className="flex flex-col gap-1 relative">
                                     <label
                                         className={`absolute left-2 transition-all ease-out ${
-                                        last_name ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
+                                        email ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
                                         }`}
                                         style={{ pointerEvents: 'none' }}
                                     >
-                                        Last name
+                                        Email
                                     </label>
                                     <input
-                                        id='lname'
+                                        id='email'
                                         type="text"
-                                        value={last_name}
-                                        onChange={handlelast_nameChange}
-                                        className={` ${ 
-                                            lnameError 
+                                        value={email}
+                                        onChange={handleemailChange}
+                                        data-tooltip-id="emailTooltip"
+                                        className= {`${
+                                            emailError
+                                                ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                                : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                        }`}
+                                    />
+                                <Tooltip
+                                        id="emailTooltip"
+                                        place="bottom"
+                                        className="z-20"
+                                        border="1px solid #5A5DFA"
+                                        // style={{ background: "linear-gradient(to bottom, #AD31C1, #E7A557)" }}
+                                        style={{background:"white"}}
+                                        >
+                                        <div className="text-xs text-black">
+                                            <h1>Please use your university email</h1>
+                                        </div>
+                                    </Tooltip>
+                                </div>
+                                <div className="flex flex-col gap-1 relative">
+                                    <label
+                                        className={`absolute left-2 transition-all ease-out ${
+                                        admin_id ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
+                                        }`}
+                                        style={{ pointerEvents: 'none' }}
+                                    >
+                                        Student ID
+                                    </label>
+                                    <input
+                                        id='studid'
+                                        type="text"
+                                        value={admin_id}
+                                        onChange={handleInputadminIdChange}
+                                        data-tooltip-id="IDTooltip"
+                                        className={`${
+                                            idError
+                                                ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                                : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                        }`}
+                                    />
+                                    <Tooltip
+                                        id="IDTooltip"
+                                        place="bottom"
+                                        className="z-20"
+                                        border="1px solid #5A5DFA"
+                                        // style={{ background: "linear-gradient(to bottom, #AD31C1, #E7A557)" }}
+                                        style={{background:"white"}}
+                                        >
+                                        <div className="text-xs text-black">
+                                            <h1>e.g. 211-00000</h1>
+                                        </div>
+                                    </Tooltip>
+                                </div>
+                                <div className="flex flex-col gap-1 relative">
+                                    <label
+                                        className={`absolute left-2 transition-all ease-out ${
+                                        password ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
+                                        }`}
+                                        style={{ pointerEvents: 'none' }}
+                                    >
+                                        Password
+                                    </label>
+                                    <input
+                                        id='pass'
+                                        type={type}
+                                        value={password}
+                                        onChange={handlepasswordChange}
+                                        className={`${
+                                            passError
+                                                ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                                : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                        }`}
+                                    />
+                                    {type === "password" ? (
+                                        <span
+                                            className="icon-span absolute inset-y-0 right-0 pr-3 flex items-center text-primPurple cursor-pointer"
+                                            onClick={() => setType("text")}>
+                                            <PiEyeClosedBold />
+                                        </span>
+                                    ) : (
+                                        <span
+                                            className="icon-span absolute inset-y-0 right-0 pr-3 flex items-center text-primPurple cursor-pointer"
+                                            onClick={() => setType("password")}>
+                                            <PiEyeBold />
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="flex flex-col gap-1 relative">
+                                    <label
+                                        className={`absolute left-2 transition-all ease-out ${
+                                        inputCPass ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
+                                        }`}
+                                        style={{ pointerEvents: 'none' }}
+                                    >
+                                        Confirm Password
+                                    </label>
+                                    <input
+                                        id='cpass'
+                                        type={showCPassword ? "text" : "password"}
+                                        value={inputCPass}
+                                        onChange={handleInputCPassChange}
+                                        className={`${
+                                            cPassError
+                                                ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                                : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                        }`}
+                                    />
+                                    <div
+                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-primPurple cursor-pointer"
+                                        onClick={() => setShowCPassword(!showCPassword)}>
+                                        {showCPassword ? <PiEyeBold /> : <PiEyeClosedBold />}
+                                    </div>
+                                </div>
+                                <div className="flex flex-col gap-1 relative">
+                                    <label
+                                        className={`absolute left-2 transition-all ease-out ${
+                                        position ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
+                                        }`}
+                                        style={{ pointerEvents: 'none' }}
+                                    >
+                                        Position
+                                    </label>
+                                    <input
+                                        id='position'
+                                        type="text"
+                                        value={position}
+                                        onChange={handlepositionChange}
+                                        className={`${
+                                            positionError
                                                 ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
                                                 : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
                                         }`}
                                     />
                                 </div>
-                            </div>
-                            <div className="flex flex-col gap-1 relative">
-                                <label
+                                <div className="flex flex-col gap-1 relative">
+                                    <label
                                     className={`absolute left-2 transition-all ease-out ${
-                                    email ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
+                                        (college || selectedCollege) && (selectedCollege !== '' && selectedCollege !== '--Choose College--')
+                                        ? 'top-0 text-[10px] text-primPurple'
+                                        : 'top-3 text-xs text-gray-400'
                                     }`}
                                     style={{ pointerEvents: 'none' }}
-                                >
-                                    Email
-                                </label>
-                                <input
-                                    id='email'
-                                    type="text"
-                                    value={email}
-                                    onChange={handleemailChange}
-                                    data-tooltip-id="emailTooltip"
-                                    className= {`${
-                                        emailError
-                                            ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                            : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                    }`}
-                                />
-                            <Tooltip
-                                    id="emailTooltip"
-                                    place="bottom"
-                                    className="z-20"
-                                    border="1px solid #5A5DFA"
-                                    // style={{ background: "linear-gradient(to bottom, #AD31C1, #E7A557)" }}
-                                    style={{background:"white"}}
                                     >
-                                    <div className="text-xs text-black">
-                                        <h1>Please use your university email</h1>
-                                    </div>
-                                </Tooltip>
-                            </div>
-                            <div className="flex flex-col gap-1 relative">
-                                <label
-                                    className={`absolute left-2 transition-all ease-out ${
-                                    admin_id ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
-                                    }`}
-                                    style={{ pointerEvents: 'none' }}
-                                >
-                                    Student ID
-                                </label>
-                                <input
-                                    id='studid'
-                                    type="text"
-                                    value={admin_id}
-                                    onChange={handleInputadminIdChange}
-                                    data-tooltip-id="IDTooltip"
-                                    className={`${
-                                        idError
-                                            ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                            : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                    }`}
-                                />
-                                <Tooltip
-                                    id="IDTooltip"
-                                    place="bottom"
-                                    className="z-20"
-                                    border="1px solid #5A5DFA"
-                                    // style={{ background: "linear-gradient(to bottom, #AD31C1, #E7A557)" }}
-                                    style={{background:"white"}}
-                                    >
-                                    <div className="text-xs text-black">
-                                        <h1>e.g. 211-00000</h1>
-                                    </div>
-                                </Tooltip>
-                            </div>
-                            <div className="flex flex-col gap-1 relative">
-                                <label
-                                    className={`absolute left-2 transition-all ease-out ${
-                                    password ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
-                                    }`}
-                                    style={{ pointerEvents: 'none' }}
-                                >
-                                    Password
-                                </label>
-                                <input
-                                    id='pass'
-                                    type={type}
-                                    value={password}
-                                    onChange={handlepasswordChange}
-                                    className={`${
-                                        passError
-                                            ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                            : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                    }`}
-                                />
-                                {type === "password" ? (
-                                    <span
-                                        className="icon-span absolute inset-y-0 right-0 pr-3 flex items-center text-primPurple cursor-pointer"
-                                        onClick={() => setType("text")}>
-                                        <PiEyeClosedBold />
-                                    </span>
-                                ) : (
-                                    <span
-                                        className="icon-span absolute inset-y-0 right-0 pr-3 flex items-center text-primPurple cursor-pointer"
-                                        onClick={() => setType("password")}>
-                                        <PiEyeBold />
-                                    </span>
-                                )}
-                            </div>
-                            <div className="flex flex-col gap-1 relative">
-                                <label
-                                    className={`absolute left-2 transition-all ease-out ${
-                                    inputCPass ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
-                                    }`}
-                                    style={{ pointerEvents: 'none' }}
-                                >
-                                    Confirm Password
-                                </label>
-                                <input
-                                    id='cpass'
-                                    type={showCPassword ? "text" : "password"}
-                                    value={inputCPass}
-                                    onChange={handleInputCPassChange}
-                                    className={`${
-                                        cPassError
-                                            ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                            : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                    }`}
-                                />
-                                <div
-                                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-primPurple cursor-pointer"
-                                    onClick={() => setShowCPassword(!showCPassword)}>
-                                    {showCPassword ? <PiEyeBold /> : <PiEyeClosedBold />}
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-1 relative">
-                                <label
-                                    className={`absolute left-2 transition-all ease-out ${
-                                    position ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
-                                    }`}
-                                    style={{ pointerEvents: 'none' }}
-                                >
-                                    Position
-                                </label>
-                                <input
-                                    id='position'
-                                    type="text"
-                                    value={position}
-                                    onChange={handlepositionChange}
-                                    className={`${
-                                        positionError
-                                            ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                            : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                    }`}
-                                />
-                            </div>
-                            <div className="flex flex-col gap-1 relative">
-                                <label
-                                className={`absolute left-2 transition-all ease-out ${
-                                    (college || selectedCollege) && (selectedCollege !== '' && selectedCollege !== '--Choose College--')
-                                    ? 'top-0 text-[10px] text-primPurple'
-                                    : 'top-3 text-xs text-gray-400'
-                                }`}
-                                style={{ pointerEvents: 'none' }}
-                                >
-                                College
-                                </label>
-                                <input
-                                    id='college'
-                                    type="text"
-                                    value={selectedCollege}
-                                    onChange={handlecollegeChange}
-                                    className={`${
-                                        collegeError
-                                            ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                            : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                    }`}
-                                />
-                                <div
-                                className="absolute inset-y-0 right-0 pr-1 flex items-center text-primPurple cursor-pointer"
-                                onClick={() => setShowDropdown(!showDropdown)}
-                                >
-                                <RiArrowDropDownLine size={28} />
-                                </div>
-                                {showDropdown && (
-                                <div className="absolute h-[112px] text-xs overflow-y-auto mt-9 border border-primPurple rounded-md bg-white shadow-md z-10">
-                                    {colleges.map((college) => (
-                                    <CollegeOptions
-                                        key={college}
-                                        option={college}
-                                        onSelect={handleSelectCollege}
+                                    College
+                                    </label>
+                                    <input
+                                        id='college'
+                                        type="text"
+                                        value={selectedCollege}
+                                        onChange={handlecollegeChange}
+                                        className={`${
+                                            collegeError
+                                                ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                                : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                        }`}
                                     />
-                                    ))}
+                                    <div
+                                    className="absolute inset-y-0 right-0 pr-1 flex items-center text-primPurple cursor-pointer"
+                                    onClick={() => setShowDropdown(!showDropdown)}
+                                    >
+                                    <RiArrowDropDownLine size={28} />
+                                    </div>
+                                    {showDropdown && (
+                                    <div className="absolute h-[112px] text-xs overflow-y-auto mt-9 border border-primPurple rounded-md bg-white shadow-md z-10">
+                                        {colleges.map((college) => (
+                                        <CollegeOptions
+                                            key={college}
+                                            option={college}
+                                            onSelect={handleSelectCollege}
+                                        />
+                                        ))}
+                                    </div>
+                                    )}
                                 </div>
-                                )}
                             </div>
-                        </div>
+                        </form>
                         <p className="text-gray-400 text-xs md:text-sm">Already registered? <a href="/login" className="text-primPurple font-medium"><u>Sign In</u></a></p>
                     </div>
-                </form>
                 <div className="flex flex-col items-center justify-center">
                     <button 
                         onClick={handleSignupRequest}
