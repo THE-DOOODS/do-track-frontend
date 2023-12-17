@@ -35,6 +35,7 @@ const Topbar = () => {
         loadingBar.current.complete();
         setTimeout(() => {
             navigator("/login");
+            localStorage.clear();
             setIsLogout(false);
         }, 1200);
     }, 1000);

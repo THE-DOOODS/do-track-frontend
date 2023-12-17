@@ -2,7 +2,6 @@ import Topbar from "../../components/Topbar";
 import Overviewbar from "../../components/Overviewbar";
 import Statistics from "../../components/Statistics";
 import StudentLists from "../../components/StudentLists";
-import Logout from "../../components/modals/Logout";
 
 const Dashboard = () => { 
 
