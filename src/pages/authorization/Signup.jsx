@@ -177,9 +177,6 @@ const Signup = () => {
                             college_id: college,
                         }),
                     });
-        
-                    const data = await response.json();
-                    console.log(data);
 
                     if (response.ok) {
                         toast.success('Success Registration');
@@ -191,7 +188,8 @@ const Signup = () => {
                             }, 1200);
                         }, 1000);
                     } else {
-                        toast.error('Email already in use');
+                        toast.error('ID number already in use');
+                        setIdError(true);
                     }
                     
                 } catch (err) {

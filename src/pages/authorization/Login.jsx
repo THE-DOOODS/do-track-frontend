@@ -125,52 +125,54 @@ const Login = () => {
 						Start managing attendees in the Do-Day event
 					</p>
 				</div>
-				<div className="flex flex-col mx-0 lg:mx-20 pt-4 gap-5">
-					<div className="flex flex-col gap-1">
-						<label className={`${
-							emailError
-								? "text-red-500 font-medium"
-								: "text-gray-500 font-medium"
-						}`}>
-							Email
-						</label>
-						<input
-							type="text"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-							placeholder="sample@carsu.edu.ph"
-							className={`${
+				<form>
+					<div className="flex flex-col mx-0 lg:mx-20 pt-4 gap-5">
+						<div className="flex flex-col gap-1">
+							<label className={`${
 								emailError
-									? "border border-red-500 rounded-md border-l-red-500 text-gray-600 border-l-[12px] outline-none h-10 p-2"
-									: "border border-gray-300 rounded-md border-l-primPurple text-gray-600 border-l-[12px] outline-none h-10 p-2"
-							}`}
-						/>
-					</div>
-					<div className="flex flex-col gap-1 relative">
-						<label className={`${
-							passError
-								? "text-red-500 font-medium"
-								: "text-gray-500 font-medium"
-						}`}>
-							Password
-						</label>
-						<input
-							type={showPassword ? "text" : "password"}
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							className={`${
+									? "text-red-500 font-medium"
+									: "text-gray-500 font-medium"
+							}`}>
+								Email
+							</label>
+							<input
+								type="text"
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								placeholder="sample@carsu.edu.ph"
+								className={`${
+									emailError
+										? "border border-red-500 rounded-md border-l-red-500 text-gray-600 border-l-[12px] outline-none h-10 p-2"
+										: "border border-gray-300 rounded-md border-l-primPurple text-gray-600 border-l-[12px] outline-none h-10 p-2"
+								}`}
+							/>
+						</div>
+						<div className="flex flex-col gap-1 relative">
+							<label className={`${
 								passError
-									? "border border-red-500 rounded-md border-l-red-500 text-gray-600 border-l-[12px] outline-none h-10 p-2"
-									: "border border-gray-300 rounded-md border-l-primPurple text-gray-600 border-l-[12px] outline-none h-10 p-2"
-							}`}
-						/>
-						<div
-							className="absolute inset-y-10 right-0 pr-3 items-center text-primPurple cursor-pointer"
-							onClick={() => setShowPassword(!showPassword)}>
-							{showPassword ? <PiEyeBold /> : <PiEyeClosedBold />}
+									? "text-red-500 font-medium"
+									: "text-gray-500 font-medium"
+							}`}>
+								Password
+							</label>
+							<input
+								type={showPassword ? "text" : "password"}
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								className={`${
+									passError
+										? "border border-red-500 rounded-md border-l-red-500 text-gray-600 border-l-[12px] outline-none h-10 p-2"
+										: "border border-gray-300 rounded-md border-l-primPurple text-gray-600 border-l-[12px] outline-none h-10 p-2"
+								}`}
+							/>
+							<div
+								className="absolute inset-y-10 right-0 pr-3 items-center text-primPurple cursor-pointer"
+								onClick={() => setShowPassword(!showPassword)}>
+								{showPassword ? <PiEyeBold /> : <PiEyeClosedBold />}
+							</div>
 						</div>
 					</div>
-				</div>
+				</form>
 				<div className="flex pt-4 gap-1 items-center mx-0 lg:mx-20 pb-2">
 					<input type="checkbox" />
 					<span className="text-gray-400 text-xs lg:text-base">Remember me</span>
