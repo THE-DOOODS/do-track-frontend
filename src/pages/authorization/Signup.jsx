@@ -174,7 +174,7 @@ const Signup = () => {
                             email,
                             password,
                             position,
-                            college,
+                            college_id: college,
                         }),
                     });
         
