@@ -1,16 +1,14 @@
+import { useEffect } from "react";
 import CardStats from "./CardStats";
 
 
+const Statistics = ({programInfo}) => {
 
-const Statistics = () => {
+    console.log(programInfo);
+
     return (
-        <div className="flex pt-5 pb-2 gap-4 overflow-x-auto">
-            <CardStats />
-            <CardStats />
-            <CardStats />
-            <CardStats />
-            <CardStats />
-            <CardStats />
+        <div className="flex pt-5 pb-2 overflow-x-auto">
+            <CardStats programInfo={programInfo} />
         </div>
     );
 };

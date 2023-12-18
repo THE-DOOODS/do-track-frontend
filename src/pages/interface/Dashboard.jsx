@@ -22,8 +22,9 @@ const Dashboard = () => {
                     },
                 });
                 if (response.ok) {
-                    const data = await response.json();
-                    setProgramInfo(data?.data);
+                  const data = await response.json();
+                  setProgramInfo(data?.data);
+                  console.log(programInfo);
                 }
             } catch (err) {
                 console.log("Unable to fetch college!");
@@ -149,7 +150,7 @@ const Dashboard = () => {
                 {/* <StudentStats programAttend={programAttend} /> */}
             </div>
             <hr />
-            <Statistics />
+            <Statistics programInfo={programInfo} />
             <StudentLists programAttend={programAttend} selectedProgram={selectedProgram} allStudents={allStudents} />
         </div>
     );
