@@ -79,13 +79,23 @@ const Signup = () => {
     const handleSelectPosition = (position) => {
         if (position !== '--Choose Position--') {
             setSelectedPosition(position);
-
-            if (position === 'Others') {
+            if (position === 'Governor') {
+                setPosition("Governor");
+            } else if (position === 'Vice Governor') {
+                setPosition("Vice Governor");
+            } else if (position === 'Secretary') {
+                setPosition("Secretary");
+            } else if (position === 'Secretary for Administration') {
+                setPosition("Secretary for Administration");
+            } else if (position === 'Treasurer') {
+                setPosition("Treasurer");
+            } else if (position === 'Business Manager') {
+                setPosition("Business Manager");
+            } else if (position === 'Others') {
                 setIsOthersSelected(true);
             } else {
                 setIsOthersSelected(false);
             }
-            
         } else {
             setSelectedPosition('');
         }
@@ -409,7 +419,7 @@ const Signup = () => {
                                 <div className="flex flex-col gap-1 relative">
                                     <label
                                         className={`absolute left-2 transition-all ease-out ${
-                                            (position || selectedPosition) && (selectedPosition !== '' && selectedPosition !== '--Choose College--')
+                                            (position || selectedPosition) && (selectedPosition !== '' && selectedPosition !== '--Choose Position--')
                                                  ? 'top-0 text-[10px] text-primPurple'
                                                  : 'top-3 text-xs text-gray-400'
                                         }`}
@@ -420,7 +430,7 @@ const Signup = () => {
                                     <input
                                         id='position'
                                         type="text"
-                                        value={isOthersSelected || selectedPosition === '--Choose Position--' ? position : selectedPosition}
+                                        value={isOthersSelected ? position : selectedPosition}
                                         onChange={handlepositionChange}
                                         onClick={() => setShowPosDropdown(!showPosDropdown)}
                                         className={`${

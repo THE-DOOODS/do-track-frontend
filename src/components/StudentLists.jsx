@@ -9,7 +9,7 @@ const StudentLists = () => {
 
     const handleAttendCollegeRequest = async () => {
         try {
-            let response = await fetch(`http://do-track-backend-production.up.railway.app/api/attendance/attendance-by-college/${college_id}`, {
+            let response = await fetch(`https://do-track-backend-production.up.railway.app/api/attendance/attendance-by-college/${college_id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
