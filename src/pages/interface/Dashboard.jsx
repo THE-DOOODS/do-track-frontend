@@ -4,6 +4,7 @@ import Statistics from "../../components/Statistics";
 import StudentLists from "../../components/StudentLists";
 import { useEffect, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { Toaster, toast } from "sonner";
 
 const Dashboard = () => { 
 
@@ -20,12 +21,10 @@ const Dashboard = () => {
                         Accept: "application/json",
                     },
                 });
-                
                 if (response.ok) {
                     const data = await response.json();
                     setProgramInfo(data?.data);
                 }
-    
             } catch (err) {
                 console.log("Unable to fetch college!");
             }
@@ -51,13 +50,8 @@ const Dashboard = () => {
   };
 
   const toggleProgram = () => {
-    if (program) {
-        setProgram(false);
-    } else {
-        setProgram(true);
-    }
+    setProgram((prevProgram) => !prevProgram);
   };
-
 
   const handleAttendProgramRequest = async (programId) => {
     try {
@@ -74,6 +68,8 @@ const Dashboard = () => {
 
       if (response.ok) {
         const data = await response.json();
+        toast.dismiss(); // Clear existing toasts
+        toast.info(`Displaying students in ${data?.data[0]?.program_name}`);
         setProgramAttend(data?.data);
       }
     } catch (err) {
@@ -83,6 +79,7 @@ const Dashboard = () => {
 
     return (
         <div className="flex flex-col mt-20 py-6 px-16">
+            <Toaster position='top-right' closeButton richColors />
             <div className="fixed top-0 left-0 w-full bg-white shadow-md z-40 px-16 pt-6">
                 <Topbar />
             </div>

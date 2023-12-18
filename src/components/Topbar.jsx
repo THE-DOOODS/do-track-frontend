@@ -50,7 +50,6 @@ const Topbar = () => {
 
   return (
     <div className="flex items-center justify-between pb-3">
-      <Toaster position='top-right' closeButton richColors />
       <LoadingBar height={7} color="#4ab516" ref={loadingBar} />
       {isLogout && <Logout onClose={handleCloseLogout} onConfirm={handleConfirmLogout} />}
       <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[116px]" />
