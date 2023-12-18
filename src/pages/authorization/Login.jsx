@@ -18,13 +18,15 @@ const Login = () => {
 
 	const navigator = useNavigate();
 	const loadingBar = useRef(null);
+	const promise = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
 	const handleLoginRequest = async (event) => {
 		event.preventDefault();
-
+		loadingBar.current.continuousStart(60);
+		
 		setEmailError(false);
 		setPassError(false);
-
+		
 		const fields = [
 			{value: password, setError: setPassError, message: "Password is required"},
 			{value: email, setError: setEmailError, message: "Email is required"},
@@ -34,6 +36,7 @@ const Login = () => {
 
 		fields.forEach((field) => {
 			if (field.value === "") {
+				loadingBar.current.complete();
 				field.setError(true);
 				toast.error(field.message);
 				isValid = false;
@@ -43,11 +46,12 @@ const Login = () => {
 		// if (email === "") {
 		// 	toast.error('Email is required')
 		// } else if (password === "") {
-		// 	toast.error('Password is required')
+			// 	toast.error('Password is required')
 		// } else
 		
 		if (isValid) {
 			if (email !== "" && !emailRegex.test(email)) {
+				loadingBar.current.complete();
 				toast.error('Please use university email')
 				setEmailError(true);
 			} else {
@@ -62,18 +66,23 @@ const Login = () => {
 							password,
 						}),
 					});
-		
+					
 					if (response.ok) {
 						const data = await response.json();
-						console.log(data);
 						localStorage.setItem("admin_id", data.data?.admin?.admin_id);
 						localStorage.setItem("college_id", data.data?.admin?.college_id);
 						localStorage.setItem("email", data.data?.admin?.email);
 						localStorage.setItem("first_name", data.data?.admin?.first_name);
 						localStorage.setItem("last_name", data.data?.admin?.last_name);
 						localStorage.setItem("position", data.data?.admin?.position);
-		
-						loadingBar.current.continuousStart(60);
+						
+						toast.promise(promise, {
+							loading: 'Logging in...',
+							success: () => {
+							  return `Success Logging In`;
+							},
+							error: 'Error',
+						});
 						setTimeout(() => {
 							loadingBar.current.complete();
 							setTimeout(() => {
@@ -84,18 +93,21 @@ const Login = () => {
 						if (response.status === 401) {
 							const data = await response.json();
 							if (data.message === "Admin not found") {
+								loadingBar.current.complete();
 								setEmailError(true);
 								toast.error('User does not exist');
 							}
 						} else if (response.status === 403) {
 							const data = await response.json();
 							if (data.message === "Invalid password. Please try again.") {
+								loadingBar.current.complete();
 								setPassError(true);
-								toast.error('Incorrect password')
+								toast.error('Incorrect password');
 							}
 						}
 					}
 				} catch (err) {
+					loadingBar.current.complete();
 					toast.warning('Internal Server Error')
 					console.log(err);
 				}

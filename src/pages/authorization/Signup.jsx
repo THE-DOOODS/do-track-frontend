@@ -43,6 +43,7 @@ const Signup = () => {
 
     const navigator = useNavigate();
     const loadingBar = useRef(null);
+    const promise = () => new Promise((resolve) => setTimeout(resolve, 1000));
   
     const handlefirst_nameChange = (e) => {
         setFirst_name(e.target.value);
@@ -127,8 +128,8 @@ const Signup = () => {
     };
 
     const handleSignupRequest = async (event) => {
-
         event.preventDefault();
+        loadingBar.current.continuousStart(60);
 
         setFnameError(false);
 		setLnameError(false);
@@ -154,6 +155,7 @@ const Signup = () => {
 
        fields.forEach((field) => {
         if (field.value === "") {
+            loadingBar.current.complete();
             field.setError(true);
             toast.error(field.message);
             isValid = false;
@@ -181,17 +183,21 @@ const Signup = () => {
 
         if (isValid) {
             if (!(password.length >= 8)) {
+                loadingBar.current.complete();
                 toast.error('Password must be at least 8 characters');
                 setPassError(true);
             } else if (email !== "" && !emailRegex.test(email)) {
+                loadingBar.current.complete();
                 toast.error('Please use university email')
                 setEmailError(true);
             } else if (password !== inputCPass) {
+                loadingBar.current.complete();
                 toast.error('Password not matched!');
                 setPassError(true);
                 setCPassError(true);
             } else {
                 try {
+
                     let response = await fetch("https://do-track-backend-production.up.railway.app/api/register", {
                         method: "POST",
                         headers: {
@@ -208,29 +214,40 @@ const Signup = () => {
                             college_id: college,
                         }),
                     });
+                    const data = await response.json();
 
                     if (response.ok) {
-                        toast.success('Success Registration');
-                        loadingBar.current.continuousStart(60);
+                        toast.promise(promise, {
+							loading: 'Creating...',
+							success: () => {
+							  return `Account created`;
+							},
+							error: 'Error',
+						});
                         setTimeout(() => {
                             loadingBar.current.complete();
                             setTimeout(() => {
                                 navigator("/login");
                             }, 1200);
                         }, 1000);
-                    } else {
-                        if (response.status === 422) {
-                            const data = await response.json();
-                            if (data.message === "The admin id has already been taken.") {
-                                toast.error('Student ID already in use');
-                                setIdError(true);
-                            } else if (data.message === "The email has already been taken.")
-                                toast.error('Email already in use');
-                                setEmailError(true);
-                        }
-                    }
+                    } else if (response.status === 422 && data.message === "The admin id has already been taken.") {
+                            loadingBar.current.complete();
+                            toast.error('Student ID already in use');
+                            setIdError(true);
+                     } else if (response.status === 422 && data.message === "The email has already been taken.") {
+                         loadingBar.current.complete();
+                         toast.error('Email already in use');
+                         setEmailError(true);
+                     } else {
+                        loadingBar.current.complete();
+                        toast.error('Email and ID already in use');
+                        setEmailError(true);
+                        setIdError(true);
+                     }
+                    
                     
                 } catch (err) {
+                    loadingBar.current.complete();
                     toast.warning('Internal Server Error');
                     console.log(err);
                 }

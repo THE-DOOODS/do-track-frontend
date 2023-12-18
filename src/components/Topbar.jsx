@@ -12,6 +12,7 @@ const Topbar = () => {
 
   const navigator = useNavigate();
   const loadingBar = useRef(null);
+  const promise = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
   const first_name = localStorage.getItem('first_name');
   const last_name = localStorage.getItem('last_name');
@@ -30,7 +31,13 @@ const Topbar = () => {
 
   const handleConfirmLogout = () => {
     loadingBar.current.continuousStart(60);
-    toast.success('Logging out...');
+    toast.promise(promise, {
+      loading: 'Logging out...',
+      success: () => {
+        return `${first_name} has been logged out`;
+      },
+      error: 'Error',
+    });
     setTimeout(() => {
         loadingBar.current.complete();
         setTimeout(() => {
