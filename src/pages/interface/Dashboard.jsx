@@ -62,7 +62,7 @@ const Dashboard = () => {
   const handleAttendProgramRequest = async (programId) => {
     try {
       let response = await fetch(
-        `https://do-track-backend-production.up.railway.app/api/attendance/getStudentAttendees/${programId}`,
+        `https://do-track-backend-production.up.railway.app/api/attendance/get-student-attendees/${programId}`,
         {
           method: "GET",
           headers: {

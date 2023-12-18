@@ -234,16 +234,16 @@ const Signup = () => {
                             loadingBar.current.complete();
                             toast.error('Student ID already in use');
                             setIdError(true);
-                     } else if (response.status === 422 && data.message === "The email has already been taken.") {
+                    } else if (response.status === 422 && data.message === "The email has already been taken.") {
                          loadingBar.current.complete();
                          toast.error('Email already in use');
                          setEmailError(true);
-                     } else {
+                    } else {
                         loadingBar.current.complete();
                         toast.error('Email and ID already in use');
                         setEmailError(true);
                         setIdError(true);
-                     }
+                    }
                     
                     
                 } catch (err) {
