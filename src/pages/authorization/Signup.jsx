@@ -219,8 +219,15 @@ const Signup = () => {
                             }, 1200);
                         }, 1000);
                     } else {
-                        toast.error('ID number already in use');
-                        setIdError(true);
+                        if (response.status === 422) {
+                            const data = await response.json();
+                            if (data.message === "The admin id has already been taken.") {
+                                toast.error('Student ID already in use');
+                                setIdError(true);
+                            } else if (data.message === "The email has already been taken.")
+                                toast.error('Email already in use');
+                                setEmailError(true);
+                        }
                     }
                     
                 } catch (err) {

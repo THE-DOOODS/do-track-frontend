@@ -12,7 +12,7 @@ const StudentStats = ({collegeAttend}) => {
     return (
         <tbody>
             {attendData?.map((data, key) => (
-                <tr key={key} className="bg-white border-b hover:bg-gray-200 text-xs">
+                <tr key={key} className="bg-white border-b hover:bg-gray-200 text-xs    ">
                     <td scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
                         {data?.student_id}
                     </td>

@@ -81,13 +81,15 @@ const Login = () => {
 							}, 1200)
 						},1000);
 					} else {
-						if (response.status === 400) {
+						if (response.status === 401) {
 							const data = await response.json();
-							if (data.message === "User does not exist") {
+							if (data.message === "Admin not found") {
 								setEmailError(true);
 								toast.error('User does not exist');
 							}
-							if (data.message === "Wrong password") {
+						} else if (response.status === 403) {
+							const data = await response.json();
+							if (data.message === "Invalid password. Please try again.") {
 								setPassError(true);
 								toast.error('Incorrect password')
 							}
