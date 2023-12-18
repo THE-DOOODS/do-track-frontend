@@ -76,9 +76,7 @@ const StudentLists = () => {
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <StudentStats collegeAttend={collegeAttend} />
-                    </tbody>
+                    <StudentStats collegeAttend={collegeAttend} />
                 </table>
             </div>
         </div>

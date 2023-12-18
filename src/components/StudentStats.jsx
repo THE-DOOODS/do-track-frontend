@@ -10,35 +10,51 @@ const StudentStats = ({collegeAttend}) => {
     }, [collegeAttend]);
 
     return (
-            <tr className="bg-white border-b hover:bg-gray-200 text-xs">
-                <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
-                    211-00121
-                </th>
-                <td className="px-6 py-4">
-                    Angelo
-                </td>
-                <td className="px-6 py-4">
-                    Galope
-                </td>
-                <td className="px-6 py-4">
-                    BS in Information Technology
-                </td>
-                <td className="px-6 py-4">
-                    3rd
-                </td>
-                <td className="px-6 py-4">
-                    8:34 AM
-                </td>
-                <td className="px-6 py-4">
-                    11:35 AM
-                </td>
-                <td className="px-6 py-4">
-                    3 Hours
-                </td>
-                <td className="px-6 py-4">
-                    Francis Tin-ao
-                </td>
-            </tr>
+        <tbody>
+            {attendData?.map((data, key) => (
+                <tr key={key} className="bg-white border-b hover:bg-gray-200 text-xs">
+                    <td scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
+                        {data?.student_id}
+                    </td>
+                    <td className="px-6 py-4">
+                        {data?.student_first_name}
+                    </td>
+                    <td className="px-6 py-4">
+                        {data?.student_last_name}
+                    </td>
+                    <td className="px-6 py-4">
+                        {data?.program_name}
+                    </td>
+                    <td className="px-6 py-4">
+                        {data?.year_level_code}
+                    </td>
+                    <td className="px-6 py-4">
+                        {new Date(data?.time_in).toLocaleDateString("en-US", {
+                            hour: "numeric",
+                            minute: "2-digit",
+                            month: "long",
+                            day: "2-digit",
+                            year: "numeric",
+                        })}
+                    </td>
+                    <td className="px-6 py-4">
+                        {data?.time_out && new Date(data?.time_out).toLocaleDateString("en-US", {
+                            hour: "numeric",
+                            minute: "2-digit",
+                            month: "long",
+                            day: "2-digit",
+                            year: "numeric",
+                        })}
+                    </td>
+                    <td className="px-6 py-4">
+                        {data?.total_hours}
+                    </td>
+                    <td className="px-6 py-4">
+                        {data?.admin_first_name} {data?.admin_last_name}
+                    </td>
+                </tr>
+            ))}
+        </tbody>
     );
 };
 
