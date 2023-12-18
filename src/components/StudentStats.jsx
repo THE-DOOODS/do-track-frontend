@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
 
 
-const StudentStats = ({collegeAttend, programAttend, selectedProgram}) => {
+const StudentStats = ({collegeAttend, programAttend, selectedProgram, allStudents}) => {
     
     const [attendData, setAttendData] = useState([]);
 
     useEffect(() => {
-        setAttendData(!selectedProgram ? collegeAttend : programAttend);
-    }, [collegeAttend, programAttend]);
+        if (allStudents) {
+            setAttendData(collegeAttend);
+        } else if (selectedProgram) {
+            setAttendData(programAttend);
+        } else {
+            setAttendData(collegeAttend);
+        }
+        // setAttendData(!selectedProgram ? collegeAttend : programAttend);
+    }, [collegeAttend, programAttend, selectedProgram, allStudents]);
+
     return (
         <tbody> 
             {attendData?.map((data, key) => (

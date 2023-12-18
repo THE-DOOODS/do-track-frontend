@@ -37,6 +37,7 @@ const Dashboard = () => {
     const [program, setProgram] = useState(false);
     const [programData, setProgramData] = useState([]);
     const [programAttend, setProgramAttend] = useState([]);
+    const [allStudents, setAllStudents] = useState(false);
     
   useEffect(() => {
     setProgramData(programInfo.programs);
@@ -47,7 +48,16 @@ const Dashboard = () => {
     handleAttendProgramRequest(programId);
     setProgram(false);
     setSelectedProgram(true);
+    setAllStudents(false);
   };
+
+  const handleAllStudentsClick = () => {
+    handleCollegeRequest();
+    setProgram(false);
+    setAllStudents(true);
+    setSelectedProgram(false);
+    toast.info(`Displaying all students`)
+  }
 
   const toggleProgram = () => {
     setProgram((prevProgram) => !prevProgram);
@@ -108,6 +118,12 @@ const Dashboard = () => {
                 {program && (
                     <div className="z-30 absolute right-16 top-[134px] mt-2 bg-gray-200 rounded-lg shadow w-auto">
                     <ul className="py-2 text-sm text-gray-700">
+                         <button 
+                          onClick={handleAllStudentsClick}
+                          className="flex px-4 py-2 hover:bg-gray-100 w-full"
+                         >
+                          All Students
+                        </button>
                         {programData?.map((data, key) => (
                         <li key={key}>
                             <button
@@ -125,7 +141,7 @@ const Dashboard = () => {
             </div>
             <hr />
             <Statistics />
-            <StudentLists programAttend={programAttend} selectedProgram={selectedProgram} />
+            <StudentLists programAttend={programAttend} selectedProgram={selectedProgram} allStudents={allStudents} />
         </div>
     );
 };
