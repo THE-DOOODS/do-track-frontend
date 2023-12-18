@@ -3,7 +3,7 @@ import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
 import { IoClose } from "react-icons/io5";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Tooltip } from "react-tooltip";
-import CollegeOptions from '../../components/CollegeOptions';
+import ChooseOptions from '../../components/ChooseOptions';
 import { useNavigate } from 'react-router';
 import { Toaster, toast } from 'sonner';
 import LoadingBar from 'react-top-loading-bar';
@@ -28,9 +28,14 @@ const Signup = () => {
 	const [positionError, setPositionError] = useState(false);
 	const [collegeError, setCollegeError] = useState(false);
 
+    const positions = ['--Choose Position--', 'Governor', 'Vice Governor', 'Secretary', 'Secretary for Administration', 'Treasurer', 'Business Manager', 'Others'];
     const colleges = ['--Choose College--', 'CCIS', 'CEGS', 'CED', 'CAA', 'CMNS', 'CHASS', 'COFES'];
+
     const emailRegex = /^[a-zA-Z0-9._-]+@carsu\.edu\.ph$/;
 
+    const [selectedPosition, setSelectedPosition] = useState('');
+    const [showPosDropdown, setShowPosDropdown] = useState('');
+    const [isOthersSelected, setIsOthersSelected] = useState(false);
     const [selectedCollege, setSelectedCollege] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -69,6 +74,22 @@ const Signup = () => {
 
     const handlecollegeChange = (e) => {
         setCollege(e.target.value);
+    };
+
+    const handleSelectPosition = (position) => {
+        if (position !== '--Choose Position--') {
+            setSelectedPosition(position);
+
+            if (position === 'Others') {
+                setIsOthersSelected(true);
+            } else {
+                setIsOthersSelected(false);
+            }
+            
+        } else {
+            setSelectedPosition('');
+        }
+        setShowPosDropdown(false);
     };
     
     const handleSelectCollege = (college) => {
@@ -388,7 +409,9 @@ const Signup = () => {
                                 <div className="flex flex-col gap-1 relative">
                                     <label
                                         className={`absolute left-2 transition-all ease-out ${
-                                        position ? 'top-0 text-[10px] text-primPurple' : 'top-3 text-xs text-gray-400'
+                                            (position || selectedPosition) && (selectedPosition !== '' && selectedPosition !== '--Choose College--')
+                                                 ? 'top-0 text-[10px] text-primPurple'
+                                                 : 'top-3 text-xs text-gray-400'
                                         }`}
                                         style={{ pointerEvents: 'none' }}
                                     >
@@ -397,14 +420,32 @@ const Signup = () => {
                                     <input
                                         id='position'
                                         type="text"
-                                        value={position}
+                                        value={isOthersSelected || selectedPosition === '--Choose Position--' ? position : selectedPosition}
                                         onChange={handlepositionChange}
+                                        onClick={() => setShowPosDropdown(!showPosDropdown)}
                                         className={`${
                                             positionError
-                                                ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                                : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                                ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2 cursor-pointer"
+                                                : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2 cursor-pointer"
                                         }`}
                                     />
+                                    <div
+                                    className="absolute inset-y-0 right-0 pr-1 flex items-center text-primPurple cursor-pointer"
+                                    onClick={() => setShowPosDropdown(!showPosDropdown)}
+                                    >
+                                    <RiArrowDropDownLine size={28} />
+                                    </div>
+                                    {showPosDropdown && (
+                                    <div className="absolute w-full h-[112px] text-xs overflow-y-auto mt-9 border border-primPurple rounded-md bg-white shadow-md z-10">
+                                        {positions.map((position) => (
+                                        <ChooseOptions
+                                            key={position}
+                                            option={position}
+                                            onSelect={handleSelectPosition}
+                                        />
+                                        ))}
+                                    </div>
+                                    )}
                                 </div>
                                 <div className="flex flex-col gap-1 relative">
                                     <label
@@ -422,10 +463,11 @@ const Signup = () => {
                                         type="text"
                                         value={selectedCollege}
                                         onChange={handlecollegeChange}
+                                        onClick={() => setShowDropdown(!showDropdown)}
                                         className={`${
                                             collegeError
-                                                ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
-                                                : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2"
+                                                ? "border border-red-500 rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2 cursor-pointer"
+                                                : "border border-primPurple rounded-md outline-none text-sm text-gray-600 w-auto h-10 p-2 cursor-pointer"
                                         }`}
                                     />
                                     <div
@@ -435,9 +477,9 @@ const Signup = () => {
                                     <RiArrowDropDownLine size={28} />
                                     </div>
                                     {showDropdown && (
-                                    <div className="absolute h-[112px] text-xs overflow-y-auto mt-9 border border-primPurple rounded-md bg-white shadow-md z-10">
+                                    <div className="absolute w-full h-[112px] text-xs overflow-y-auto mt-9 border border-primPurple rounded-md bg-white shadow-md z-10">
                                         {colleges.map((college) => (
-                                        <CollegeOptions
+                                        <ChooseOptions
                                             key={college}
                                             option={college}
                                             onSelect={handleSelectCollege}

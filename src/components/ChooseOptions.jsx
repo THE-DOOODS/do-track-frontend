@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CollegeOptions = ({ option, onSelect }) => {
+const ChooseOptions = ({ option, onSelect }) => {
   return (
     <div
       className="cursor-pointer p-2 hover:bg-gray-200"
@@ -11,4 +11,4 @@ const CollegeOptions = ({ option, onSelect }) => {
   );
 };
 
-export default CollegeOptions;
+export default ChooseOptions;
