@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 
 
-const StudentStats = ({collegeAttend}) => {
+const StudentStats = ({collegeAttend, programAttend, selectedProgram}) => {
     
     const [attendData, setAttendData] = useState([]);
 
     useEffect(() => {
-        setAttendData(collegeAttend);
-    }, [collegeAttend]);
-
+        setAttendData(!selectedProgram ? collegeAttend : programAttend);
+    }, [collegeAttend, programAttend]);
     return (
-        <tbody>
+        <tbody> 
             {attendData?.map((data, key) => (
                 <tr key={key} className="bg-white border-b hover:bg-gray-200 text-xs    ">
                     <td scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">

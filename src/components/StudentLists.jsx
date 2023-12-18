@@ -2,7 +2,7 @@ import { TbClipboardList } from "react-icons/tb";
 import StudentStats from "./StudentStats";
 import { useState, useEffect } from "react";
 
-const StudentLists = () => {
+const StudentLists = ({programAttend, selectedProgram}) => {
     const college_id = localStorage.getItem("college_id");
 
     const [collegeAttend, setCollegeAttend] = useState([]);
@@ -38,9 +38,9 @@ const StudentLists = () => {
             </div>
             <div className="flex items-center gap-4 text-gray-700">
                 <h1 className="cursor-pointer text-primPurple font-bold">All Students</h1>
-                <h1 className="cursor-pointer">Active Students</h1>
-                <h1 className="cursor-pointer">Inactive Students</h1>
-                {/* <input type="text" placeholder="Search student" className="p-1 px-4 border rounded-full text-sm" /> */}
+                {/* <h1 className="cursor-pointer">All Students</h1> */}
+                {/* <h1 className="cursor-pointer">Inactive Students</h1>
+                <input type="text" placeholder="Search student" className="p-1 px-4 border rounded-full text-sm" /> */}
             </div>
             <hr />
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -76,7 +76,7 @@ const StudentLists = () => {
                             </th>
                         </tr>
                     </thead>
-                    <StudentStats collegeAttend={collegeAttend} />
+                    <StudentStats collegeAttend={collegeAttend} programAttend={programAttend} selectedProgram={selectedProgram} />
                 </table>
             </div>
         </div>
