@@ -16,6 +16,12 @@ const StudentStats = ({collegeAttend, programAttend, selectedProgram, allStudent
         // setAttendData(!selectedProgram ? collegeAttend : programAttend);
     }, [collegeAttend, programAttend, selectedProgram, allStudents]);
 
+    const formatHours = (totalHours) => {
+        const hours = Math.floor(totalHours);
+        const minutes = Math.round((totalHours - hours) * 60);
+        return `${hours}:${String(minutes).padStart(2, '0')}`;
+    };
+
     return (
         <tbody> 
             {attendData?.map((data, key) => (
@@ -54,7 +60,7 @@ const StudentStats = ({collegeAttend, programAttend, selectedProgram, allStudent
                         })}
                     </td>
                     <td className="px-6 py-4">
-                        {data?.total_hours}
+                        {formatHours(data?.total_hours)} hrs
                     </td>
                     <td className="px-6 py-4">
                         {data?.admin_first_name} {data?.admin_last_name}
