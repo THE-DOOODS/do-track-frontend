@@ -1,91 +1,95 @@
-import { RiArrowDropDownLine } from "react-icons/ri";
-import { useState } from "react";
+// import { RiArrowDropDownLine } from "react-icons/ri";
+// import { useEffect, useState } from "react";
+// // import StudentStats from "./StudentStats";
 
-const Overviewbar = () => {
+// const Overviewbar = ({ programInfo }) => {
+//   const [program, setProgram] = useState(false);
+//   const [programData, setProgramData] = useState([]);
+//   const [programAttend, setProgramAttend] = useState([]);
+  
+//   useEffect(() => {
+//     setProgramData(programInfo.programs);
+//   }, [programInfo]);
 
-    const college_id = localStorage.getItem("college_id");
+  
+//   const handleProgramClick = (programId) => {
+//     console.log(programId);
+//     handleAttendProgramRequest(programId);
+//     setProgram(false);
+//   };
 
-    const [program, setprogram] = useState(false);
+//   const toggleProgram = () => {
+//     if (program) {
+//         setProgram(false);
+//     } else {
+//         setProgram(true);
+//     }
+//   };
 
-    const toggleprogram = () => {
-        setprogram(!program);
-    };
 
-    const handleCollegeRequest = async () => {
-        try {
-            let collResponse = await fetch(`http://do-track-backend-production.up.railway.app/api/ /${college_id}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            
-            if (collResponse.ok) {
-                const data = await collResponse.json();
-                console.log(data);
-            }
+//   const handleAttendProgramRequest = async (programId) => {
+//     try {
+//       let response = await fetch(
+//         `https://do-track-backend-production.up.railway.app/api/attendance/getStudentAttendees/${programId}`,
+//         {
+//           method: "GET",
+//           headers: {
+//             "Content-Type": "application/json",
+//             Accept: "application/json",
+//           },
+//         }
+//       );
 
-        } catch (err) {
-            console.log("Unable to fetch college!");
-        }
-    };
+//       if (response.ok) {
+//         const data = await response.json();
+//         setProgramAttend(data?.data);
+//       }
+//     } catch (err) {
+//       console.log("Unable to fetch attendance by program");
+//     }
+//   };
 
-    const handleProgramRequest = async () => {
-        try {
-            let progResponse = await fetch(`http://do-track-backend-production.up.railway.app/api/ /${college_id}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+//   return (
+//     <div className="flex items-center justify-between pb-5">
+//       <div className="flex items-center gap-2">
+//         <h1 className="font-bold text-2xl text-primPurple">Overview</h1>
+//         <div className="flex items-center">
+//           <img
+//             src="static/icons/CCIS-logo.png"
+//             alt="CCIS-logo"
+//             className="w-[42px]"
+//           />
+//           {programInfo?.college?.map((data, key) => (
+//             <p key={key} className="text-sm text-gray-500">
+//               {data?.college_name}
+//             </p>
+//           ))}
+//         </div>
+//       </div>
+//       <button
+//         onClick={toggleProgram}
+//         className="flex items-center gap-2 border p-1 px-5 rounded-full bg-gray-300 text-gray-700 font-medium text-sm"
+//       >
+//         Select Program <RiArrowDropDownLine size={28} />
+//       </button>
+//       {program && (
+//         <div className="z-30 absolute right-16 top-[134px] mt-2 bg-gray-200 rounded-lg shadow w-auto">
+//           <ul className="py-2 text-sm text-gray-700">
+//             {programData?.map((data, key) => (
+//               <li key={key}>
+//                 <h1
+//                   onClick={() => handleProgramClick(data?.program_id)}
+//                   className="flex px-4 py-2 hover:bg-gray-100 w-full"
+//                 >
+//                   {data?.program_name}
+//                 </h1>
+//               </li>
+//             ))}
+//           </ul>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
 
-            if (progResponse.ok) {
-                const data = await progResponse.json();
-                console.log(data);
-            }
-
-        } catch (err) {
-            console.log("Unable to fetch program!");
-        }
-    };
-
-    return (
-        <div className="flex items-center justify-between pb-5">
-            <div className="flex items-center gap-2">
-                <h1 className="font-bold text-2xl text-primPurple">Overview</h1>
-                <div className="flex items-center">
-                    <img src="static/icons/CCIS-logo.png" alt="CCIS-logo" className="w-[42px]" />
-                    <p className="text-sm text-gray-500">College of Computing and Information Sciences</p>
-                </div>
-            </div>
-            <button
-                onClick={toggleprogram}
-                className="flex items-center gap-2 border p-1 px-5 rounded-full bg-gray-300 text-gray-700 font-medium text-sm">
-                    Select Program <RiArrowDropDownLine size={28} />
-            </button>
-            {program && (
-                <div className="z-40 absolute right-16 top-[134px] mt-2 bg-gray-200 rounded-lg shadow w-auto">
-                    <ul className="py-2 text-sm text-gray-700">
-                        <li>
-                            <a href="#" className="flex px-4 py-2 hover:bg-gray-100 ">
-                                Information Technology
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 ">
-                                Information System
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 ">
-                                Computer Science
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            )}
-        </div>
-    );
-};
-
-export default Overviewbar;
+// export default Overviewbar;

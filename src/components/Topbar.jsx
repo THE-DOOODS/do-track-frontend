@@ -12,6 +12,7 @@ const Topbar = () => {
 
   const navigator = useNavigate();
   const loadingBar = useRef(null);
+  const promise = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
   const first_name = localStorage.getItem('first_name');
   const last_name = localStorage.getItem('last_name');
@@ -30,7 +31,13 @@ const Topbar = () => {
 
   const handleConfirmLogout = () => {
     loadingBar.current.continuousStart(60);
-    toast.success('Logging out...');
+    toast.promise(promise, {
+      loading: 'Logging out...',
+      success: () => {
+        return `${first_name} has been logged out`;
+      },
+      error: 'Error',
+    });
     setTimeout(() => {
         loadingBar.current.complete();
         setTimeout(() => {
@@ -43,7 +50,6 @@ const Topbar = () => {
 
   return (
     <div className="flex items-center justify-between pb-3">
-      <Toaster position='top-right' closeButton richColors />
       <LoadingBar height={7} color="#4ab516" ref={loadingBar} />
       {isLogout && <Logout onClose={handleCloseLogout} onConfirm={handleConfirmLogout} />}
       <img src="/static/icons/Logo.png" alt="Do-Track Logo" className="w-[116px]" />
@@ -57,11 +63,6 @@ const Topbar = () => {
           {menu && (
             <div className="z-40 absolute top-full right-0 mt-2 bg-gray-200 rounded-lg shadow w-44">
               <ul className="py-2 text-sm text-gray-700">
-                <li>
-                  <button href="#" className="flex px-4 py-2 hover:bg-gray-100 w-full">
-                    Settings
-                  </button>
-                </li>
                 <li>
                   <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 w-full">
                     Sign Out <IoMdExit />
