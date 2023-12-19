@@ -46,7 +46,10 @@ const ProgramStats = ({ statData }) => {
   
         if (response.ok) {
           const data = await response.json();
-          setStatsData((prevStatsData) => [...prevStatsData, data]);
+          setStatsData((prevStatsData) => [
+            ...prevStatsData,
+            { programId, data },
+          ]);
         }
       } catch (err) {
         console.log(err);
@@ -76,7 +79,11 @@ const ProgramStats = ({ statData }) => {
                 {data?.program_name}
               </p>
             </div>
-            {statsData[key] && <ProgramStats statData={statsData[key]} />}
+            {statsData.find((stat) => stat.programId === data?.program_id) && (
+              <ProgramStats
+                statData={statsData.find((stat) => stat.programId === data?.program_id).data}
+              />
+            )}
           </div>
         ))}
       </div>
