@@ -56,7 +56,7 @@ const Dashboard = () => {
     setProgram(false);
     setAllStudents(true);
     setSelectedProgram(false);
-    toast.info(`Displaying all students`)
+    toast.info(`Displaying all students`);
   }
 
   const toggleProgram = () => {
@@ -82,14 +82,7 @@ const Dashboard = () => {
         toast.info(`Displaying students in ${data?.data[0]?.program_name}`);
         setProgramAttend(data?.data);
       } else if (response.status === 404) {
-        const data = await response.json();
-          if (data.message === "No attendances in the program: CIS-CS") {
-            toast.error('No students attendance in the program Computer Science')
-          } else if (data.message === "No attendances in the program: CIS-IS") {
-            toast.error('No students attendance in the program Information System')
-          } else if (data.message === "No attendances in the program: CIS-IT") {
-            toast.error('No students attendance in the program Information Technology')
-          }
+        toast.error(`No students attendance in this program`);
       }
     } catch (err) {
       console.log("Unable to fetch attendance by program");
