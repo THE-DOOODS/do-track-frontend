@@ -64,11 +64,6 @@ const Topbar = () => {
             <div className="z-40 absolute top-full right-0 mt-2 bg-gray-200 rounded-lg shadow w-44">
               <ul className="py-2 text-sm text-gray-700">
                 <li>
-                  <button href="#" className="flex px-4 py-2 hover:bg-gray-100 w-full">
-                    Settings
-                  </button>
-                </li>
-                <li>
                   <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 w-full">
                     Sign Out <IoMdExit />
                   </button>

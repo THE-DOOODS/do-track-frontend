@@ -24,7 +24,6 @@ const Dashboard = () => {
                 if (response.ok) {
                   const data = await response.json();
                   setProgramInfo(data?.data);
-                  console.log(programInfo);
                 }
             } catch (err) {
                 console.log("Unable to fetch college!");
@@ -67,7 +66,7 @@ const Dashboard = () => {
   const handleAttendProgramRequest = async (programId) => {
     try {
       let response = await fetch(
-        `https://do-track-backend-production.up.railway.app/api/attendance/get-student-attendees/${programId}`,
+        `https://do-track-backend-production.up.railway.app/api/attendance/attendance-by-program/${programId}`,
         {
           method: "GET",
           headers: {
@@ -98,7 +97,7 @@ const Dashboard = () => {
   };
 
     return (
-        <div className="flex flex-col mt-20 py-6 px-16">
+        <div className="flex flex-col mt-16 py-6 px-16">
             <Toaster position='top-right' closeButton richColors />
             <div className="fixed top-0 left-0 w-full bg-white shadow-md z-40 px-16 pt-6">
                 <Topbar />
@@ -113,7 +112,7 @@ const Dashboard = () => {
                         className="w-[42px]"
                     />
                     {programInfo?.college?.map((data, key) => (
-                        <p key={key} className="text-sm text-gray-500">
+                        <p key={key} className="text-lg text-gray-500">
                         {data?.college_name}
                         </p>
                     ))}
@@ -126,7 +125,7 @@ const Dashboard = () => {
                     Select Program <RiArrowDropDownLine size={28} />
                 </button>
                 {program && (
-                    <div className="z-30 absolute right-16 top-[134px] mt-2 bg-gray-200 rounded-lg shadow w-auto">
+                    <div className="z-30 absolute right-16 top-[118px] mt-2 bg-gray-200 rounded-lg shadow w-auto">
                     <ul className="py-2 text-sm text-gray-700">
                          <button 
                           onClick={handleAllStudentsClick}

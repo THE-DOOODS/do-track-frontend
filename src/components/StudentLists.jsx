@@ -1,36 +1,55 @@
 import { TbClipboardList } from "react-icons/tb";
+import { TablePagination } from "@mui/material";
 import StudentStats from "./StudentStats";
 import { useState, useEffect } from "react";
 
-const StudentLists = ({programAttend, selectedProgram, allStudents}) => {
-    const college_id = localStorage.getItem("college_id");
+const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
+  const college_id = localStorage.getItem("college_id");
 
-    const [collegeAttend, setCollegeAttend] = useState([]);
+  const [collegeAttend, setCollegeAttend] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    const handleAttendCollegeRequest = async () => {
-        try {
-            let response = await fetch(`https://do-track-backend-production.up.railway.app/api/attendance/attendance-by-college/${college_id}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setCollegeAttend(data?.data);
-            }
-        } catch (err) {
-            console.log("Unable to fetch attendance by college");
+  const handleAttendCollegeRequest = async () => {
+    try {
+      let response = await fetch(
+        `https://do-track-backend-production.up.railway.app/api/attendance/attendance-by-college/${college_id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
         }
-    };
+      );
 
-    useEffect(() => {
-        handleAttendCollegeRequest();
-    }, [])
+      if (response.ok) {
+        const data = await response.json();
+        setCollegeAttend(data?.data);
+      }
+    } catch (err) {
+      console.log("Unable to fetch attendance by college");
+    }
+  };
 
+  useEffect(() => {
+    handleAttendCollegeRequest();
+  }, []);
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const paginatedData = collegeAttend.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
+    
     return (
         <div className="flex flex-col py-4 gap-3">
             <div className="flex items-center justify-between">
@@ -81,9 +100,24 @@ const StudentLists = ({programAttend, selectedProgram, allStudents}) => {
                             </th>
                         </tr>
                     </thead>
-                    <StudentStats collegeAttend={collegeAttend} programAttend={programAttend} selectedProgram={selectedProgram} allStudents={allStudents} />
+                    <StudentStats
+                        paginatedData={paginatedData}
+                        collegeAttend={collegeAttend}
+                        programAttend={programAttend}
+                        selectedProgram={selectedProgram}
+                        allStudents={allStudents}
+                    />
                 </table>
             </div>
+            <TablePagination
+                rowsPerPageOptions={[10, 25, 50, { label: "All", value: -1 }]}
+                component="div"
+                count={collegeAttend.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
         </div>
     );
 };
