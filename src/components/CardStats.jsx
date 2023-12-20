@@ -7,8 +7,6 @@ const generateRandomColors = (count) => {
 	return Array.from({ length: count }, () => randomColor({ format: "hex" }));
 };
 
-const token = localStorage.getItem("token");
-
 const ProgramStats = ({ statData, randomBgColor }) => {
 	return (
 		<div className="flex flex-col py-1 gap-3 items-end text-black z-10">
@@ -34,6 +32,7 @@ const ProgramStats = ({ statData, randomBgColor }) => {
 };
 
 const CardStats = ({ programInfo }) => {
+	const token = localStorage.getItem("token");
 	const [statsData, setStatsData] = useState([]);
 	const [randomColors, setRandomColors] = useState([]);
 

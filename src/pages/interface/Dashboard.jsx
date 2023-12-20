@@ -12,7 +12,6 @@ const Dashboard = () => {
 	const [selectedProgram, setSelectedProgram] = useState(false);
 
 	const token = localStorage.getItem("token");
-	console.log("token: ", token);
 
 	const handleCollegeRequest = async () => {
 		try {
@@ -28,7 +27,6 @@ const Dashboard = () => {
 				},
 			);
 			if (response.ok) {
-				console.log("here");
 				const data = await response.json();
 				setProgramInfo(data?.data);
 			}
@@ -85,7 +83,6 @@ const Dashboard = () => {
 
 			if (response.ok) {
 				const data = await response.json();
-				console.log("data in attend program request", data);
 				toast.dismiss();
 				toast.info(`Displaying students in ${data?.data[0]?.program_name}`);
 				setProgramAttend(data?.data);
@@ -93,7 +90,6 @@ const Dashboard = () => {
 				toast.error(`No students attendance in this program`);
 			}
 		} catch (err) {
-			console.error("Error during fetch:", err);
 			console.log("Unable to fetch college!");
 		}
 	};
