@@ -11,6 +11,8 @@ const Dashboard = () => {
 	const [programInfo, setProgramInfo] = useState([]);
 	const [selectedProgram, setSelectedProgram] = useState(false);
 
+	const token = localStorage.getItem("token");
+
 	const handleCollegeRequest = async () => {
 		try {
 			let response = await fetch(
@@ -20,6 +22,7 @@ const Dashboard = () => {
 					headers: {
 						"Content-Type": "application/json",
 						Accept: "application/json",
+						Authorization: Bearer`${token}`,
 					},
 				},
 			);
