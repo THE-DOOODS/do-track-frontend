@@ -7,7 +7,6 @@ import LoadingBar from "react-top-loading-bar";
 import { Toaster, toast } from "sonner";
 
 const Topbar = () => {
-	const [menu, setMenu] = useState(false);
 	const [isLogout, setIsLogout] = useState(false);
 
 	const navigator = useNavigate();
@@ -18,10 +17,6 @@ const Topbar = () => {
 	const last_name = localStorage.getItem("last_name");
 
 	const token = localStorage.getItem("token");
-
-	const toggleMenu = () => {
-		setMenu(!menu);
-	};
 
 	const handleLogout = async () => {
 		setIsLogout(true);
@@ -77,23 +72,11 @@ const Topbar = () => {
 					{first_name} {last_name}
 				</h1>
 				<div className="flex items-center gap-2 relative">
-					<div className="w-[32px] h-[32px] rounded-full bg-primPurple"></div>
-					<button onClick={toggleMenu} className="rounded-md bg-gray-200 p-1">
-						<RiArrowDropDownLine />
+					<img src="/static/icons/avatar.jpg" alt="" className="w-[42px] rounded-full" />
+					{/* <div className="w-[32px] h-[32px] rounded-full bg-primPurple"></div> */}
+					<button onClick={handleLogout} className="rounded-md text-primOrange">
+						<IoMdExit size={22} className="hover:text-purple-200 transition duration-500" />
 					</button>
-					{menu && (
-						<div className="z-40 absolute top-full right-0 mt-2 bg-gray-200 rounded-lg shadow w-44">
-							<ul className="py-2 text-sm text-gray-700">
-								<li>
-									<button
-										onClick={handleLogout}
-										className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 w-full">
-										Sign Out <IoMdExit />
-									</button>
-								</li>
-							</ul>
-						</div>
-					)}
 				</div>
 			</div>
 		</div>

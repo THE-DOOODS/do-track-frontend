@@ -177,12 +177,12 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 						/>
 						<IoIosSearch
 							onClick={handleSearchStudentAttendee}
-							className="absolute z-10 hover:text-primOrange right-3 text-gray-500 cursor-pointer"
+							className="absolute z-10 text-[22px] font-bold transition duration-500 hover:text-primOrange right-3 text-gray-500 cursor-pointer"
 						/>
 					</div>
 					<button
 						onClick={exportPDF}
-						className="hidden md:flex items-center gap-2 border p-1 px-4 rounded-full text-sm text-white bg-primOrange h-10">
+						className="hidden md:flex items-center gap-2 border p-1 px-4 rounded-full text-sm text-white bg-primOrange transition duration-500 hover:bg-purple-200 h-10">
 						Convert List of PDF <TbClipboardList size={16} />
 					</button>
 				</div>
