@@ -80,10 +80,14 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 		setDisplayedData(collegeAttend.slice(newStartIndex, newEndIndex));
 	};
 
-	const paginatedData = collegeAttend.slice(
-		page * rowsPerPage,
-		page * rowsPerPage + rowsPerPage,
-	);
+	// depends on the user request, it should be collegeAttend or programAttend
+	const paginatedData = selectedProgram ? programAttend : collegeAttend;
+
+	useEffect(() => {
+		const startIndex = page * rowsPerPage;
+		const endIndex = startIndex + rowsPerPage;
+		setDisplayedData(paginatedData.slice(startIndex, endIndex));
+	}, [paginatedData, page, rowsPerPage]);
 
 	// function for handling the creation of pdf list of all student attendees
 	const exportPDF = () => {
@@ -139,7 +143,6 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 
 						if (response.ok) {
 							const data = await response.json();
-							setDisplayedData(data?.data.slice(0, rowsPerPage));
 							setTimeout(() => {
 								setOpenSearchModal(true);
 								setSearchStudentData(data);
@@ -156,7 +159,7 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 				}),
 				{
 					loading: "Searching student...",
-					success: (data) => `Student information found`,
+					success: (data) => `Student information found`, // Modify this according to your data structure
 					error: (message) => message,
 				},
 			);
@@ -252,9 +255,14 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 				</table>
 			</div>
 			<TablePagination
-				rowsPerPageOptions={[10, 25, 50, { label: "All", value: -1 }]}
+				rowsPerPageOptions={[
+					10,
+					25,
+					50,
+					{ label: "All", value: paginatedData.length },
+				]}
 				component="div"
-				count={collegeAttend.length}
+				count={paginatedData.length}
 				rowsPerPage={rowsPerPage}
 				page={page}
 				onPageChange={handleChangePage}
