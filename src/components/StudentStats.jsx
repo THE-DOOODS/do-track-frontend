@@ -14,7 +14,6 @@ const StudentStats = ({
 		return `${hours}:${String(minutes).padStart(2, "0")}`;
 	};
 
-	//trikk
 
 	return (
 		<tbody>
