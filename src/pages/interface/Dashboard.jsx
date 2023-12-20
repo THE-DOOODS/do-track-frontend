@@ -43,6 +43,8 @@ const Dashboard = () => {
 			if (response.ok) {
 				const data = await response.json();
 				setProgramInfo(data?.data);
+			} else if (response.status === 404) {
+				toast.error("No programs retrieved");
 			}
 		} catch (err) {
 			console.log("Unable to fetch college!");
