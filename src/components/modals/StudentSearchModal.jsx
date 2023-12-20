@@ -1,5 +1,6 @@
 import { IoClose } from "react-icons/io5";
 import { toast } from "sonner";
+import { useEffect } from "react";
 
 export const StudentSearchModal = ({searchStudentData, onChangeCloseModal}) => {
 
@@ -45,6 +46,19 @@ export const StudentSearchModal = ({searchStudentData, onChangeCloseModal}) => {
         }
     }
 
+    useEffect(() => {
+        const body = document.body;
+    
+        // Function to handle body overflow
+        const handleBodyOverflow = (isOpen) => {
+          body.style.overflow = isOpen ? "hidden" : "auto";
+        };
+    
+        // Call the function when the modal is mounted/unmounted
+        handleBodyOverflow(true);
+        return () => handleBodyOverflow(false);
+      }, []);
+
     return (
         <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-60 flex">
             <div className="flex flex-col p-4 gap-3 bg-white w-full h-auto max-w-md m-auto rounded-lg shadow">  
@@ -64,6 +78,18 @@ export const StudentSearchModal = ({searchStudentData, onChangeCloseModal}) => {
                             <div className="flex flex-row justify-between p-2 bg-white border-b hover:bg-gray-200 text-xs ">
                                 <h1>Student Name</h1>
                                 <p>{searchStudentData?.data?.student_first_name} {searchStudentData?.data?.student_last_name}</p>
+                            </div>
+                            <div className="flex flex-row justify-between p-2 bg-white border-b hover:bg-gray-200 text-xs ">
+                                <h1>Year Level</h1>
+                                <p>{searchStudentData?.data?.year_level_code} Year</p>
+                            </div>
+                            <div className="flex flex-row justify-between p-2 bg-white border-b hover:bg-gray-200 text-xs ">
+                                <h1>College</h1>
+                                <p>{searchStudentData?.data?.college_name}</p>
+                            </div>
+                            <div className="flex flex-row justify-between p-2 bg-white border-b hover:bg-gray-200 text-xs ">
+                                <h1>Program</h1>
+                                <p>{searchStudentData?.data?.program_name}</p>
                             </div>
                             <div className="flex flex-row justify-between p-2 bg-white border-b hover:bg-gray-200 text-xs ">
                                 <h1>Time In</h1>
@@ -88,14 +114,6 @@ export const StudentSearchModal = ({searchStudentData, onChangeCloseModal}) => {
                             <div className="flex flex-row justify-between p-2 bg-white border-b hover:bg-gray-200 text-xs ">
                                 <h1>Time Rendered</h1>
                                 <p>{formatHours(searchStudentData?.data?.total_hours)} hrs</p>
-                            </div>
-                            <div className="flex flex-row justify-between p-2 bg-white border-b hover:bg-gray-200 text-xs ">
-                                <h1>College</h1>
-                                <p>{searchStudentData?.data?.college_name}</p>
-                            </div>
-                            <div className="flex flex-row justify-between p-2 bg-white border-b hover:bg-gray-200 text-xs ">
-                                <h1>Program</h1>
-                                <p>{searchStudentData?.data?.program_name}</p>
                             </div>
                             <div className="flex flex-row justify-between p-2 bg-white border-b hover:bg-gray-200 text-xs ">
                                 <h1>Designator</h1>
