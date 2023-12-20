@@ -109,7 +109,9 @@ const Dashboard = () => {
 							className="w-[42px] md:w-[100px]"
 						/>
 						{programInfo?.college?.map((data, key) => (
-							<p key={key} className="text-xs md:text-2xl font-bold w-[450px] text-gray-400">
+							<p
+								key={key}
+								className="text-xs md:text-2xl font-bold w-[450px] text-gray-400">
 								{data?.college_name}
 							</p>
 						))}
@@ -117,34 +119,34 @@ const Dashboard = () => {
 				</div>
 				{/* <StudentStats programAttend={programAttend} /> */}
 			</div>
-				<div className="flex items-center justify-between mb-5">
-						<h1 className="font-bold text-2xl text-primPurple">Overview</h1>
-					<button
-						onClick={toggleProgram}
-						className="flex items-center gap-1 text-white border px-2 rounded-full h-10 bg-primPurple font-medium text-xs md:text-sm">
-						Select Program <RiArrowDropDownLine size={22} />
-					</button>
+			<div className="flex items-center justify-between mb-5">
+				<h1 className="font-bold text-2xl text-primPurple">Overview</h1>
+				<button
+					onClick={toggleProgram}
+					className="flex items-center gap-1 text-white border px-4 rounded-full h-10 bg-primPurple font-medium text-xs md:text-sm">
+					Select Program <RiArrowDropDownLine size={22} />
+				</button>
+			</div>
+			{program && (
+				<div className="z-30 absolute right-16 top-[118px] mt-2 bg-gray-200 rounded-lg shadow w-auto">
+					<ul className="py-2 text-sm text-gray-700">
+						<button
+							onClick={handleAllStudentsClick}
+							className="flex px-4 py-2 hover:bg-gray-100 w-full">
+							All Students
+						</button>
+						{programData?.map((data, key) => (
+							<li key={key}>
+								<button
+									onClick={() => handleProgramClick(data?.program_id)}
+									className="flex px-4 py-2 hover:bg-gray-100 w-full">
+									{data?.program_name}
+								</button>
+							</li>
+						))}
+					</ul>
 				</div>
-				{program && (
-					<div className="z-30 absolute right-16 top-[118px] mt-2 bg-gray-200 rounded-lg shadow w-auto">
-						<ul className="py-2 text-sm text-gray-700">
-							<button
-								onClick={handleAllStudentsClick}
-								className="flex px-4 py-2 hover:bg-gray-100 w-full">
-								All Students
-							</button>
-							{programData?.map((data, key) => (
-								<li key={key}>
-									<button
-										onClick={() => handleProgramClick(data?.program_id)}
-										className="flex px-4 py-2 hover:bg-gray-100 w-full">
-										{data?.program_name}
-									</button>
-								</li>
-							))}
-						</ul>
-					</div>
-				)}
+			)}
 			<hr />
 			<Statistics programInfo={programInfo} />
 			<div>
