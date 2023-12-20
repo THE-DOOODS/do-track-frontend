@@ -344,7 +344,7 @@ const Signup = () => {
                                         <div className="text-xs text-black">
                                             <h1>Please use your university email</h1>
                                         </div>
-                                    </Tooltip>
+                                </Tooltip>
                                 </div>
                                 <div className="flex flex-col gap-1 relative">
                                     <label

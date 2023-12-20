@@ -2,6 +2,7 @@ import { RiBuilding2Line } from "react-icons/ri";
 import { IoIosPeople } from "react-icons/io";
 import randomColor from "randomcolor";
 import { useEffect, useState } from "react";
+import { Tooltip } from "react-tooltip";
 
 const generateRandomColors = (count) => {
 	return Array.from({ length: count }, () => randomColor({ format: "hex" }));
@@ -9,7 +10,7 @@ const generateRandomColors = (count) => {
 
 const ProgramStats = ({ statData, randomBgColor }) => {
 	return (
-		<div className="flex flex-col py-1 gap-3 items-end text-black z-10">
+		<div className="flex flex-col py-1 gap-3 items-end text-black z-10 ">
 			<div className="flex">
 				<div
 					className="border rounded-xl p-3 opacity-80"
@@ -71,8 +72,9 @@ const CardStats = ({ programInfo }) => {
 		<div className="flex gap-4">
 			{programInfo?.programs?.map((data, key) => (
 				<div
+					data-tooltip-id={`card-info-${key}`}
 					key={key}
-					className={`flex flex-col justify-between w-[248px] h-[126px] border rounded-xl p-3 border-gray-300`}
+					className={`flex flex-col justify-between w-[248px] h-[126px] border rounded-xl p-3 border-gray-300 cursor-default`}
 					style={{ background: `${randomColors[key]}40` }}>
 					<div className="flex items-center justify-between z-10">
 						<RiBuilding2Line className="text-black" />
@@ -89,6 +91,19 @@ const CardStats = ({ programInfo }) => {
 							}
 							randomBgColor={randomColors[key]}
 						/>
+					)}
+					{statsData.find((stat) => stat.programId === data?.program_id) && (
+						<Tooltip
+						id={`card-info-${key}`}
+						place="bottom"
+						className="z-20"
+						border="1px solid #D3D3D3"
+						style={{ background: "#E7A557" }}
+						>
+						<div className="text-xs text-white">
+							<h1>Statistics of {data?.program_name}</h1>
+						</div>
+						</Tooltip>
 					)}
 				</div>
 			))}
