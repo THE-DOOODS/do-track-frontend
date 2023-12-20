@@ -18,8 +18,9 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 	const [rowsPerPage, setRowsPerPage] = useState(10);
 	const [openSearchModal, setOpenSearchModal] = useState(false);
 	const [searchStudentData, setSearchStudentData] = useState([]);
-
 	const [searchID, setSearchID] = useState("");
+
+	const [displayedData, setDisplayedData] = useState([]);
 
 	const list = useRef(null);
 
@@ -41,10 +42,11 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 
 			if (response.ok) {
 				const data = await response.json();
+				console.log(data?.data);
 				setCollegeAttend(data?.data);
 			}
 		} catch (err) {
-			console.log("Unable to fetch attendance by college");
+			console.log("Unable to fetch attendance by college", err);
 		}
 	};
 
@@ -52,13 +54,30 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 		handleAttendCollegeRequest();
 	}, []);
 
+	useEffect(() => {
+		const startIndex = page * rowsPerPage;
+		const endIndex = startIndex + rowsPerPage;
+		setDisplayedData(collegeAttend.slice(startIndex, endIndex));
+	}, [collegeAttend, page, rowsPerPage]);
+
 	const handleChangePage = (event, newPage) => {
+		const newStartIndex = newPage * rowsPerPage;
+		const newEndIndex = newStartIndex + rowsPerPage;
+		setDisplayedData(collegeAttend.slice(newStartIndex, newEndIndex));
 		setPage(newPage);
 	};
 
 	const handleChangeRowsPerPage = (event) => {
-		setRowsPerPage(parseInt(event.target.value, 10));
-		setPage(0);
+		const newRowsPerPage = parseInt(event.target.value, 10);
+		setRowsPerPage(newRowsPerPage);
+
+		// Calculate the new page based on the rowsPerPage change
+		const newPage = Math.floor((page * rowsPerPage) / newRowsPerPage);
+		setPage(newPage);
+
+		const newStartIndex = newPage * newRowsPerPage;
+		const newEndIndex = newStartIndex + newRowsPerPage;
+		setDisplayedData(collegeAttend.slice(newStartIndex, newEndIndex));
 	};
 
 	const paginatedData = collegeAttend.slice(
@@ -66,7 +85,7 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 		page * rowsPerPage + rowsPerPage,
 	);
 
-	// function for handling the creation of pdf list of all atudent attendees
+	// function for handling the creation of pdf list of all student attendees
 	const exportPDF = () => {
 		// Adjust the width and height based on your requirements
 		const pdfWidth = 210;
@@ -120,6 +139,7 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 
 						if (response.ok) {
 							const data = await response.json();
+							setDisplayedData(data?.data.slice(0, rowsPerPage));
 							setTimeout(() => {
 								setOpenSearchModal(true);
 								setSearchStudentData(data);
@@ -136,7 +156,7 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 				}),
 				{
 					loading: "Searching student...",
-					success: (data) => `Student information found`, // Modify this according to your data structure
+					success: (data) => `Student information found`,
 					error: (message) => message,
 				},
 			);
@@ -160,7 +180,9 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 				/>
 			)}
 			<div className="flex items-center justify-between">
-				<h1 className="text-sm md:text-xl font-bold text-gray-600">List of Attendees</h1>
+				<h1 className="text-sm md:text-xl font-bold text-gray-600">
+					List of Attendees
+				</h1>
 				<div className="flex items-center justify-end gap-2">
 					<div className="relative flex items-center">
 						<input
@@ -221,7 +243,7 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 						</tr>
 					</thead>
 					<StudentStats
-						paginatedData={paginatedData}
+						paginatedData={displayedData}
 						collegeAttend={collegeAttend}
 						programAttend={programAttend}
 						selectedProgram={selectedProgram}
