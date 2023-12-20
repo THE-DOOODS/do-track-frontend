@@ -64,7 +64,6 @@ const CardStats = ({ programInfo }) => {
 			handleStatsRequest(data?.program_id);
 		});
 
-		// Generate random colors once when the component mounts
 		setRandomColors(generateRandomColors(programInfo?.programs?.length || 0));
 	}, [programInfo]);
 
