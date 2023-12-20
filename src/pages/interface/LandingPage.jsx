@@ -9,7 +9,7 @@ const LandingPage = () => {
                         Do-Day Activity Attendance and Management System
                     </h1>
                     <a href="/login">
-                        <button className="p-3 w-[148px] text-white font-semibold bg-primPurple rounded-full">
+                        <button className="p-3 w-[148px] text-white font-semibold bg-primPurple transition duration-500 hover:scale-105 hover:bg-purple-200 rounded-full">
                             Get Started
                         </button>
                     </a>

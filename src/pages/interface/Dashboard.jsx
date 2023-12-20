@@ -6,10 +6,22 @@ import { useEffect, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Toaster, toast } from "sonner";
 
+const CollegeLogo = {
+	"1" : "static/icons/CCIS-logo.png",
+	"2" : "static/icons/CEGS-logo.png",
+	"3" : "static/icons/CED-logo.png",
+	"4" : "static/icons/CAA-logo.png",
+	"5" : "static/icons/CMNS-logo.png",
+	"6" : "static/icons/CHASS-logo.png",
+	"7" : "static/icons/COFES-logo.png",
+}
+
 const Dashboard = () => {
 	const college_id = localStorage.getItem("college_id");
 	const [programInfo, setProgramInfo] = useState([]);
 	const [selectedProgram, setSelectedProgram] = useState(false);
+
+	const token = localStorage.getItem("token");
 
 	const handleCollegeRequest = async () => {
 		try {
@@ -20,6 +32,7 @@ const Dashboard = () => {
 					headers: {
 						"Content-Type": "application/json",
 						Accept: "application/json",
+						Authorization: `Bearer ${token}`,
 					},
 				},
 			);
@@ -42,9 +55,8 @@ const Dashboard = () => {
 	const [allStudents, setAllStudents] = useState(false);
 
 	useEffect(() => {
-		setProgramData(programInfo.programs);
+		setProgramData(programInfo?.programs);
 	}, [programInfo.programs]);
-
 
 	const handleProgramClick = (programId) => {
 		handleAttendProgramRequest(programId);
@@ -53,7 +65,6 @@ const Dashboard = () => {
 		setAllStudents(false);
 	};
 
-
 	const handleAllStudentsClick = () => {
 		handleCollegeRequest();
 		setProgram(false);
@@ -61,6 +72,16 @@ const Dashboard = () => {
 		setSelectedProgram(false);
 		toast.info(`Displaying all students`);
 	};
+
+	const handleProgramChange = (event) => {
+		const selectedProgramId = event.target.value;
+	
+		if (selectedProgramId === 'allStudents') {
+		  handleAllStudentsClick();
+		} else {
+		  handleProgramClick(selectedProgramId);
+		}
+	  };
 
 	const toggleProgram = () => {
 		setProgram((prevProgram) => !prevProgram);
@@ -75,75 +96,83 @@ const Dashboard = () => {
 					headers: {
 						"Content-Type": "application/json",
 						Accept: "application/json",
+						Authorization: `Bearer ${token}`,
 					},
 				},
 			);
 
-      if (response.ok) {
-        const data = await response.json();
-        toast.dismiss();
-        toast.info(`Displaying students in ${data?.data[0]?.program_name}`);
-        setProgramAttend(data?.data);
-      } else if (response.status === 404) {
-        toast.error(`No students attendance in this program`);
-      }
-    } catch (err) {
-      console.log("Unable to fetch attendance by program");
-    }
-  };
-
-
-			
+			if (response.ok) {
+				const data = await response.json();
+				toast.dismiss();
+				toast.info(`Displaying students in ${data?.data[0]?.program_name}`);
+				setProgramAttend(data?.data);
+			} else if (response.status === 404) {
+				toast.error(`No students attendance in this program`);
+			}
+		} catch (err) {
+			console.log("Unable to fetch college!");
+		}
+	};
 
 	return (
-		<div className="flex flex-col mt-16 py-6 px-16">
-			<Toaster position="top-right" closeButton richColors />
-			<div className="fixed top-0 left-0 w-full bg-white shadow-md z-40 px-16 pt-6">
+		<div className="flex flex-col mt-10 md:mt-16 py-6 px-5 md:px-16 lg:max-w-7xl md:mx-auto">
+			<Toaster position="top-center" closeButton richColors />
+			<div className="fixed top-0 left-0 w-full pt-2 bg-white shadow-md z-40 px-5 md:px-16">
 				<Topbar />
 			</div>
 			<div className="flex items-center justify-between pb-5">
-				<div className="flex items-center gap-2">
-					<h1 className="font-bold text-2xl text-primPurple">Overview</h1>
-					<div className="flex items-center">
+				<div className="w-full md:flex items-center gap-2">
+					<div className="flex w-full items-center gap-2 border border-gray-50 shadow backdrop-filter bg-blur rounded p-2">
 						<img
-							src="static/icons/CCIS-logo.png"
-							alt="CCIS-logo"
-							className="w-[42px]"
+							src={CollegeLogo[college_id]}
+							alt="College-logo"
+							className="w-[42px] md:w-[100px]"
 						/>
 						{programInfo?.college?.map((data, key) => (
-							<p key={key} className="text-lg text-gray-500">
+							<p
+								key={key}
+								className="text-xs md:text-2xl font-bold w-[450px] text-gray-400">
 								{data?.college_name}
 							</p>
 						))}
 					</div>
 				</div>
-				<button
-					onClick={toggleProgram}
-					className="flex items-center gap-2 border p-1 px-5 rounded-full bg-gray-300 text-gray-700 font-medium text-sm">
-					Select Program <RiArrowDropDownLine size={28} />
-				</button>
-				{program && (
-					<div className="z-30 absolute right-16 top-[118px] mt-2 bg-gray-200 rounded-lg shadow w-auto">
-						<ul className="py-2 text-sm text-gray-700">
-							<button
-								onClick={handleAllStudentsClick}
-								className="flex px-4 py-2 hover:bg-gray-100 w-full">
-								All Students
-							</button>
-							{programData?.map((data, key) => (
-								<li key={key}>
-									<button
-										onClick={() => handleProgramClick(data?.program_id)}
-										className="flex px-4 py-2 hover:bg-gray-100 w-full">
-										{data?.program_name}
-									</button>
-								</li>
-							))}
-						</ul>
-					</div>
-				)}
 				{/* <StudentStats programAttend={programAttend} /> */}
 			</div>
+			<div className="flex items-center justify-between mb-5">
+				<h1 className="font-bold text-2xl text-primPurple">Overview</h1>
+				<select
+				onChange={handleProgramChange}
+				className="flex items-center gap-0 text-white text-center outline-none border px-2 rounded-full h-10 bg-primPurple hover:bg-purple-400 transition duration-500 font-medium text-xs md:text-sm"
+				>
+				<option value="allStudents" className="bg-gray-200 text-gray-600 text-sm">All Students</option>
+				{programData?.map((data, key) => (
+					<option key={key} value={data?.program_id} className="bg-gray-200 text-gray-600 text-sm transition duration-500">
+					{data?.program_name}
+					</option>
+				))}
+				</select>
+			</div>
+			{/* {program && (
+				<div className="z-30 absolute right-16 top-[118px] mt-2 bg-gray-200 rounded-lg shadow w-auto">
+					<ul className="py-2 text-sm text-gray-700">
+						<button
+							onClick={handleAllStudentsClick}
+							className="flex px-4 py-2 hover:bg-gray-100 w-full">
+							All Students
+						</button>
+						{programData?.map((data, key) => (
+							<li key={key}>
+								<button
+									onClick={() => handleProgramClick(data?.program_id)}
+									className="flex px-4 py-2 hover:bg-gray-100 w-full">
+									{data?.program_name}
+								</button>
+							</li>
+						))}
+					</ul>
+				</div>
+			)} */}
 			<hr />
 			<Statistics programInfo={programInfo} />
 			<div>
