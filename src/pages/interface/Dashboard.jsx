@@ -5,6 +5,8 @@ import StudentLists from "../../components/StudentLists";
 import { useEffect, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Toaster, toast } from "sonner";
+import DeleteAllConfirmation from "../../components/modals/DeleteAllConfirmation";
+import DeleteProgConfirmation from "../../components/modals/DeleteProgConfirmation";
 
 const CollegeLogo = {
 	"1" : "static/icons/CCIS-logo.png",
@@ -20,6 +22,8 @@ const Dashboard = () => {
 	const college_id = localStorage.getItem("college_id");
 	const [programInfo, setProgramInfo] = useState([]);
 	const [selectedProgram, setSelectedProgram] = useState(false);
+	const [openDeleteAllConfirmation, setOpenDeleteAllConfirmation] = useState(false);
+	const [openDeleteProgConfirmation, setOpenDeleteProgConfirmation] = useState(false);
 
 	const token = localStorage.getItem("token");
 
@@ -53,6 +57,7 @@ const Dashboard = () => {
 	const [programData, setProgramData] = useState([]);
 	const [programAttend, setProgramAttend] = useState([]);
 	const [allStudents, setAllStudents] = useState(false);
+	const [selectedProgramId, setSelectedProgramId] = useState(null);
 
 	useEffect(() => {
 		setProgramData(programInfo?.programs);
@@ -63,6 +68,7 @@ const Dashboard = () => {
 		setProgram(false);
 		setSelectedProgram(true);
 		setAllStudents(false);
+		setSelectedProgramId(programId);
 	};
 
 	const handleAllStudentsClick = () => {
@@ -75,7 +81,6 @@ const Dashboard = () => {
 
 	const handleProgramChange = (event) => {
 		const selectedProgramId = event.target.value;
-	
 		if (selectedProgramId === 'allStudents') {
 		  handleAllStudentsClick();
 		} else {
@@ -114,27 +119,67 @@ const Dashboard = () => {
 		}
 	};
 
+	const handleDeleteOptionChange = (event) => {
+		const selectedOption = event.target.value;
+		
+		if (selectedOption === 'deleteAll') {
+			setOpenDeleteAllConfirmation(true);
+		} else if (selectedOption === 'deleteByProgram') {
+			setOpenDeleteProgConfirmation(true);
+		}
+	};
+
+	const onChangeCloseModal = (value) => {
+		if (value) {
+		  setOpenDeleteAllConfirmation(false);
+		  setOpenDeleteProgConfirmation(false);
+	  
+		  const deleteOptionSelect = document.getElementById("deleteOptionSelect");
+		  if (deleteOptionSelect) {
+			deleteOptionSelect.value = "";
+		  }
+		}
+	  };
+
 	return (
 		<div className="flex flex-col mt-10 md:mt-16 py-6 px-5 md:px-16 lg:max-w-7xl md:mx-auto">
+			{openDeleteAllConfirmation && (
+				<DeleteAllConfirmation onChangeCloseModal={(value) => onChangeCloseModal(value)} />
+			)}
+			{openDeleteProgConfirmation && (
+				<DeleteProgConfirmation onChangeCloseModal={(value) => onChangeCloseModal(value)} selectedProgramId={selectedProgramId} />
+			)}
 			<Toaster position="top-center" closeButton richColors />
 			<div className="fixed top-0 left-0 w-full pt-2 bg-white shadow-md z-40 px-5 md:px-16">
 				<Topbar />
 			</div>
 			<div className="flex items-center justify-between pb-5">
 				<div className="w-full md:flex items-center gap-2">
-					<div className="flex w-full items-center gap-2 border border-gray-50 shadow backdrop-filter bg-blur rounded p-2">
-						<img
-							src={CollegeLogo[college_id]}
-							alt="College-logo"
-							className="w-[42px] md:w-[100px]"
-						/>
-						{programInfo?.college?.map((data, key) => (
-							<p
-								key={key}
-								className="text-xs md:text-2xl font-bold w-[450px] text-gray-400">
-								{data?.college_name}
-							</p>
-						))}
+					<div className="flex w-full justify-between items-center gap-2 border border-gray-50 shadow backdrop-filter bg-gradient-to-r from-primPurple to-primOrange rounded-lg p-2">
+						<div className="flex items-center gap-4">
+							<img
+								src={CollegeLogo[college_id]}
+								alt="College-logo"
+								className="w-[42px] md:w-[100px] rounded-md"
+							/>
+							{programInfo?.college?.map((data, key) => (
+								<p
+									key={key}
+									className="text-xs md:text-2xl font-bold w-[450px] text-white">
+									{data?.college_name}
+								</p>
+							))}
+						</div>
+						<select
+							name=""
+							id="deleteOptionSelect"  // Add an id to the select element
+							className="bg-white rounded-full w-[150px] h-10 outline-none px-2 text-xs text-center"
+							onChange={(e) => handleDeleteOptionChange(e)}
+						>
+							<option value="">Delete Options</option>
+							<option value="deleteAll">Delete All Records</option>
+							<option value="deleteByProgram">Delete By Program</option>
+						</select>
 					</div>
 				</div>
 				{/* <StudentStats programAttend={programAttend} /> */}

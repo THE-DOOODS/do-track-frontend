@@ -43,7 +43,6 @@ export const StudentSearchModal = ({ searchStudentData, onChangeCloseModal }) =>
       );
 
       if (response.ok) {
-        toast.success("Student attendance information deleted");
         setTimeout(() => {
           handleCloseModal();
           setIsDelete(false);
