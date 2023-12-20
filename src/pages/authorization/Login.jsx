@@ -1,16 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { PiEyeBold, PiEyeClosedBold } from "react-icons/pi";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router";
+
 import { Toaster, toast } from "sonner";
 import LoadingBar from "react-top-loading-bar";
+import Cookies from "js-cookie";
+
 
 const Login = () => {
 	const [showPassword, setShowPassword] = useState(false);
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-
+	const [rememberMe, setRememberMe] = useState(false);
 	const [emailError, setEmailError] = useState(false);
 	const [passError, setPassError] = useState(false);
 
@@ -19,6 +22,18 @@ const Login = () => {
 	const navigator = useNavigate();
 	const loadingBar = useRef(null);
 	const promise = () => new Promise((resolve) => setTimeout(resolve, 1000));
+
+	const rememberMeCookie = "remembered_credentials";
+
+	useEffect(() => {
+		// Load saved email from cookies when component mounts
+		const savedEmail = Cookies.get(rememberMeCookie);
+	  
+		if (savedEmail) {
+		  setEmail(savedEmail);
+		  setRememberMe(true);
+		}
+	  }, []);
 
 	const handleLoginRequest = async (event) => {
 		event.preventDefault();
@@ -42,14 +57,16 @@ const Login = () => {
 				isValid = false;
 			}
 		});
-
-		// if (email === "") {
-		// 	toast.error('Email is required')
-		// } else if (password === "") {
-		// 	toast.error('Password is required')
-		// } else
-
+    
 		if (isValid) {
+			if (rememberMe) {
+				// Save email to cookies
+				Cookies.set(rememberMeCookie, email, { expires: 7 });
+			} else {
+				// Clear saved email from cookies
+				Cookies.remove(rememberMeCookie);
+			}
+
 			if (email !== "" && !emailRegex.test(email)) {
 				loadingBar.current.complete();
 				toast.error("Please use university email");
@@ -194,7 +211,11 @@ const Login = () => {
 					</div>
 				</form>
 				<div className="flex pt-4 gap-1 items-center mx-0 lg:mx-20 pb-2">
-					<input type="checkbox" />
+				<input
+					type="checkbox"
+					checked={rememberMe}
+					onChange={() => setRememberMe(!rememberMe)}
+				/>
 					<span className="text-gray-400 text-xs lg:text-base">Remember me</span>
 				</div>
 				<button
