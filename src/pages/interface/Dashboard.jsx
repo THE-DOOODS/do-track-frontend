@@ -95,32 +95,36 @@ const Dashboard = () => {
 	};
 
 	return (
-		<div className="flex flex-col mt-16 py-6 px-16 lg:max-w-7xl mx-auto">
+		<div className="flex flex-col mt-10 md:mt-16 py-6 px-5 md:px-16 lg:max-w-7xl md:mx-auto">
 			<Toaster position="top-center" closeButton richColors />
-			<div className="fixed top-0 left-0 w-full bg-white shadow-md z-40 px-16 pt-6">
+			<div className="fixed top-0 left-0 w-full pt-2 bg-white shadow-md z-40 px-5 md:px-16">
 				<Topbar />
 			</div>
 			<div className="flex items-center justify-between pb-5">
-				<div className="flex items-center gap-2">
-					<h1 className="font-bold text-2xl text-primPurple">Overview</h1>
-					<div className="flex items-center">
+				<div className="w-full md:flex items-center gap-2">
+					<div className="flex w-full items-center border border-gray-50 shadow backdrop-filter bg-blur rounded p-2">
 						<img
 							src="static/icons/CCIS-logo.png"
 							alt="CCIS-logo"
-							className="w-[42px]"
+							className="w-[42px] md:w-[100px]"
 						/>
 						{programInfo?.college?.map((data, key) => (
-							<p key={key} className="text-lg text-gray-500">
+							<p key={key} className="text-xs md:text-2xl font-bold w-[450px] text-gray-400">
 								{data?.college_name}
 							</p>
 						))}
 					</div>
 				</div>
-				<button
-					onClick={toggleProgram}
-					className="flex items-center gap-2 border p-1 px-5 rounded-full bg-gray-300 text-gray-700 font-medium text-sm">
-					Select Program <RiArrowDropDownLine size={28} />
-				</button>
+				{/* <StudentStats programAttend={programAttend} /> */}
+			</div>
+				<div className="flex items-center justify-between mb-5">
+						<h1 className="font-bold text-2xl text-primPurple">Overview</h1>
+					<button
+						onClick={toggleProgram}
+						className="flex items-center gap-1 text-white border px-2 rounded-full h-10 bg-primPurple font-medium text-xs md:text-sm">
+						Select Program <RiArrowDropDownLine size={22} />
+					</button>
+				</div>
 				{program && (
 					<div className="z-30 absolute right-16 top-[118px] mt-2 bg-gray-200 rounded-lg shadow w-auto">
 						<ul className="py-2 text-sm text-gray-700">
@@ -141,8 +145,6 @@ const Dashboard = () => {
 						</ul>
 					</div>
 				)}
-				{/* <StudentStats programAttend={programAttend} /> */}
-			</div>
 			<hr />
 			<Statistics programInfo={programInfo} />
 			<div>
