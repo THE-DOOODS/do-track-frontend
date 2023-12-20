@@ -2,18 +2,22 @@ import { TbClipboardList } from "react-icons/tb";
 import { TablePagination } from "@mui/material";
 import StudentStats from "./StudentStats";
 import { useState, useEffect, useRef } from "react";
+import { Toaster, toast } from "sonner";
 
 import JsPDF, { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 
 import { IoIosSearch } from "react-icons/io";
+import { StudentSearchModal } from "./modals/StudentSearchModal";
 
 const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
+	const promise = () => new Promise((resolve) => setTimeout(resolve, 1000));
 	const college_id = localStorage.getItem("college_id");
-
 	const [collegeAttend, setCollegeAttend] = useState([]);
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
+	const [openSearchModal, setOpenSearchModal] = useState(false);
+	const [searchStudentData, setSearchStudentData] = useState([]);
 
 	const [searchID, setSearchID] = useState("");
 
@@ -97,15 +101,60 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 	};
 
 	// search functionalities
-	const handleSearchStudentAttendee = (event) => {
-		if (event.key === "Enter") {
-			// todo implement the search functionality here
-			//? overwrite the data that is being passed from params
+	const handleSearchStudentAttendee = async (event) => {
+		
+		  try {
+			toast.promise(
+			  new Promise(async (resolve, reject) => {
+				try {
+				  let response = await fetch(`https://do-track-backend-production.up.railway.app/api/attendance/find-student/${searchID}`, {
+					method: "GET",
+					headers: {
+					  "Content-Type": "application/json",
+					  Accept: "application/json",
+					  Authorization: `Bearer ${token}`,
+					}
+				  });
+	  
+				  if (response.ok) {
+					const data = await response.json();
+					setTimeout(() => {
+					  setOpenSearchModal(true);
+					  setSearchStudentData(data);
+					  resolve(data); // Resolve the promise on success
+					}, 1000);
+				  } else {
+					// If the response is not ok, reject the promise
+					reject("Student record does not exist");
+				  }
+				} catch (err) {
+				  // If there's an error, reject the promise
+				  reject("An error occurred while searching for the student");
+				}
+			  }),
+			  {
+				loading: "Searching student...",
+				success: (data) => `Student information found`, // Modify this according to your data structure
+				error: (message) => message,
+			  }
+			);
+		  } catch (err) {
+			console.error("An error occurred:", err);
+		  }
+		
+	  };
+	  
+
+	const onChangeCloseModal = (value) => {
+		if (value) {
+			setOpenSearchModal(false);
 		}
-	};
+	}
+
 
 	return (
 		<div className="flex flex-col py-4 gap-3">
+			{openSearchModal && <StudentSearchModal searchStudentData={searchStudentData} onChangeCloseModal={(value)=>onChangeCloseModal(value)} />}
 			<div className="flex items-center justify-between">
 				<h1 className="text-xl font-bold text-gray-600">List of Attendees</h1>
 				<div className="flex items-center gap-2">
@@ -116,11 +165,15 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 							className="h-10 px-12 rounded-full outline-primPurple text-xs border border-gray-300 text-gray-500"
 							value={searchID}
 							onChange={(e) => setSearchID(e.target.value)}
-							onKeyDown={handleSearchStudentAttendee}
+							onKeyDown={(event) => {
+								if (event.key === "Enter") {
+								  handleSearchStudentAttendee();
+								}
+							}}
 						/>
 						<IoIosSearch
 							onClick={handleSearchStudentAttendee}
-							className="absolute left-3 text-gray-500"
+							className="absolute z-10 hover:text-primOrange right-3 text-gray-500 cursor-pointer"
 						/>
 					</div>
 					<button
@@ -132,7 +185,7 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 			</div>
 			<div ref={list} className="relative overflow-x-auto shadow-md sm:rounded-lg">
 				<table className="w-full text-sm text-left rtl:text-right text-gray-500">
-					<thead className="text-xs text-gray-700 uppercase bg-purple -200 bg-gray-200">
+					<thead className="text-xs text-gray-700 uppercase bg-purple-200">
 						<tr>
 							<th scope="col" className="px-6 py-3">
 								Student ID
