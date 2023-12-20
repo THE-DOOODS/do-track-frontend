@@ -44,7 +44,10 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 			if (response.ok) {
 				const data = await response.json();
 				setCollegeAttend(data?.data);
+			} else if (response.status === 404) {
+				toast.error("No records to be displayed");
 			}
+
 		} catch (err) {
 			console.log("Unable to fetch attendance by college", err);
 		}
