@@ -13,10 +13,10 @@ const Logout = ({ onClose, onConfirm }) => {
         </div>
         <h1 className='text-center text-sm text-gray-500'>You are attempting to leave. Are you sure you want to log out?</h1>
         <div className="flex flex-row gap-10">
-          <button onClick={onClose} className="text-gray-600 font-medium px-6 py-1 border rounded-md border-gray-600 hover:bg-purple-100 hover:text-white hover:border-white">
+          <button onClick={onClose} className="text-gray-600 font-medium px-6 py-1 border rounded-md border-gray-600 transition duration-500 hover:bg-purple-100 hover:text-white hover:border-white">
             Cancel
           </button>
-          <button onClick={onConfirm} className="text-white font-medium px-6 py-1 rounded-md bg-primOrange hover:bg-purple-100">
+          <button onClick={onConfirm} className="text-white font-medium px-6 py-1 rounded-md bg-primOrange transition duration-500 hover:bg-purple-100">
             Confirm
           </button>
         </div>
