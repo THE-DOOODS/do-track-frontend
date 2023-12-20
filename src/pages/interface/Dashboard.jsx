@@ -95,7 +95,7 @@ const Dashboard = () => {
 	};
 
 	return (
-		<div className="flex flex-col mt-16 py-6 px-16">
+		<div className="flex flex-col mt-16 py-6 px-16 lg:max-w-7xl mx-auto">
 			<Toaster position="top-center" closeButton richColors />
 			<div className="fixed top-0 left-0 w-full bg-white shadow-md z-40 px-16 pt-6">
 				<Topbar />
@@ -144,7 +144,7 @@ const Dashboard = () => {
 				{/* <StudentStats programAttend={programAttend} /> */}
 			</div>
 			<hr />
-			<Statistics programInfo={programInfo}/>
+			<Statistics programInfo={programInfo} />
 			<div>
 				<StudentLists
 					programAttend={programAttend}
