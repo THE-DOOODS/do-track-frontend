@@ -1,33 +1,23 @@
 import { useEffect, useState } from "react";
 
 const StudentStats = ({
+	paginatedData,
 	collegeAttend,
 	programAttend,
 	selectedProgram,
 	allStudents,
 }) => {
 	const [attendData, setAttendData] = useState([]);
-
-	useEffect(() => {
-		if (allStudents) {
-			setAttendData(collegeAttend);
-		} else if (selectedProgram) {
-			setAttendData(programAttend);
-		} else {
-			setAttendData(collegeAttend);
-		}
-		// setAttendData(!selectedProgram ? collegeAttend : programAttend);
-	}, [collegeAttend, programAttend, selectedProgram, allStudents]);
-
 	const formatHours = (totalHours) => {
 		const hours = Math.floor(totalHours);
 		const minutes = Math.round((totalHours - hours) * 60);
 		return `${hours}:${String(minutes).padStart(2, "0")}`;
 	};
 
+
 	return (
 		<tbody>
-			{attendData?.map((data, key) => (
+			{paginatedData.map((data, key) => (
 				<tr key={key} className="bg-white border-b hover:bg-gray-200 text-xs    ">
 					<td scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
 						{data?.student_id}
