@@ -154,7 +154,7 @@ const Login = () => {
 					</div>
 					<div className="flex items-center">
 						<a href="/">
-							<IoClose className="text-primPurple" size={32} />
+							<IoClose className="text-primPurple hover:text-purple-300 transition duration-500" size={32} />
 						</a>
 					</div>
 				</div>
@@ -220,13 +220,13 @@ const Login = () => {
 				</div>
 				<button
 					onClick={handleLoginRequest}
-					className="bg-gradient-to-r from-primPurple to-primOrange text-white h-10 p-2 rounded-md mx-0 lg:mx-20">
+					className="bg-gradient-to-r from-primPurple to-primOrange transition duration-500 hover:scale-105 text-white h-10 p-2 rounded-md mx-0 lg:mx-20">
 					Sign In
 				</button>
 				<p className="text-gray-500 mx-0 lg:mx-20 pt-2">
 					Don't have an account yet?{" "}
 					<a href="/signup">
-						<u className="text-primPurple font-medium">Sign up</u>
+						<u className="text-primPurple font-medium hover:text-purple-200 transition duration-500">Sign up</u>
 					</a>
 				</p>
 			</div>

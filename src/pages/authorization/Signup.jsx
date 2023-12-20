@@ -344,7 +344,7 @@ const Signup = () => {
                                         <div className="text-xs text-black">
                                             <h1>Please use your university email</h1>
                                         </div>
-                                    </Tooltip>
+                                </Tooltip>
                                 </div>
                                 <div className="flex flex-col gap-1 relative">
                                     <label
@@ -524,12 +524,12 @@ const Signup = () => {
                                 </div>
                             </div>
                         </form>
-                        <p className="text-gray-400 text-xs md:text-sm">Already registered? <a href="/login" className="text-primPurple font-medium"><u>Sign In</u></a></p>
+                        <p className="text-gray-400 text-xs md:text-sm">Already registered? <a href="/login" className="text-primPurple transition duration-500 hover:text-purple-200 font-medium"><u>Sign In</u></a></p>
                     </div>
                 <div className="flex flex-col items-center justify-center">
                     <button 
                         onClick={handleSignupRequest}
-                        className="bg-primPurple text-white font-semibold p-2 rounded-full w-[102px] md:w-[142px] lg:w-[182px]"
+                        className="bg-primPurple transition duration-500 hover:scale-105 hover:bg-purple-200 text-white font-semibold p-2 rounded-full w-[102px] md:w-[142px] lg:w-[182px]"
                         type="submit"
                     >
                         Sign Up

@@ -6,6 +6,16 @@ import { useEffect, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Toaster, toast } from "sonner";
 
+const CollegeLogo = {
+	"1" : "static/icons/CCIS-logo.png",
+	"2" : "static/icons/CEGS-logo.png",
+	"3" : "static/icons/CED-logo.png",
+	"4" : "static/icons/CAA-logo.png",
+	"5" : "static/icons/CMNS-logo.png",
+	"6" : "static/icons/CHASS-logo.png",
+	"7" : "static/icons/COFES-logo.png",
+}
+
 const Dashboard = () => {
 	const college_id = localStorage.getItem("college_id");
 	const [programInfo, setProgramInfo] = useState([]);
@@ -63,6 +73,16 @@ const Dashboard = () => {
 		toast.info(`Displaying all students`);
 	};
 
+	const handleProgramChange = (event) => {
+		const selectedProgramId = event.target.value;
+	
+		if (selectedProgramId === 'allStudents') {
+		  handleAllStudentsClick();
+		} else {
+		  handleProgramClick(selectedProgramId);
+		}
+	  };
+
 	const toggleProgram = () => {
 		setProgram((prevProgram) => !prevProgram);
 	};
@@ -102,10 +122,10 @@ const Dashboard = () => {
 			</div>
 			<div className="flex items-center justify-between pb-5">
 				<div className="w-full md:flex items-center gap-2">
-					<div className="flex w-full items-center border border-gray-50 shadow backdrop-filter bg-blur rounded p-2">
+					<div className="flex w-full items-center gap-2 border border-gray-50 shadow backdrop-filter bg-blur rounded p-2">
 						<img
-							src="static/icons/CCIS-logo.png"
-							alt="CCIS-logo"
+							src={CollegeLogo[college_id]}
+							alt="College-logo"
 							className="w-[42px] md:w-[100px]"
 						/>
 						{programInfo?.college?.map((data, key) => (
@@ -121,13 +141,19 @@ const Dashboard = () => {
 			</div>
 			<div className="flex items-center justify-between mb-5">
 				<h1 className="font-bold text-2xl text-primPurple">Overview</h1>
-				<button
-					onClick={toggleProgram}
-					className="flex items-center gap-1 text-white border px-4 rounded-full h-10 bg-primPurple font-medium text-xs md:text-sm">
-					Select Program <RiArrowDropDownLine size={22} />
-				</button>
+				<select
+				onChange={handleProgramChange}
+				className="flex items-center gap-0 text-white text-center outline-none border px-2 rounded-full h-10 bg-primPurple hover:bg-purple-400 transition duration-500 font-medium text-xs md:text-sm"
+				>
+				<option value="allStudents" className="bg-gray-200 text-gray-600 text-sm">All Students</option>
+				{programData?.map((data, key) => (
+					<option key={key} value={data?.program_id} className="bg-gray-200 text-gray-600 text-sm transition duration-500">
+					{data?.program_name}
+					</option>
+				))}
+				</select>
 			</div>
-			{program && (
+			{/* {program && (
 				<div className="z-30 absolute right-16 top-[118px] mt-2 bg-gray-200 rounded-lg shadow w-auto">
 					<ul className="py-2 text-sm text-gray-700">
 						<button
@@ -146,7 +172,7 @@ const Dashboard = () => {
 						))}
 					</ul>
 				</div>
-			)}
+			)} */}
 			<hr />
 			<Statistics programInfo={programInfo} />
 			<div>
