@@ -19,6 +19,8 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 
 	const list = useRef(null);
 
+	const token = localStorage.getItem("token");
+
 	const handleAttendCollegeRequest = async () => {
 		try {
 			let response = await fetch(
@@ -28,6 +30,7 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 					headers: {
 						"Content-Type": "application/json",
 						Accept: "application/json",
+						Authorization: `Bearer ${token}`,
 					},
 				},
 			);

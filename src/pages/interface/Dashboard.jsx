@@ -12,6 +12,7 @@ const Dashboard = () => {
 	const [selectedProgram, setSelectedProgram] = useState(false);
 
 	const token = localStorage.getItem("token");
+	console.log("token: ", token);
 
 	const handleCollegeRequest = async () => {
 		try {
@@ -22,11 +23,12 @@ const Dashboard = () => {
 					headers: {
 						"Content-Type": "application/json",
 						Accept: "application/json",
-						Authorization: Bearer`${token}`,
+						Authorization: `Bearer ${token}`,
 					},
 				},
 			);
 			if (response.ok) {
+				console.log("here");
 				const data = await response.json();
 				setProgramInfo(data?.data);
 			}
@@ -45,9 +47,8 @@ const Dashboard = () => {
 	const [allStudents, setAllStudents] = useState(false);
 
 	useEffect(() => {
-		setProgramData(programInfo.programs);
+		setProgramData(programInfo?.programs);
 	}, [programInfo.programs]);
-
 
 	const handleProgramClick = (programId) => {
 		handleAttendProgramRequest(programId);
@@ -55,7 +56,6 @@ const Dashboard = () => {
 		setSelectedProgram(true);
 		setAllStudents(false);
 	};
-
 
 	const handleAllStudentsClick = () => {
 		handleCollegeRequest();
@@ -78,25 +78,25 @@ const Dashboard = () => {
 					headers: {
 						"Content-Type": "application/json",
 						Accept: "application/json",
+						Authorization: `Bearer ${token}`,
 					},
 				},
 			);
 
-      if (response.ok) {
-        const data = await response.json();
-        toast.dismiss();
-        toast.info(`Displaying students in ${data?.data[0]?.program_name}`);
-        setProgramAttend(data?.data);
-      } else if (response.status === 404) {
-        toast.error(`No students attendance in this program`);
-      }
-    } catch (err) {
-      console.log("Unable to fetch attendance by program");
-    }
-  };
-
-
-			
+			if (response.ok) {
+				const data = await response.json();
+				console.log("data in attend program request", data);
+				toast.dismiss();
+				toast.info(`Displaying students in ${data?.data[0]?.program_name}`);
+				setProgramAttend(data?.data);
+			} else if (response.status === 404) {
+				toast.error(`No students attendance in this program`);
+			}
+		} catch (err) {
+			console.error("Error during fetch:", err);
+			console.log("Unable to fetch college!");
+		}
+	};
 
 	return (
 		<div className="flex flex-col mt-16 py-6 px-16">
