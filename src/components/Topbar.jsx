@@ -62,7 +62,7 @@ const Topbar = () => {
 	};
 
 	return (
-		<div className="flex items-center justify-between pb-3">
+		<div className="flex items-center justify-between pb-3 lg:max-w-7xl mx-auto">
 			<LoadingBar height={7} color="#4ab516" ref={loadingBar} />
 			{isLogout && (
 				<Logout onClose={handleCloseLogout} onConfirm={handleConfirmLogout} />
