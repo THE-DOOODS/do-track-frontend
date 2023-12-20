@@ -1,24 +1,18 @@
 import { useEffect, useState } from "react";
 
-const StudentStats = ({
-	paginatedData,
-	collegeAttend,
-	programAttend,
-	selectedProgram,
-	allStudents,
-}) => {
-	const [attendData, setAttendData] = useState([]);
+const StudentStats = ({ paginatedData }) => {
 	const formatHours = (totalHours) => {
 		const hours = Math.floor(totalHours);
 		const minutes = Math.round((totalHours - hours) * 60);
 		return `${hours}:${String(minutes).padStart(2, "0")}`;
 	};
 
-
 	return (
 		<tbody>
 			{paginatedData.map((data, key) => (
-				<tr key={key} className="bg-white border-b hover:bg-gray-200 text-xs    ">
+				<tr
+					key={key}
+					className="bg-white border-b border-l border-r hover:bg-gray-200 text-xs    ">
 					<td scope="row" className="px-6 py-4 font-medium  whitespace-nowrap">
 						{data?.student_id}
 					</td>
