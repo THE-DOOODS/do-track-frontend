@@ -62,7 +62,7 @@ const Topbar = () => {
 	};
 
 	return (
-		<div className="flex items-center justify-between pb-3 lg:max-w-7xl mx-auto">
+		<div className="flex w-full items-center justify-between pb-3 lg:max-w-7xl md:mx-auto">
 			<LoadingBar height={7} color="#4ab516" ref={loadingBar} />
 			{isLogout && (
 				<Logout onClose={handleCloseLogout} onConfirm={handleConfirmLogout} />
@@ -70,10 +70,10 @@ const Topbar = () => {
 			<img
 				src="/static/icons/Logo.png"
 				alt="Do-Track Logo"
-				className="w-[116px]"
+				className="w-[80px] md:w-[116px]"
 			/>
-			<div className="flex items-center gap-3">
-				<h1>
+			<div className="flex w-full items-center justify-end gap-3 ">
+				<h1 className="text-xs">
 					{first_name} {last_name}
 				</h1>
 				<div className="flex items-center gap-2 relative">

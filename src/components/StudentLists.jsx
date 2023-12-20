@@ -102,72 +102,76 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 
 	// search functionalities
 	const handleSearchStudentAttendee = async (event) => {
-		
-		  try {
+		try {
 			toast.promise(
-			  new Promise(async (resolve, reject) => {
-				try {
-				  let response = await fetch(`https://do-track-backend-production.up.railway.app/api/attendance/find-student/${searchID}`, {
-					method: "GET",
-					headers: {
-					  "Content-Type": "application/json",
-					  Accept: "application/json",
-					  Authorization: `Bearer ${token}`,
+				new Promise(async (resolve, reject) => {
+					try {
+						let response = await fetch(
+							`https://do-track-backend-production.up.railway.app/api/attendance/find-student/${searchID}`,
+							{
+								method: "GET",
+								headers: {
+									"Content-Type": "application/json",
+									Accept: "application/json",
+									Authorization: `Bearer ${token}`,
+								},
+							},
+						);
+
+						if (response.ok) {
+							const data = await response.json();
+							setTimeout(() => {
+								setOpenSearchModal(true);
+								setSearchStudentData(data);
+								resolve(data); // Resolve the promise on success
+							}, 1000);
+						} else {
+							// If the response is not ok, reject the promise
+							reject("Student record does not exist");
+						}
+					} catch (err) {
+						// If there's an error, reject the promise
+						reject("An error occurred while searching for the student");
 					}
-				  });
-	  
-				  if (response.ok) {
-					const data = await response.json();
-					setTimeout(() => {
-					  setOpenSearchModal(true);
-					  setSearchStudentData(data);
-					  resolve(data); // Resolve the promise on success
-					}, 1000);
-				  } else {
-					// If the response is not ok, reject the promise
-					reject("Student record does not exist");
-				  }
-				} catch (err) {
-				  // If there's an error, reject the promise
-				  reject("An error occurred while searching for the student");
-				}
-			  }),
-			  {
-				loading: "Searching student...",
-				success: (data) => `Student information found`, // Modify this according to your data structure
-				error: (message) => message,
-			  }
+				}),
+				{
+					loading: "Searching student...",
+					success: (data) => `Student information found`, // Modify this according to your data structure
+					error: (message) => message,
+				},
 			);
-		  } catch (err) {
+		} catch (err) {
 			console.error("An error occurred:", err);
-		  }
-		
-	  };
-	  
+		}
+	};
 
 	const onChangeCloseModal = (value) => {
 		if (value) {
 			setOpenSearchModal(false);
 		}
-	}
-
+	};
 
 	return (
 		<div className="flex flex-col py-4 gap-3">
-			{openSearchModal && <StudentSearchModal searchStudentData={searchStudentData} onChangeCloseModal={(value)=>onChangeCloseModal(value)} />}
+			{openSearchModal && (
+				<StudentSearchModal
+					searchStudentData={searchStudentData}
+					onChangeCloseModal={(value) => onChangeCloseModal(value)}
+				/>
+			)}
 			<div className="flex items-center justify-between">
-				<h1 className="text-xl font-bold text-gray-600">List of Attendees</h1>
-				<div className="flex items-center gap-2">
+				<h1 className="text-sm md:text-xl font-bold text-gray-600">List of Attendees</h1>
+				<div className="flex items-center justify-end gap-2">
 					<div className="relative flex items-center">
 						<input
 							type="text"
-							placeholder="Search student by ID no."
-							className="h-10 px-12 rounded-full outline-primPurple text-xs border border-gray-300 text-gray-500"
+							placeholder="Search student ID"
+							className="h-10 px-4 md:px-12 rounded-full outline-primPurple text-xs border border-gray-300 text-gray-500"
 							value={searchID}
 							onChange={(e) => setSearchID(e.target.value)}
 							onKeyDown={(event) => {
 								if (event.key === "Enter") {
-								  handleSearchStudentAttendee();
+									handleSearchStudentAttendee();
 								}
 							}}
 						/>
@@ -178,7 +182,7 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 					</div>
 					<button
 						onClick={exportPDF}
-						className="flex items-center gap-2 border p-1 px-4 rounded-full text-sm text-white bg-primOrange h-10">
+						className="hidden md:flex items-center gap-2 border p-1 px-4 rounded-full text-sm text-white bg-primOrange h-10">
 						Convert List of PDF <TbClipboardList size={16} />
 					</button>
 				</div>
