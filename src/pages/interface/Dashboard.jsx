@@ -6,6 +6,16 @@ import { useEffect, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Toaster, toast } from "sonner";
 
+const CollegeLogo = {
+	"1" : "static/icons/CCIS-logo.png",
+	"2" : "static/icons/CEGS-logo.png",
+	"3" : "static/icons/CED-logo.png",
+	"4" : "static/icons/CAA-logo.png",
+	"5" : "static/icons/CMNS-logo.png",
+	"6" : "static/icons/CHASS-logo.png",
+	"7" : "static/icons/COFES-logo.png",
+}
+
 const Dashboard = () => {
 	const college_id = localStorage.getItem("college_id");
 	const [programInfo, setProgramInfo] = useState([]);
@@ -103,9 +113,9 @@ const Dashboard = () => {
 			<div className="flex items-center justify-between pb-5">
 				<div className="flex items-center gap-2">
 					<h1 className="font-bold text-2xl text-primPurple">Overview</h1>
-					<div className="flex items-center">
+					<div className="flex items-center gap-1">
 						<img
-							src="static/icons/CCIS-logo.png"
+							src={CollegeLogo[college_id]}
 							alt="CCIS-logo"
 							className="w-[42px]"
 						/>
