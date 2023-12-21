@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import '../index.css'
+import "../index.css";
 
 const StudentStats = ({ paginatedData }) => {
 	const formatHours = (totalHours) => {
@@ -21,7 +21,9 @@ const StudentStats = ({ paginatedData }) => {
 					<td className="px-6 py-4">{data?.student_last_name}</td>
 					<td className="px-6 py-4">{data?.program_name}</td>
 					<td className="px-6 py-4">{data?.year_level_code}</td>
-					<td className="px-6 py-4 w-[12px] h-[12px]"><img src={data?.digital_sig_url}/></td>
+					<td className="py-4 flex items-center justify-center">
+						<img src={data?.digital_sig_url} className="w-[50px]" />
+					</td>
 					<td className="px-6 py-4">
 						{new Date(data?.time_in).toLocaleString("en-US", {
 							hour: "numeric",

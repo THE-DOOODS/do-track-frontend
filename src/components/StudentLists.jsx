@@ -46,7 +46,6 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 			} else if (response.status === 404) {
 				toast.error("No records to be displayed");
 			}
-
 		} catch (err) {
 			console.log("Unable to fetch attendance by college", err);
 		}
@@ -105,15 +104,15 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 		const listElement = list.current;
 
 		// Use html2canvas to capture the HTML element as an image
-		html2canvas(listElement).then((canvas) => {
+		html2canvas(listElement, { useCORS: true }).then((canvas) => {
 			// Calculate the scaling factor based on the PDF dimensions
-			const imgData = canvas.toDataURL("image/jpeg", 1.0);
+			const imgData = canvas.toDataURL("image/png", 1.0);
 			const scaleFactor = (pdfWidth - 2 * margin) / canvas.width; // Adjusted for the margins
 
 			// Add the image to the PDF with the calculated scaling and margin
 			listPdf.addImage(
 				imgData,
-				"JPEG",
+				"PNG",
 				margin,
 				margin,
 				pdfWidth - 2 * margin,
