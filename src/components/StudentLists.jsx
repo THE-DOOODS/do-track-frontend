@@ -25,7 +25,6 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 	const list = useRef(null);
 
 	const token = localStorage.getItem("token");
-	const adminId = localStorage.getItem("admin_id")
 
 	const handleAttendCollegeRequest = async () => {
 		try {
@@ -133,7 +132,7 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 				new Promise(async (resolve, reject) => {
 					try {
 						let response = await fetch(
-							`https://do-track-backend-production.up.railway.app/api/attendance/find-student/${searchID}?adminId=${adminId}`,
+							`https://do-track-backend-production.up.railway.app/api/attendance/find-student/${searchID}?collegeId=${college_id}`,
 							{
 								method: "GET",
 								headers: {
