@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { toast } from "sonner";
 
-const DeleteProgConfirmation = ({onChangeCloseModal, selectedProgramId}) => {
+const DeleteProgConfirmation = ({onChangeCloseModal, selectedProgramId, programData}) => {
     const promise = () => new Promise((resolve) => setTimeout(resolve, 1000));
     const token = localStorage.getItem("token");
 
@@ -14,36 +14,51 @@ const DeleteProgConfirmation = ({onChangeCloseModal, selectedProgramId}) => {
         if (selectedProgramId === null) {
             toast.error('Please choose programs for student attendance records to be deleted');
         } else {
-            toast.promise(promise, {
-                loading: "Deleting student attendance in...",
-                success: () => {
-                  return `Deleted student attendance in`;
-                },
-                error: "Error deleting all students",
-              });
             try {
-                let response = await fetch(
-                  `https://do-track-backend-production.up.railway.app/api/attendance/delete-program-record/${selectedProgramId}`,
-                  {
-                    method: "DELETE",
-                    headers: {
-                      "Content-Type": "application/json",
-                      Accept: "application/json",
-                      Authorization: `Bearer ${token}`,
+                
+                const selectedProgram = programData.find(program => program.program_id === selectedProgramId);
+    
+                toast.promise(
+                    new Promise(async (resolve, reject) => {
+                        try {
+                            let response = await fetch(
+                                `https://do-track-backend-production.up.railway.app/api/attendance/delete-program-record/${selectedProgramId}`,
+                                {
+                                    method: "DELETE",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        Accept: "application/json",
+                                        Authorization: `Bearer ${token}`,
+                                    },
+                                }
+                            );
+    
+                            if (response.ok) {
+                                const data = await response.json();
+                                setTimeout(() => {
+                                    handleCloseModal();
+                                    resolve(data);
+                                }, 1000);
+                            } else if (response.status === 404) {
+                                reject(`No student attendance records to be deleted in ${selectedProgram.program_name}`);
+                            }
+                        } catch (err) {
+                            reject("An error occurred while deleting the student attendance records");
+                        }
+    
+                    }),
+                    {
+                        loading: "Deleting student attendance records...",
+                        success: () => `Student attendance records successfully deleted in ${selectedProgram.program_name}`,
+                        error: (message) => message,
                     },
-                  }
-                );
-          
-                if (response.ok) {
-                  setTimeout(() => {
-                    handleCloseModal();
-                  }, 1000);
-                }
+                )
             } catch (err) {
                 toast.error("Could not make request right now");
             }
         }
-    }
+    };
+    
 
     return (
         <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-60 flex">
