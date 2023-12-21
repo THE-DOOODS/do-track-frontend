@@ -20,6 +20,7 @@ const StudentStats = ({ paginatedData }) => {
 					<td className="px-6 py-4">{data?.student_last_name}</td>
 					<td className="px-6 py-4">{data?.program_name}</td>
 					<td className="px-6 py-4">{data?.year_level_code}</td>
+					<td className="px-6 py-4 w-[32px] h-[32px]"><img src={data?.digital_sig_url}/></td>
 					<td className="px-6 py-4">
 						{new Date(data?.time_in).toLocaleString("en-US", {
 							hour: "numeric",
