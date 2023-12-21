@@ -12,7 +12,7 @@ const DeleteProgConfirmation = ({onChangeCloseModal, selectedProgramId, programD
 
     const handleDeleteAll = async () => {
         if (selectedProgramId === null) {
-            toast.error('Please choose programs for student attendance records to be deleted');
+            toast.error('Before deleting, click the purple button to choose a program for filtering');
         } else {
             try {
 
