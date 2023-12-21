@@ -15,7 +15,7 @@ const DeleteProgConfirmation = ({onChangeCloseModal, selectedProgramId, programD
             toast.error('Please choose programs for student attendance records to be deleted');
         } else {
             try {
-                
+
                 const selectedProgram = programData.find(program => program.program_id === selectedProgramId);
     
                 toast.promise(
@@ -38,6 +38,7 @@ const DeleteProgConfirmation = ({onChangeCloseModal, selectedProgramId, programD
                                 setTimeout(() => {
                                     handleCloseModal();
                                     resolve(data);
+                                    window.location.reload();
                                 }, 1000);
                             } else if (response.status === 404) {
                                 reject(`No student attendance records to be deleted in ${selectedProgram.program_name}`);

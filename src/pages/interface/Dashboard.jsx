@@ -175,7 +175,7 @@ const Dashboard = () => {
 						<select
 							name=""
 							id="deleteOptionSelect"  // Add an id to the select element
-							className="bg-white rounded-full w-[110px] md:w-[130px] h-10 outline-none px-2 text-xs text-center"
+							className="bg-white rounded-full w-[110px] md:w-[130px] h-10 outline-none px-2 text-xs text-center duration-500 transform hover:translate-y-1 hover:bg-purple-200"
 							onChange={(e) => handleDeleteOptionChange(e)}
 						>
 							<option value="">Delete Options</option>
