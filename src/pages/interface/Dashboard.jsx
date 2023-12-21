@@ -191,8 +191,8 @@ const Dashboard = () => {
 							border="1px solid #D3D3D3"
 							style={{ background: "#AD32C1" }}
 						>
-							<div className="text-xs text-white">
-								<h1>Deletion students attencdance records option</h1>
+							<div className="text-[10px] text-white">
+								<h1>Deletion students attendance records option</h1>
 							</div>
 						</Tooltip>
 					</div>
