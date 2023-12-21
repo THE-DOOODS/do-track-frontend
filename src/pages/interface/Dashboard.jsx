@@ -167,7 +167,7 @@ const Dashboard = () => {
 							{programInfo?.college?.map((data, key) => (
 								<p
 									key={key}
-									className="text-xs md:text-2xl font-bold w-[450px] text-white">
+									className="text-xs md:text-2xl font-bold md:w-[450px] text-white">
 									{data?.college_name}
 								</p>
 							))}
@@ -175,7 +175,7 @@ const Dashboard = () => {
 						<select
 							name=""
 							id="deleteOptionSelect"  // Add an id to the select element
-							className="bg-white rounded-full w-[150px] h-10 outline-none px-2 text-xs text-center"
+							className="bg-white rounded-full w-[110px] md:w-[130px] h-10 outline-none px-2 text-xs text-center"
 							onChange={(e) => handleDeleteOptionChange(e)}
 						>
 							<option value="">Delete Options</option>
@@ -190,7 +190,7 @@ const Dashboard = () => {
 				<h1 className="font-bold text-2xl text-primPurple">Overview</h1>
 				<select
 				onChange={handleProgramChange}
-				className="flex items-center gap-0 text-white text-center outline-none border px-2 rounded-full h-10 bg-primPurple hover:bg-purple-400 transition duration-500 font-medium text-xs md:text-sm"
+				className="w-[150px] flex items-center gap-0 text-white text-center outline-none border px-2 rounded-full h-10 bg-primPurple hover:bg-purple-400 transition duration-500 font-medium text-xs md:text-sm"
 				>
 				<option value="allStudents" className="bg-gray-200 text-gray-600 text-sm">All Students</option>
 				{programData?.map((data, key) => (
