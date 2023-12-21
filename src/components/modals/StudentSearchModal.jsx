@@ -100,7 +100,7 @@ export const StudentSearchModal = ({ searchStudentData, onChangeCloseModal }) =>
                             </div>
                             <div className="flex flex-row justify-between p-2 bg-white border-b hover:bg-gray-200 text-xs items-center ">
                                 <h1 className="font-semibold text-primPurple">Digital Signature</h1>
-                                <img className="w-[12px] h-[12px]" src={searchStudentData?.data?.digital_sig_url}/>
+                                <img className="w-[42px] h-[42px]" src={searchStudentData?.data?.digital_sig_url}/>
                             </div>
                             <div className="flex flex-row justify-between p-2 bg-white border-b hover:bg-gray-200 text-xs ">
                                 <h1 className="font-semibold text-primPurple">College</h1>
