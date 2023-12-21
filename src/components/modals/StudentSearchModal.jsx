@@ -1,68 +1,82 @@
+import React, { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { toast } from "sonner";
-import { useEffect } from "react";
+import DeleteConfirmation from "./DeleteConfirmation";
 
-export const StudentSearchModal = ({searchStudentData, onChangeCloseModal}) => {
+export const StudentSearchModal = ({ searchStudentData, onChangeCloseModal }) => {
+  const [isDelete, setIsDelete] = useState(false);
+  const token = localStorage.getItem("token");
 
-    const token = localStorage.getItem("token");
-    const promise = () => new Promise((resolve) => setTimeout(resolve, 1000));
+  const handleDelete = async () => {
+    setIsDelete(true);
+  };
 
-    const handleCloseModal = () => {
-        onChangeCloseModal(true);
+  const handleCloseModal = () => {
+    onChangeCloseModal(true);
+  };
+
+  const formatHours = (totalHours) => {
+    const hours = Math.floor(totalHours);
+    const minutes = Math.round((totalHours - hours) * 60);
+    return `${hours}:${String(minutes).padStart(2, "0")}`;
+  };
+
+  const handleStudentDelete = async () => {
+    toast.promise(promise, {
+      loading: "Deleting student attendance...",
+      success: () => {
+        return `Deleted student attendance`;
+      },
+      error: "Error",
+    });
+    try {
+      let response = await fetch(
+        `https://do-track-backend-production.up.railway.app/api/attendance/delete-student-record/${searchStudentData?.data?.student_id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        setTimeout(() => {
+          handleCloseModal();
+          setIsDelete(false);
+        }, 3000);
+      }
+    } catch (err) {
+      toast.error("Could not make request right now");
     }
+  };
 
-   const formatHours = (totalHours) => {
-        const hours = Math.floor(totalHours);
-        const minutes = Math.round((totalHours - hours) * 60);
-        return `${hours}:${String(minutes).padStart(2, '0')}`;
+  const promise = () => new Promise((resolve) => setTimeout(resolve, 1000));
+
+  useEffect(() => {
+    const body = document.body;
+
+    const handleBodyOverflow = (isOpen) => {
+      body.style.overflow = isOpen ? "hidden" : "auto";
     };
 
-    const handleStudentDelete = async () => {
-        toast.promise(promise, {
-            loading: "Deleting student attendance...",
-            success: () => {
-                return `Deleted student attendance`;
-            },
-            error: "Error",
-        });
-        try {
-            let response = await fetch(`https://do-track-backend-production.up.railway.app/api/attendance/delete-student-record/${searchStudentData?.data?.student_id}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                    Authorization: `Bearer ${token}`,
-                }
-            })
+    handleBodyOverflow(true);
+    return () => handleBodyOverflow(false);
+  }, []);
 
-            if(response.ok) {
-                toast.success('Student attendance information deleted')
-                setTimeout(()=>{
-                    handleCloseModal();
-                }, 3000)
-            }
-        } catch (err) {
-            toast.error('Could not make request right now')
-        }
-    }
-
-    useEffect(() => {
-        const body = document.body;
-    
-        // Function to handle body overflow
-        const handleBodyOverflow = (isOpen) => {
-          body.style.overflow = isOpen ? "hidden" : "auto";
-        };
-    
-        // Call the function when the modal is mounted/unmounted
-        handleBodyOverflow(true);
-        return () => handleBodyOverflow(false);
-      }, []);
-
-    return (
-        <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-60 flex">
-            <div className="flex flex-col p-4 gap-3 bg-white w-full h-auto max-w-md m-auto rounded-lg shadow">  
-                <div className="flex flex-col gap-4 rounded-lg relative overflow-x-auto shadow-md sm:rounded-lg">
+  return (
+    <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-60 flex">
+      {isDelete ? (
+        <DeleteConfirmation
+          handleStudentDelete={handleStudentDelete}
+          handleCloseModal={() => setIsDelete(false)}
+          searchStudentData={searchStudentData}
+        />
+      ) : (
+        <div className="flex flex-col p-4 gap-3 bg-white w-full h-auto max-w-md m-auto rounded-lg shadow">
+          <div className="flex flex-col gap-4 rounded-lg relative overflow-x-auto shadow-md sm:rounded-lg">
                     <div className="">
                         <div className="flex justify-between items-center p-2 text-xl font-bold bg-purple-200">
                             <h1 className="">Searched Student</h1>
@@ -122,12 +136,13 @@ export const StudentSearchModal = ({searchStudentData, onChangeCloseModal}) => {
                         </div>
                     </div>
                     <div className="flex justify-center pb-5">
-                        <button onClick={handleStudentDelete} className="border px-6 py-1 rounded-md w-[132px] text-sm text-white bg-red-500">
-                            Delete
-                        </button>
+                    <button onClick={handleDelete} className="border px-6 py-1 rounded-md w-[132px] text-sm text-white bg-red-500">
+                        Delete
+                    </button>
                     </div>
                 </div>
             </div>
+            )}
         </div>
     )
 }

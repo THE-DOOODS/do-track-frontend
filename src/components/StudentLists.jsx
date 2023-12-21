@@ -2,7 +2,7 @@ import { TbClipboardList } from "react-icons/tb";
 import { TablePagination } from "@mui/material";
 import StudentStats from "./StudentStats";
 import { useState, useEffect, useRef } from "react";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 import JsPDF, { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
@@ -43,9 +43,11 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 
 			if (response.ok) {
 				const data = await response.json();
-				console.log(data?.data);
 				setCollegeAttend(data?.data);
+			} else if (response.status === 404) {
+				toast.error("No records to be displayed");
 			}
+
 		} catch (err) {
 			console.log("Unable to fetch attendance by college", err);
 		}
