@@ -234,6 +234,9 @@ const StudentLists = ({ programAttend, selectedProgram, allStudents }) => {
 								Year
 							</th>
 							<th scope="col" className="px-6 py-3">
+								Digital Signature
+							</th>
+							<th scope="col" className="px-6 py-3">
 								Time In
 							</th>
 							<th scope="col" className="px-6 py-3">
