@@ -5,6 +5,8 @@ import Dashboard from "./pages/interface/Dashboard";
 import LandingPage from "./pages/interface/LandingPage";
 import Logout from "./components/modals/Logout";
 import { PrivateRoute } from "./utils/Privateroute";
+import './index.css'
+
 
 function App() {
 	return (
