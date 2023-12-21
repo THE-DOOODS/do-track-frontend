@@ -7,6 +7,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { Toaster, toast } from "sonner";
 import DeleteAllConfirmation from "../../components/modals/DeleteAllConfirmation";
 import DeleteProgConfirmation from "../../components/modals/DeleteProgConfirmation";
+import { Tooltip } from "react-tooltip";
 
 const CollegeLogo = {
 	"1" : "static/icons/CCIS-logo.png",
@@ -174,6 +175,7 @@ const Dashboard = () => {
 						</div>
 						<select
 							name=""
+							data-tooltip-id="select-tooltip"
 							id="deleteOptionSelect"  // Add an id to the select element
 							className="bg-white rounded-full w-[110px] md:w-[130px] h-10 outline-none px-2 text-xs text-center duration-500 transform hover:translate-y-1 hover:bg-purple-200"
 							onChange={(e) => handleDeleteOptionChange(e)}
@@ -182,6 +184,17 @@ const Dashboard = () => {
 							<option value="deleteAll">Delete All Records</option>
 							<option value="deleteByProgram">Delete By Program</option>
 						</select>
+						<Tooltip
+							id="select-tooltip"
+							place="bottom"
+							className="z-20"
+							border="1px solid #D3D3D3"
+							style={{ background: "#AD32C1" }}
+						>
+							<div className="text-xs text-white">
+								<h1>Deletion students attencdance records option</h1>
+							</div>
+						</Tooltip>
 					</div>
 				</div>
 				{/* <StudentStats programAttend={programAttend} /> */}
