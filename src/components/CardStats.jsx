@@ -93,17 +93,17 @@ const CardStats = ({ programInfo }) => {
 						/>
 					)}
 					{statsData.find((stat) => stat.programId === data?.program_id) && (
-						<Tooltip
+					<Tooltip
 						id={`card-info-${key}`}
 						place="bottom"
 						className="z-20"
 						border="1px solid #D3D3D3"
 						style={{ background: "#E7A557" }}
-						>
+					>
 						<div className="text-xs text-white">
 							<h1>Statistics of {data?.program_name}</h1>
 						</div>
-						</Tooltip>
+					</Tooltip>
 					)}
 				</div>
 			))}

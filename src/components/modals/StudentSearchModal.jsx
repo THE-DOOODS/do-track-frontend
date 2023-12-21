@@ -46,6 +46,7 @@ export const StudentSearchModal = ({ searchStudentData, onChangeCloseModal }) =>
         setTimeout(() => {
           handleCloseModal();
           setIsDelete(false);
+          window.location.reload();
         }, 3000);
       }
     } catch (err) {

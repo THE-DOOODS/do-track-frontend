@@ -7,6 +7,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { Toaster, toast } from "sonner";
 import DeleteAllConfirmation from "../../components/modals/DeleteAllConfirmation";
 import DeleteProgConfirmation from "../../components/modals/DeleteProgConfirmation";
+import { Tooltip } from "react-tooltip";
 
 const CollegeLogo = {
 	"1" : "static/icons/CCIS-logo.png",
@@ -149,7 +150,7 @@ const Dashboard = () => {
 				<DeleteAllConfirmation onChangeCloseModal={(value) => onChangeCloseModal(value)} />
 			)}
 			{openDeleteProgConfirmation && (
-				<DeleteProgConfirmation onChangeCloseModal={(value) => onChangeCloseModal(value)} selectedProgramId={selectedProgramId} />
+				<DeleteProgConfirmation onChangeCloseModal={(value) => onChangeCloseModal(value)} selectedProgramId={selectedProgramId} programData={programData} />
 			)}
 			<Toaster position="top-center" closeButton richColors />
 			<div className="fixed top-0 left-0 w-full pt-2 bg-white shadow-md z-40 px-5 md:px-16">
@@ -174,14 +175,26 @@ const Dashboard = () => {
 						</div>
 						<select
 							name=""
+							data-tooltip-id="select-tooltip"
 							id="deleteOptionSelect"  // Add an id to the select element
-							className="bg-white rounded-full w-[110px] md:w-[130px] h-10 outline-none px-2 text-xs text-center"
+							className="bg-white rounded-full w-[110px] md:w-[130px] h-10 outline-none px-2 text-xs text-center duration-500 transform hover:translate-y-1 hover:bg-purple-200"
 							onChange={(e) => handleDeleteOptionChange(e)}
 						>
 							<option value="">Delete Options</option>
 							<option value="deleteAll">Delete All Records</option>
 							<option value="deleteByProgram">Delete By Program</option>
 						</select>
+						<Tooltip
+							id="select-tooltip"
+							place="bottom"
+							className="z-20"
+							border="1px solid #D3D3D3"
+							style={{ background: "#AD32C1" }}
+						>
+							<div className="text-[10px] text-white">
+								<h1>Deletion students attendance records option</h1>
+							</div>
+						</Tooltip>
 					</div>
 				</div>
 				{/* <StudentStats programAttend={programAttend} /> */}
