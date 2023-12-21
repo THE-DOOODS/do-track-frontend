@@ -149,7 +149,7 @@ const Dashboard = () => {
 				<DeleteAllConfirmation onChangeCloseModal={(value) => onChangeCloseModal(value)} />
 			)}
 			{openDeleteProgConfirmation && (
-				<DeleteProgConfirmation onChangeCloseModal={(value) => onChangeCloseModal(value)} selectedProgramId={selectedProgramId} />
+				<DeleteProgConfirmation onChangeCloseModal={(value) => onChangeCloseModal(value)} selectedProgramId={selectedProgramId} programData={programData} />
 			)}
 			<Toaster position="top-center" closeButton richColors />
 			<div className="fixed top-0 left-0 w-full pt-2 bg-white shadow-md z-40 px-5 md:px-16">

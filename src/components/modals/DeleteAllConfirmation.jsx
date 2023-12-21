@@ -15,35 +15,40 @@ const DeleteAllConfirmation = ({onChangeCloseModal}) => {
     const handleDeleteAll = async () => {
         try {
             toast.promise(
-                promise().then(async () => {
-                    let response = await fetch(
-                        `https://do-track-backend-production.up.railway.app/api/attendance/delete-college-record/${college_id}`,
-                        {
-                            method: "DELETE",
-                            headers: {
-                                "Content-Type": "application/json",
-                                Accept: "application/json",
-                                Authorization: `Bearer ${token}`,
-                            },
+                new Promise(async (resolve, reject) => {
+                    try {
+                        let response = await fetch(
+                            `https://do-track-backend-production.up.railway.app/api/attendance/delete-college-record/${college_id}`,
+                            {
+                                method: "DELETE",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    Accept: "application/json",
+                                    Authorization: `Bearer ${token}`,
+                                },
+                            }
+                        );
+                    
+                        if (response.ok) {
+                            const data = await response.json();
+                            setTimeout(() => {
+                                handleCloseModal();
+                                resolve(data);
+                            }, 1000);
+                        } else if (response.status === 404) {
+                            reject("No student attendance records to be deleted in this college");
                         }
-                    );
-    
-                    if (response.ok) {
-                        setTimeout(() => {
-                            handleCloseModal();
-                        }, 1000);
-                        return `Deleted all student attendance`;
-                    } else if (response.status === 404) {
-                        toast.error("No records to be deleted");
-                    } else {
-                        toast.error("Error deleting all students");
+                    } catch (err) {
+                        reject("An error occurred while deleting all the student attendance records");
                     }
+
                 }),
                 {
-                    loading: "Deleting all student attendance...",
-                    error: "Could not make request right now",
-                }
-            );
+                    loading: "Deleting all student attendance records...",
+                    success: () => "All student attendance records successfully deleted in this college",
+                    error: (message) => message,
+                 },
+            )
         } catch (err) {
             toast.error("Could not make request right now");
         }
