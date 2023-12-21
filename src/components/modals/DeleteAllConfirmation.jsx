@@ -34,6 +34,7 @@ const DeleteAllConfirmation = ({onChangeCloseModal}) => {
                             setTimeout(() => {
                                 handleCloseModal();
                                 resolve(data);
+                                window.location.reload();
                             }, 1000);
                         } else if (response.status === 404) {
                             reject("No student attendance records to be deleted in this college");
