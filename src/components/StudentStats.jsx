@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import '../index.css'
 
 const StudentStats = ({ paginatedData }) => {
 	const formatHours = (totalHours) => {
