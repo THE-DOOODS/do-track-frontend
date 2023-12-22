@@ -1,4 +1,4 @@
-# Do-Track Attendance System 📊🚀
+# Do-Track | Web-based Attendance Management System 📊🚀
 
 The conventional method of collecting attendance at Caraga State University involves pen and paper, requiring students to list their names, program details, and provide a signature. This practice is observed by the College of Computing and Information Sciences Local Student Government and other Local Government Organizations, functioning as subordinate bodies within the CSU University Student Government (CSU-USG).
 
