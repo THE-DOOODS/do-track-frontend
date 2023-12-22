@@ -50,6 +50,16 @@ To set up the Do-Track Attendance System React project, follow these comprehensi
 Feel free to explore, contribute, and enhance the system to meet your institution's unique needs! 🚀📚
 
 # Contributors
-
+<p align="center">
+  <a href="https://github.com/angelogalope">
+    <img src="https://avatars.githubusercontent.com/u/105281585?v=4" alt="Angelo Galope" width="100" style="border-radius:50%">
+  </a>
+  <a href="https://github.com/ImTrikk">
+    <img src="https://avatars.githubusercontent.com/u/130761529?v=4" alt="Patrick Dionen" width="100" style="border-radius:50%">
+  </a>
+  <a href="https://github.com/qarudafxz">
+    <img src="https://avatars.githubusercontent.com/u/70809588?v=4" alt="Contributor 3" width="100" style="border-radius:50%">
+  </a>
+</p>
 
 ![image](https://github.com/THE-DOOODS/do-track-frontend/assets/70809588/cd12ebad-4ffd-465d-ac8e-4fd078ee76e0)
